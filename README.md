@@ -27,7 +27,8 @@ interaction with decentralized platforms.
 
 ## Contents
 
-- **[index.html](index.html)** — *Nanoarguments: Vocabulary Survey and Model
+- **[index.html](index.html)** - project landing page.
+- **[model.html](model.html)** - *Nanoarguments: Vocabulary Survey and Model
   Specification*, the project's first published deliverable, covering the vocabulary survey
   (schema.org, Web Annotation, CiTO, PROV-O, SIO, ECO, SEPIO, AMO, Activity
   Streams, ActivityPub, LDN) and the model specification (content nodes, the
