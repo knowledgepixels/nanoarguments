@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="en"
-  prefix="schema: https://schema.org/ rdf: http://www.w3.org/1999/02/22-rdf-syntax-ns# rdfs: http://www.w3.org/2000/01/rdf-schema# dcterms: http://purl.org/dc/terms/ oa: http://www.w3.org/ns/oa# cito: http://purl.org/spar/cito/ prov: http://www.w3.org/ns/prov# as: https://www.w3.org/ns/activitystreams# sio: http://semanticscience.org/resource/ na: https://w3id.org/nanoarguments/ np: http://www.nanopub.org/nschema# npx: http://purl.org/nanopub/x/ rel: https://www.w3.org/ns/iana/link-relations/relation#">
+  prefix="schema: https://schema.org/ rdf: http://www.w3.org/1999/02/22-rdf-syntax-ns# rdfs: http://www.w3.org/2000/01/rdf-schema# dcterms: http://purl.org/dc/terms/ oa: http://www.w3.org/ns/oa# cito: http://purl.org/spar/cito/ prov: http://www.w3.org/ns/prov# as: https://www.w3.org/ns/activitystreams# sio: http://semanticscience.org/resource/ na: https://w3id.org/nanoarguments/ np: http://www.nanopub.org/nschema# npx: http://purl.org/nanopub/x/ rel: https://www.w3.org/ns/iana/link-relations/relation# spec: http://www.w3.org/ns/spec#">
 
 <head>
   <meta charset="utf-8" />
@@ -38,7 +38,7 @@
       </dl>
       <dl id="document-version">
         <dt>Version</dt>
-        <dd><span property="schema:version">0.1.0</span></dd>
+        <dd><span property="schema:version">0.1.1</span></dd>
       </dl>
       <dl id="document-type">
         <dt>Document Type</dt>
@@ -1813,6 +1813,28 @@ sub:pubinfo {
               annotation's body is the same RDF resource that carries the discourse triples (<a href="#5">#5</a>).</p>
           </section>
         </section>
+      </section>
+
+      <section class="appendix" id="changelog" rel="schema:hasPart" resource="#changelog" typeof="spec:Changelog">
+        <h2 property="schema:name">Changelog</h2>
+        <div datatype="rdf:HTML" property="schema:description">
+          <h3 property="schema:name">Version 0.1.1</h3>
+          <ul about="#changelog" rel="spec:change">
+            <li typeof="spec:Change" property="spec:statement">Reuse <code>cito:qualifies</code> for qualifying caveats
+              and add it to the recommended CiTO subset (<a href="#4.1" rel="spec:changeSubject">§4.1</a>), retiring the
+              previously minted <code>na:qualifies</code> term and its <code>rdfs:subPropertyOf cito:discusses</code>
+              fallback.</li>
+            <li typeof="spec:Change" property="spec:statement">Standardize the worked examples on slash sub-resource IRIs
+              for content nodes (<code>&lt;np&gt;/claim</code>), matching the IRIs produced at signing time (<a
+                href="#11" rel="spec:changeSubject">§11</a>).</li>
+            <li typeof="spec:Change" property="spec:statement">Clarify that discourse relations target the content node
+              while <code>oa:hasTarget</code> anchors on the nanopublication, and that the two may differ in granularity
+              (<a href="#11.B" rel="spec:changeSubject">§11.B</a>).</li>
+            <li typeof="spec:Change" property="spec:statement">Add <code>npx:introduces</code> to each example to mark the
+              content node the nanopublication mints (<a href="#11" rel="spec:changeSubject">§11</a>).</li>
+            <li typeof="spec:Change" property="spec:statement">Add this Changelog appendix.</li>
+          </ul>
+        </div>
       </section>
 
       <section id="acknowledgements" rel="schema:hasPart" resource="#acknowledgements">
