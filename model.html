@@ -619,7 +619,7 @@ sub:annot a oa:Annotation ;
           <p>In every case the content node is the same RDF resource (<code>sub:statement</code>); what changes is which
             other resources reference it and at what granularity. Being the body of an annotation does not constrain a
             content node's discourse content: the same <code>sub:statement</code> could simultaneously carry
-            <code>cito:supports</code>, <code>na:qualifies</code>, citations, or other discourse triples while being
+            <code>cito:supports</code>, <code>cito:qualifies</code>, citations, or other discourse triples while being
             wrapped in an annotation that anchors it to a passage.</p>
           <p>This specification adopts <code>schema:Statement</code> as the base type for content nodes.
             <code>schema:Statement</code> is defined by schema.org as "a statement about something." This model uses it
@@ -664,6 +664,8 @@ sub:annot a oa:Annotation ;
               <li><code>cito:disputes</code>: the subject contribution argues against the target.</li>
               <li><code>cito:extends</code>: the subject contribution builds on the target.</li>
               <li><code>cito:agreesWith</code>: the subject contribution endorses the target.</li>
+              <li><code>cito:qualifies</code>: the subject contribution places conditions or restrictions on the
+                target (a caveat or qualification).</li>
             </ul>
             <p>CiTO's full property set is available where the listed subset does not fit. Implementations should prefer
               the subset to maximize interoperability and UI legibility.</p>
@@ -685,12 +687,6 @@ sub:annot a oa:Annotation ;
 
             <h5 id="4.1.3">4.1.3 Minted in na:</h5>
             <ul>
-              <li><code>na:qualifies</code>: the subject contribution accepts the target but adds a caveat or
-                qualification. (Tentative.) CiTO has no clean equivalent (<code>cito:critiques</code> and
-                <code>cito:discusses</code> carry the wrong tone). Declared <code>rdfs:subPropertyOf</code>
-                <code>cito:discusses</code> so CiTO-aware consumers receive a usable fallback. Whether this predicate
-                earns its place as a project-owned mint or whether qualifying caveats are better expressed
-                compositionally (e.g. <code>cito:supports</code> plus a textual qualifier) is pending pilot input.</li>
               <li><code>na:tests</code>: the subject contribution (a study, experiment, analysis, or similar
                 investigative contribution) tests the target contribution (typically a <code>sio:hypothesis</code>,
                 <a href="#9.1">#9.1</a>). (Proposed; pending pilot confirmation.)</li>
@@ -735,7 +731,7 @@ sub:annot a oa:Annotation ;
               target) and are distinct from discourse relations in subject type and purpose.</p>
             <p>The body of an annotation is itself a content node and may carry the full discourse vocabulary. A body
               can simultaneously be the body of an <code>oa:Annotation</code> (positioning it at a target) and the
-              subject of <code>cito:supports</code>, <code>cito:disputes</code>, <code>na:qualifies</code>, scientific
+              subject of <code>cito:supports</code>, <code>cito:disputes</code>, <code>cito:qualifies</code>, scientific
               relations, or citation triples. The annotation framing does not flatten or restrict the body's discourse
               content; the body's RDF resource is independently a full participant in the discourse layer.</p>
           </section>
@@ -748,7 +744,7 @@ sub:annot a oa:Annotation ;
           <section id="sec-5-1" rel="schema:hasPart" resource="#sec-5-1">
             <h4 id="5.1">5.1 The discourse layer</h4>
             <p>The discourse layer lives on content nodes as direct triples. Discourse relations
-              (<code>cito:supports</code>, <code>cito:disputes</code>, <code>na:qualifies</code>,
+              (<code>cito:supports</code>, <code>cito:disputes</code>, <code>cito:qualifies</code>,
               <code>as:inReplyTo</code>, and other CiTO relations from the subset in section 4) sit on the content node
               and connect it to its target. This layer carries statements about how a contribution relates to others in
               the discussion: who supports or disputes what, who replies to whom, who qualifies whose claims.</p>
@@ -988,7 +984,7 @@ sub:pubinfo {
             <h4 id="6.7">6.7 Nanopub type indexing</h4>
             <p>The pubinfo graph carries <code>npx:hasNanopubType</code> indicating the primary rhetorical or content
               type of the nanopub (e.g. <code>cito:disputes</code>, <code>schema:Statement</code>,
-              <code>na:qualifies</code>). Used for indexing and query.</p>
+              <code>cito:qualifies</code>). Used for indexing and query.</p>
           </section>
         </section>
 
@@ -1122,7 +1118,7 @@ sub:pubinfo {
   ?contribution ?relation &lt;CLAIM_IRI&gt; ;
                 ^prov:wasAttributedTo ?author .
   FILTER (?relation IN (cito:supports, cito:disputes,
-                        na:qualifies, cito:agreesWith,
+                        cito:qualifies, cito:agreesWith,
                         cito:extends, as:inReplyTo))
 }</code></pre>
             <p>Walk a reply tree from a root:</p>
@@ -1133,7 +1129,7 @@ sub:pubinfo {
   OPTIONAL {
     ?contribution ?relation ?parent .
     FILTER (?relation IN (cito:supports, cito:disputes,
-                          na:qualifies, cito:agreesWith,
+                          cito:qualifies, cito:agreesWith,
                           cito:extends))
   }
 }</code></pre>
@@ -1266,7 +1262,6 @@ sub:pubinfo {
             <h5 id="11.A.3">11.A.3 Caveat</h5>
             <pre><code>@prefix this: &lt;https://w3id.org/np/RAxample-medaibot-caveat&gt; .
 @prefix sub:  &lt;https://w3id.org/np/RAxample-medaibot-caveat/&gt; .
-@prefix na:   &lt;https://w3id.org/nanoarguments/&gt; .
 
 sub:Head {
   this: a np:Nanopublication ;
@@ -1278,7 +1273,7 @@ sub:Head {
 sub:assertion {
   sub:caveat a schema:Statement ;
     rdf:value     "Be cautious about interpreting causality here without intervention studies." ;
-    na:qualifies  &lt;https://w3id.org/np/RAxample-alvarez-microbiota-claim/claim&gt; .
+    cito:qualifies  &lt;https://w3id.org/np/RAxample-alvarez-microbiota-claim/claim&gt; .
 }
 
 sub:provenance {
@@ -1290,7 +1285,7 @@ sub:pubinfo {
   this: dct:creator        &lt;https://example.org/agents/medai-bot&gt; ;
     dct:created            "2026-05-24T10:10:00Z"^^xsd:dateTime ;
     npx:introduces       sub:caveat ;
-    npx:hasNanopubType     na:qualifies .
+    npx:hasNanopubType     cito:qualifies .
 }</code></pre>
 
             <h5 id="11.A.4">11.A.4 Counter-argument</h5>
@@ -1397,7 +1392,7 @@ sub:pubinfo {
               (https://w3id.org/np/...). This anchoring is distinct from the discourse relation: the
               <code>oa:hasTarget</code> records where the annotation is positioned (the nanopublication as a citeable
               artifact), while the discourse relation on the content node (<code>cito:supports</code>,
-              <code>na:qualifies</code>, <code>as:inReplyTo</code>, etc.) points at the content node being responded to
+              <code>cito:qualifies</code>, <code>as:inReplyTo</code>, etc.) points at the content node being responded to
               (the <code>/claim</code> resource), matching the direct representation in <a href="#11.A">#11.A</a>. The two
               may legitimately point at different granularities (see <a href="#11.B.4">#11.B.4</a>, where the discourse
               relation targets the whole claim while the anchoring narrows to a phrase).</p>
@@ -1457,7 +1452,7 @@ sub:Head {
 sub:assertion {
   sub:caveat a schema:Statement ;
     rdf:value     "Be cautious about interpreting causality here without intervention studies." ;
-    na:qualifies  &lt;https://w3id.org/np/RAxample-alvarez-microbiota-claim/claim&gt; .
+    cito:qualifies  &lt;https://w3id.org/np/RAxample-alvarez-microbiota-claim/claim&gt; .
 
   sub:annot a oa:Annotation ;
     oa:hasBody     sub:caveat ;
@@ -1474,7 +1469,7 @@ sub:pubinfo {
   this: dct:creator        &lt;https://example.org/agents/medai-bot&gt; ;
     dct:created            "2026-05-24T10:10:00Z"^^xsd:dateTime ;
     npx:introduces       sub:caveat ;
-    npx:hasNanopubType     na:qualifies .
+    npx:hasNanopubType     cito:qualifies .
 }</code></pre>
 
             <h5 id="11.B.4">11.B.4 Counter-argument (as annotation, with selector)</h5>
@@ -1606,7 +1601,7 @@ sub:pubinfo {
             <p>The content nodes in <a href="#11.A">#11.A</a> and <a href="#11.B">#11.B</a> are the same: same IRIs, same values, same discourse-graph
               relations. A query for "all contributions targeting Alvarez's claim" returns the same result set in either
               representation, because the <code>cito:supports</code>, <code>cito:disputes</code>,
-              <code>na:qualifies</code>, and <code>as:inReplyTo</code> triples sit on the content nodes regardless of
+              <code>cito:qualifies</code>, and <code>as:inReplyTo</code> triples sit on the content nodes regardless of
               whether an annotation wraps them.</p>
             <p>What differs between the two representations is the anchoring: <a href="#11.B">#11.B</a> contributions additionally carry
               <code>oa:Annotation</code> resources with <code>oa:hasTarget</code> pointing at the contribution they
