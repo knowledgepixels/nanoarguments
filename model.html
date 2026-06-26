@@ -10,6 +10,10 @@
   <link href="https://dokie.li/media/css/basic.css" media="all" rel="stylesheet" />
   <link href="https://dokie.li/media/css/dokieli.css" media="all" rel="stylesheet" />
   <script src="https://dokie.li/scripts/dokieli.js"></script>
+  <style>
+    .toc > li[data-id="changelog"] { counter-increment: none !important; }
+    .toc > li[data-id="changelog"]::before { content: "\00a0\00a0\00a0\00a0" !important; margin-right: 0 !important; }
+  </style>
 </head>
 
 <body>
@@ -45,7 +49,7 @@
         <dd><a href="http://usefulinc.com/ns/doap#Specification" rel="rdf:type">Specification</a></dd>
       </dl>
 
-      <section id="abstract" rel="schema:hasPart" resource="#abstract">
+      <section id="abstract" rel="schema:hasPart" resource="#abstract" inlist>
         <h2 property="schema:name">Abstract</h2>
         <div property="schema:abstract" datatype="rdf:HTML">
           <p>This is the first published deliverable of the Nanoarguments project: a vocabulary and model specification
@@ -60,7 +64,7 @@
         </div>
       </section>
 
-      <section id="audience" rel="schema:hasPart" resource="#audience">
+      <section id="audience" rel="schema:hasPart" resource="#audience" inlist>
         <h2>Audience</h2>
         <p>This document is for readers interested in adopting, extending, or reviewing the model: researchers, ontology
           contributors, tool developers, and community organizers working on decentralized scholarly communication. The
@@ -68,7 +72,7 @@
           candidate ontology, so prior familiarity with every one is not required.</p>
       </section>
 
-      <section id="content" rel="schema:hasPart" resource="#content">
+      <section id="content" rel="schema:hasPart" resource="#content" inlist>
         <h2>Content</h2>
         <p>This document includes:</p>
         <ul>
@@ -81,7 +85,7 @@
         </ul>
       </section>
 
-      <section id="out-of-scope" rel="schema:hasPart" resource="#out-of-scope">
+      <section id="out-of-scope" rel="schema:hasPart" resource="#out-of-scope" inlist>
         <h2>Out of scope</h2>
         <p>Some work that complements this specification is being addressed in other Nanoarguments project milestones:
         </p>
@@ -94,15 +98,15 @@
         <p>The following are out of scope for the project as a whole and may be addressed by future work:</p>
         <ul>
           <li>Aggregation queries such as equivalence resolution, evidence aggregation, and agent-level metrics.
-            Deferred to a follow-up specification effort (<a href="#10.2">#10.2</a>).</li>
-          <li>A canonical convention for which property identifies a contribution's source application (<a href="#6.6">#6.6</a>).</li>
+            Deferred to a follow-up specification effort (<a href="#level-2-aggregation-queries">Level 2: aggregation queries</a>).</li>
+          <li>A canonical convention for which property identifies a contribution's source application (<a href="#source-application-or-platform">Source application or platform</a>).</li>
         </ul>
       </section>
 
-      <section id="part-1" rel="schema:hasPart" resource="#part-1">
-        <h2 id="vocabulary-survey">1. Vocabulary Survey</h2>
+      <section id="part-1" rel="schema:hasPart" resource="#part-1" inlist>
+        <h2 id="vocabulary-survey">Vocabulary Survey</h2>
 
-        <section id="survey-scope" rel="schema:hasPart" resource="#survey-scope">
+        <section id="survey-scope" rel="schema:hasPart" resource="#survey-scope" inlist>
           <h3>Scope of this Survey</h3>
           <p>This survey reviews vocabularies and ontologies that cover parts of what a model for decentralized
             scholarly discourse needs to express: statements as content nodes, relations between statements (support,
@@ -120,10 +124,10 @@
             specification (Part II).</p>
         </section>
 
-        <section id="existing-vocabularies" rel="schema:hasPart" resource="#existing-vocabularies">
+        <section id="existing-vocabularies" rel="schema:hasPart" resource="#existing-vocabularies" inlist>
           <h3>Existing Vocabularies and Ontologies</h3>
 
-          <section id="vocab-schema-org" rel="schema:hasPart" resource="#vocab-schema-org">
+          <section id="vocab-schema-org" rel="schema:hasPart" resource="#vocab-schema-org" inlist>
             <h4>Schema.org</h4>
             <p><a href="https://schema.org/">https://schema.org/</a></p>
             <p><strong>Summary:</strong> Schema.org is a collaborative vocabulary maintained by Google, Yahoo,
@@ -159,7 +163,7 @@
               relations.</p>
           </section>
 
-          <section id="vocab-web-annotation" rel="schema:hasPart" resource="#vocab-web-annotation">
+          <section id="vocab-web-annotation" rel="schema:hasPart" resource="#vocab-web-annotation" inlist>
             <h4>Web Annotation Data Model (W3C Rec, 2017)</h4>
             <p><a href="https://www.w3.org/TR/annotation-model/">https://www.w3.org/TR/annotation-model/</a></p>
             <p><strong>Summary:</strong> The Web Annotation Data Model is a W3C Recommendation defining a structured way
@@ -182,19 +186,15 @@
             <p>Limitations/gaps:</p>
             <p>Web Annotation's scope is body-to-target anchoring with typed motivation, with optional selectors for
               parts of the target. This model uses <code>oa:Annotation</code> where this scope fits and uses direct
-              triples between content nodes for rhetorical relations where no anchoring is involved (<a href="#4">#4</a>, <a href="#5">#5</a>).</p>
+              triples between content nodes for rhetorical relations where no anchoring is involved (<a href="#relations-on-statements">Relations on statements</a>, <a href="#discourse-and-annotation-layers">Discourse and annotation layers</a>).</p>
             <p><code>oa:motivatedBy</code> specifically expects an <code>oa:Motivation</code> instance as its object.
               Using it to carry a CiTO property is a domain stretch; placing the discourse relation on the body resource
               (which is itself an addressable RDF resource) is a cleaner alternative.</p>
           </section>
 
-          <section id="vocab-amo" rel="schema:hasPart" resource="#vocab-amo">
+          <section id="vocab-amo" rel="schema:hasPart" resource="#vocab-amo" inlist>
             <h4>Argument Model Ontology</h4>
-            <p><a
-                href="http://purl.org/spar/amo
-">http://purl.org/spar/amo
-</a>
-            </p>
+            <p><a href="http://purl.org/spar/amo">http://purl.org/spar/amo</a></p>
             <p><strong>Summary:</strong> AMO is a SPAR ontology that encodes <a
                 href="https://owl.purdue.edu/owl/general_writing/academic_writing/historical_perspectives_on_argumentation/toulmin_argument.html">Toulmin's
                 model of argument</a>. It defines six interrelated components (claim, evidence, warrant, backing,
@@ -229,11 +229,11 @@
                 narrower than the everyday "rebuttal" usage and not directly equivalent to a <code>cito:disputes</code>
                 reply.</li>
               <li>AMO remains a useful candidate for pilot communities that want to structure contributions according to
-                Toulmin's framework. See the spec's <a href="#9.3">#9.3</a> for the extension.</li>
+                Toulmin's framework. See the spec's <a href="#extensions-for-richer-structure">Extensions for richer structure</a> for the extension.</li>
             </ul>
           </section>
 
-          <section id="vocab-sepio" rel="schema:hasPart" resource="#vocab-sepio">
+          <section id="vocab-sepio" rel="schema:hasPart" resource="#vocab-sepio" inlist>
             <h4>SEPIO - Scientific Evidence and Provenance Information Ontology</h4>
             <p><a
                 href="https://github.com/monarch-initiative/SEPIO-ontology/wiki/The-SEPIO-Core-Ontology">https://github.com/monarch-initiative/SEPIO-ontology/wiki/The-SEPIO-Core-Ontology</a>
@@ -259,7 +259,7 @@
               documentation references, so adoption would require pinning to a specific version.</p>
           </section>
 
-          <section id="vocab-prov-o" rel="schema:hasPart" resource="#vocab-prov-o">
+          <section id="vocab-prov-o" rel="schema:hasPart" resource="#vocab-prov-o" inlist>
             <h4>PROV-O (W3C Rec)</h4>
             <p><a href="https://www.w3.org/TR/prov-o/">https://www.w3.org/TR/prov-o/</a></p>
             <p><strong>Summary:</strong> PROV-O is the W3C-recommended OWL ontology for representing provenance. It
@@ -279,12 +279,12 @@
             <p>PROV-O is generic by design. Its relations cover provenance broadly without committing to domain-specific
               notions of derivation, evaluation, or implementation. The Nanoarguments model uses PROV-O for what it
               covers (attribution, derivation, generation) and mints <code>na:tests</code> and
-              <code>na:implements</code> for the domain-specific relations PROV-O doesn't aim to provide (<a href="#4">#4</a>).</p>
+              <code>na:implements</code> for the domain-specific relations PROV-O doesn't aim to provide (<a href="#relations-on-statements">Relations on statements</a>).</p>
             <p>The nanopublication network uses PROV-O conventions specific to its own structure; this specification
-              follows those conventions (<a href="#6">#6</a>) per the nanopublication guidelines.</p>
+              follows those conventions (<a href="#provenance-and-authorship">Provenance and authorship</a>) per the nanopublication guidelines.</p>
           </section>
 
-          <section id="vocab-cito" rel="schema:hasPart" resource="#vocab-cito">
+          <section id="vocab-cito" rel="schema:hasPart" resource="#vocab-cito" inlist>
             <h4>CiTO - Citation Typing Ontology</h4>
             <p><a
                 href="https://sparontologies.github.io/cito/current/cito.html">https://sparontologies.github.io/cito/current/cito.html</a>
@@ -315,7 +315,7 @@
               between them.</p>
           </section>
 
-          <section id="vocab-eco" rel="schema:hasPart" resource="#vocab-eco">
+          <section id="vocab-eco" rel="schema:hasPart" resource="#vocab-eco" inlist>
             <h4>ECO - Evidence &amp; Conclusion Ontology</h4>
             <p><a href="http://evidenceontology.org/">http://evidenceontology.org/</a></p>
             <p><strong>Summary:</strong> ECO is a community-curated controlled vocabulary of evidence categories used to
@@ -332,10 +332,10 @@
             <p>Limitations/gaps:</p>
             <p>ECO types evidence; it does not type contributions more broadly. It complements rather than replaces
               other vocabularies in this survey. A contribution typed <code>sio:evidence</code> may optionally carry an
-              ECO class as a finer-grained subtype (<a href="#9.2">#9.2</a>). ECO is not required by the model.</p>
+              ECO class as a finer-grained subtype (<a href="#optional-evidence-typing-with-eco">Optional evidence typing with ECO</a>). ECO is not required by the model.</p>
           </section>
 
-          <section id="vocab-sio" rel="schema:hasPart" resource="#vocab-sio">
+          <section id="vocab-sio" rel="schema:hasPart" resource="#vocab-sio" inlist>
             <h4>SIO - Semanticscience Integrated Ontology</h4>
             <p><a
                 href="https://github.com/MaastrichtU-IDS/semanticscience">https://github.com/MaastrichtU-IDS/semanticscience</a>
@@ -352,11 +352,11 @@
             </ul>
             <p>Limitations/gaps:</p>
             <p>SIO provides the class hierarchy for hypothesis, evidence, argument, and proposition. This model uses SIO
-              classes for typing and supplies the relations among them through CiTO and project-minted predicates (<a href="#4">#4</a>,
-              <a href="#9.1">#9.1</a>).</p>
+              classes for typing and supplies the relations among them through CiTO and project-minted predicates (<a href="#relations-on-statements">Relations on statements</a>,
+              <a href="#sio-subtypes">SIO subtypes</a>).</p>
           </section>
 
-          <section id="vocab-activitypub" rel="schema:hasPart" resource="#vocab-activitypub">
+          <section id="vocab-activitypub" rel="schema:hasPart" resource="#vocab-activitypub" inlist>
             <h4>ActivityPub</h4>
             <p><a href="https://www.w3.org/TR/activitypub/">https://www.w3.org/TR/activitypub/</a></p>
             <p><strong>Summary:</strong> ActivityPub is a W3C-recommended decentralized social networking protocol built
@@ -372,10 +372,10 @@
             <p>ActivityPub is a federation transport, not a content vocabulary. This model's content lives in
               nanopublications, and the connector layer projects nanopublications into ActivityPub activities when
               federation is needed. ActivityPub and nanopublications have different commitments (federated messaging vs
-              signed immutable graphs), and the connector cannot be fully faithful to both (<a href="#8">#8</a>).</p>
+              signed immutable graphs), and the connector cannot be fully faithful to both (<a href="#alignment-with-activitypub">Alignment with ActivityPub</a>).</p>
           </section>
 
-          <section id="vocab-activitystreams" rel="schema:hasPart" resource="#vocab-activitystreams">
+          <section id="vocab-activitystreams" rel="schema:hasPart" resource="#vocab-activitystreams" inlist>
             <h4>Activity Streams 2.0 (alignment target)</h4>
             <p><a
                 href="https://www.w3.org/TR/activitystreams-vocabulary/">https://www.w3.org/TR/activitystreams-vocabulary/</a>
@@ -395,10 +395,10 @@
             <p>Limitations / gaps:</p>
             <p>Activity Streams covers conversational structure and social activities. This model uses
               <code>as:inReplyTo</code> for threading and uses CiTO predicates for rhetorical typing, treating the two
-              as independent axes (<a href="#4.1">#4.1</a>).</p>
+              as independent axes (<a href="#discourse-graph-relations">Discourse-graph relations</a>).</p>
           </section>
 
-          <section id="vocab-ldn" rel="schema:hasPart" resource="#vocab-ldn">
+          <section id="vocab-ldn" rel="schema:hasPart" resource="#vocab-ldn" inlist>
             <h4>Linked Data Notifications</h4>
             <p><a href="https://www.w3.org/TR/ldn/">https://www.w3.org/TR/ldn/</a></p>
             <p><strong>Summary:</strong> Linked Data Notifications (LDN) is a W3C-recommended protocol for delivering
@@ -415,7 +415,7 @@
           </section>
         </section>
 
-        <section id="background" rel="schema:hasPart" resource="#background">
+        <section id="background" rel="schema:hasPart" resource="#background" inlist>
           <h3>Background</h3>
 
           <p><strong>Reply-To in dokieli:</strong></p>
@@ -451,7 +451,7 @@
             conflates two separable jobs. The annotation reifies the body-target association; the discourse relation
             expresses a rhetorical stance. Putting the discourse relations directly on the content node, and letting the
             annotation do only the anchoring it was designed for, produces a layering that is queryable from either
-            angle (<a href="#5">#5</a>).</p>
+            angle (<a href="#discourse-and-annotation-layers">Discourse and annotation layers</a>).</p>
           <p>The resulting layers are orthogonal. The discourse layer lives on content nodes; the annotation layer wraps
             a body-target association when one is needed. Both layers are first-class.</p>
 
@@ -460,7 +460,7 @@
             dokieli's emission convention, or restricting <code>oa:Annotation</code> to cases where its machinery is
             actually doing work, anchoring via a selector, carrying a motivation, or otherwise saying something about
             the body-target association that a direct triple between content nodes cannot carry.</p>
-          <p>The orthogonal-layers model (<a href="#5">#5</a>) resolves this. Discourse relations live on content nodes as direct
+          <p>The orthogonal-layers model (<a href="#discourse-and-annotation-layers">Discourse and annotation layers</a>) resolves this. Discourse relations live on content nodes as direct
             triples, giving them a single canonical placement that supports one-hop queries for "what does this
             contribution dispute or support." <code>oa:Annotation</code> is used when an authoring tool produces an
             annotation as part of its flow (as dokieli does when a user selects a passage), or when a contribution needs
@@ -490,11 +490,11 @@
         </section>
       </section>
 
-      <section id="part-2" rel="schema:hasPart" resource="#part-2">
-        <h2 id="model-specification">II. Model Specification</h2>
+      <section id="part-2" rel="schema:hasPart" resource="#part-2" inlist>
+        <h2 id="model-specification">Model Specification</h2>
 
-        <section id="sec-1-scope" rel="schema:hasPart" resource="#sec-1-scope">
-          <h3 id="1">1. Scope and purpose</h3>
+        <section id="scope-and-purpose" rel="schema:hasPart" resource="#scope-and-purpose" inlist>
+          <h3>Scope and purpose</h3>
           <p>This section specifies the model for discourse and evidence graphs.</p>
           <p>The model is composed from existing vocabularies (Web Annotation, CiTO, PROV, SIO, with optional ECO and
             SEPIO extensions) and a small project-owned namespace (<code>na:</code>), aligned with the nanopublication
@@ -504,8 +504,8 @@
             documents.</p>
         </section>
 
-        <section id="sec-2-namespaces" rel="schema:hasPart" resource="#sec-2-namespaces">
-          <h3 id="2">2. Namespaces</h3>
+        <section id="namespaces" rel="schema:hasPart" resource="#namespaces" inlist>
+          <h3>Namespaces</h3>
           <table>
             <thead>
               <tr>
@@ -570,17 +570,17 @@
           </table>
         </section>
 
-        <section id="sec-3-entity-classes" rel="schema:hasPart" resource="#sec-3-entity-classes">
-          <h3 id="3">3. Entity classes (content nodes)</h3>
+        <section id="entity-classes" rel="schema:hasPart" resource="#entity-classes" inlist>
+          <h3>Entity classes (content nodes)</h3>
           <p>A content node is a first-class RDF resource carrying the substantive content of a contribution. Each
-            content node has its own identifier, a type (see this section and <a href="#9">#9</a>), a value (typically as
-            <code>rdf:value</code>), and may carry discourse relations (<a href="#4">#4</a>) and citations as direct triples. Content
+            content node has its own identifier, a type (see this section and <a href="#statement-subtypes">Statement subtypes</a>), a value (typically as
+            <code>rdf:value</code>), and may carry discourse relations (<a href="#relations-on-statements">Relations on statements</a>) and citations as direct triples. Content
             nodes are not annotations, and do not depend on a host resource for their standing. Their identity persists
             across the nanopublications and queries that reference them.</p>
           <p>The same content node is referenced in several ways depending on context. As a bare node in a nanopub:</p>
           <pre><code>sub:statement a schema:Statement ;
   rdf:value "Pigeons can pass a modified mirror-mark test." .</code></pre>
-          <p>As the subject of discourse relations (<a href="#4">#4</a>), the claim now takes a position toward another existing claim
+          <p>As the subject of discourse relations (<a href="#relations-on-statements">Relations on statements</a>), the claim now takes a position toward another existing claim
             expressed as a direct triple:</p>
           <pre><code>sub:statement a schema:Statement ;
   rdf:value     "Pigeons can pass a modified mirror-mark test." ;
@@ -625,8 +625,8 @@ sub:annot a oa:Annotation ;
             <code>schema:Statement</code> is defined by schema.org as "a statement about something." This model uses it
             broadly to cover any propositional or near-propositional contribution to the discourse graph: claims,
             hypotheses, observations, findings, expressions of stance, and so on. A statement carries its content in
-            <code>rdf:value</code>, may carry citations to external works via CiTO citation properties (<a href="#4.2">#4.2</a>), and may
-            target other content nodes via discourse-graph relations (<a href="#4.1">#4.1</a>).</p>
+            <code>rdf:value</code>, may carry citations to external works via CiTO citation properties (<a href="#context-relations">Context relations</a>), and may
+            target other content nodes via discourse-graph relations (<a href="#discourse-graph-relations">Discourse-graph relations</a>).</p>
           <p>A second content node type is <code>schema:Question</code>, used when a contribution asks rather than
             asserts: a request for clarification, evidence, or opinion. <code>schema:Question</code> is defined by
             schema.org as "a specific question, e.g. from a user seeking answers online, or collected in a Frequently
@@ -646,18 +646,19 @@ sub:annot a oa:Annotation ;
             produced under this specification.</p>
         </section>
 
-        <section id="sec-4-relations" rel="schema:hasPart" resource="#sec-4-relations">
-          <h3 id="4">4. Relations on statements</h3>
+        <section id="relations-on-statements" rel="schema:hasPart" resource="#relations-on-statements" inlist>
+          <h3>Relations on statements</h3>
           <p>Two kinds of relations sit on statements: those that connect statements to other statements (forming the
             discourse graph), and those that connect a statement to a non-statement resource, anchoring the discourse
             graph to external context (papers, datasets, methods, protocols).</p>
 
-          <section id="sec-4-1" rel="schema:hasPart" resource="#sec-4-1">
-            <h4 id="4.1">4.1 Discourse-graph relations (Statement to Statement)</h4>
+          <section id="discourse-graph-relations" rel="schema:hasPart" resource="#discourse-graph-relations" inlist>
+            <h4>Discourse-graph relations (Statement to Statement)</h4>
             <p>These relations have a statement as subject and a statement as object. They form the graph among
-              contributions and are what discourse-graph traversal queries (<a href="#10.1">#10.1</a>) operate on.</p>
+              contributions and are what discourse-graph traversal queries (<a href="#level-1-graph-traversal-queries">Level 1: graph-traversal queries</a>) operate on.</p>
 
-            <h5 id="4.1.1">4.1.1 Reused from CiTO</h5>
+            <section id="discourse-reused-from-cito" rel="schema:hasPart" resource="#discourse-reused-from-cito" inlist>
+            <h5>Reused from CiTO</h5>
             <p>The model reuses CiTO properties without modification. The recommended subset for this version:</p>
             <ul>
               <li><code>cito:supports</code>: the subject contribution argues in favor of the target.</li>
@@ -670,7 +671,9 @@ sub:annot a oa:Annotation ;
             <p>CiTO's full property set is available where the listed subset does not fit. Implementations should prefer
               the subset to maximize interoperability and UI legibility.</p>
 
-            <h5 id="4.1.2">4.1.2 Reused from Activity Streams</h5>
+            </section>
+            <section id="reused-from-activity-streams" rel="schema:hasPart" resource="#reused-from-activity-streams" inlist>
+            <h5>Reused from Activity Streams</h5>
             <ul>
               <li><code>as:inReplyTo</code>: the subject is a reply to the target, expressing conversational threading.
                 Used on content nodes when the contribution is a direct response to another contribution. CiTO
@@ -685,27 +688,33 @@ sub:annot a oa:Annotation ;
               </li>
             </ul>
 
-            <h5 id="4.1.3">4.1.3 Minted in na:</h5>
+            </section>
+            <section id="discourse-minted-in-na" rel="schema:hasPart" resource="#discourse-minted-in-na" inlist>
+            <h5>Minted in na:</h5>
             <ul>
               <li><code>na:tests</code>: the subject contribution (a study, experiment, analysis, or similar
                 investigative contribution) tests the target contribution (typically a <code>sio:hypothesis</code>,
-                <a href="#9.1">#9.1</a>). (Proposed; pending pilot confirmation.)</li>
+                <a href="#sio-subtypes">SIO subtypes</a>). (Proposed; pending pilot confirmation.)</li>
             </ul>
+            </section>
           </section>
 
-          <section id="sec-4-2" rel="schema:hasPart" resource="#sec-4-2">
-            <h4 id="4.2">4.2 Context relations (Statement to non-Statement)</h4>
+          <section id="context-relations" rel="schema:hasPart" resource="#context-relations" inlist>
+            <h4>Context relations (Statement to non-Statement)</h4>
             <p>These relations have a statement as subject and a non-statement resource as object, typically an external
               paper, dataset, method, protocol, or other resource that exists outside the discourse graph.</p>
 
-            <h5 id="4.2.1">4.2.1 Reused from CiTO (citation subset):</h5>
+            <section id="context-reused-from-cito" rel="schema:hasPart" resource="#context-reused-from-cito" inlist>
+            <h5>Reused from CiTO (citation subset):</h5>
             <ul>
               <li><code>cito:citesAsEvidence</code>: the subject cites the target as evidence.</li>
               <li><code>cito:citesAsAuthority</code>: the subject cites the target as authoritative.</li>
               <li><code>cito:usesDataFrom</code>: the subject reuses the target's data.</li>
             </ul>
 
-            <h5 id="4.2.2">4.2.2 Reused from PROV:</h5>
+            </section>
+            <section id="reused-from-prov" rel="schema:hasPart" resource="#reused-from-prov" inlist>
+            <h5>Reused from PROV:</h5>
             <ul>
               <li><code>prov:wasDerivedFrom</code>: the subject was generated from the target. Covers derivation and
                 grounding ("this finding follows from this study," "this conclusion is derived from this evidence"). If
@@ -713,7 +722,9 @@ sub:annot a oa:Annotation ;
                 graph; the default case is statement-to-external-resource.</li>
             </ul>
 
-            <h5 id="4.2.3">4.2.3 Minted in na:</h5>
+            </section>
+            <section id="context-minted-in-na" rel="schema:hasPart" resource="#context-minted-in-na" inlist>
+            <h5>Minted in na:</h5>
             <ul>
               <li><code>na:implements</code>: the subject is a concrete realization of the target specification. A
                 protocol implements a method; an experimental procedure implements a study design; a piece of code
@@ -721,11 +732,12 @@ sub:annot a oa:Annotation ;
                 realization) and from <code>sio:realizes</code> (which relates a process to a realizable entity rather
                 than two informational entities). (Proposed; pending pilot confirmation.)</li>
             </ul>
+            </section>
           </section>
 
-          <section id="sec-4-3" rel="schema:hasPart" resource="#sec-4-3">
-            <h4 id="4.3">4.3 Relations from other layers</h4>
-            <p>The annotation layer (<a href="#5.2">#5.2</a>) introduces annotation properties (<code>oa:hasBody</code>,
+          <section id="relations-from-other-layers" rel="schema:hasPart" resource="#relations-from-other-layers" inlist>
+            <h4>Relations from other layers</h4>
+            <p>The annotation layer (<a href="#the-annotation-layer">The annotation layer</a>) introduces annotation properties (<code>oa:hasBody</code>,
               <code>oa:hasTarget</code>, <code>oa:hasSelector</code>) that sit on <code>oa:Annotation</code> resources
               rather than on content nodes. These describe anchoring (where a body is positioned in relation to a
               target) and are distinct from discourse relations in subject type and purpose.</p>
@@ -737,12 +749,12 @@ sub:annot a oa:Annotation ;
           </section>
         </section>
 
-        <section id="sec-5-layers" rel="schema:hasPart" resource="#sec-5-layers">
-          <h3 id="5">5. Discourse and annotation layers</h3>
+        <section id="discourse-and-annotation-layers" rel="schema:hasPart" resource="#discourse-and-annotation-layers" inlist>
+          <h3>Discourse and annotation layers</h3>
           <p>The model has two orthogonal layers, each carrying a different kind of statement about a contribution.</p>
 
-          <section id="sec-5-1" rel="schema:hasPart" resource="#sec-5-1">
-            <h4 id="5.1">5.1 The discourse layer</h4>
+          <section id="the-discourse-layer" rel="schema:hasPart" resource="#the-discourse-layer" inlist>
+            <h4>The discourse layer</h4>
             <p>The discourse layer lives on content nodes as direct triples. Discourse relations
               (<code>cito:supports</code>, <code>cito:disputes</code>, <code>cito:qualifies</code>,
               <code>as:inReplyTo</code>, and other CiTO relations from the subset in section 4) sit on the content node
@@ -750,11 +762,11 @@ sub:annot a oa:Annotation ;
               the discussion: who supports or disputes what, who replies to whom, who qualifies whose claims.</p>
             <p>The discourse layer is always present on a content node that has any discourse standing regardless of the
               authoring context. It is the canonical representation of the discussion structure and what aggregation
-              queries (<a href="#10">#10</a>) operate on.</p>
+              queries (<a href="#query-patterns">Query patterns</a>) operate on.</p>
           </section>
 
-          <section id="sec-5-2" rel="schema:hasPart" resource="#sec-5-2">
-            <h4 id="5.2">5.2 The annotation layer</h4>
+          <section id="the-annotation-layer" rel="schema:hasPart" resource="#the-annotation-layer" inlist>
+            <h4>The annotation layer</h4>
             <p>The annotation layer uses <code>oa:Annotation</code> to anchor a body (typically a content node) with a
               target. The annotation is a separate, addressable resource with its own properties: a body, a target,
               optionally a selector narrowing the target to a part of it, and optionally a motivation. The target may be
@@ -768,8 +780,8 @@ sub:annot a oa:Annotation ;
               elsewhere in the network.</p>
           </section>
 
-          <section id="sec-5-3" rel="schema:hasPart" resource="#sec-5-3">
-            <h4 id="5.3">5.3 Orthogonality</h4>
+          <section id="orthogonality" rel="schema:hasPart" resource="#orthogonality" inlist>
+            <h4>Orthogonality</h4>
             <p>The two layers are independent:</p>
             <ul>
               <li>A contribution may participate in the discourse layer only. Example: a claim disputing another claim,
@@ -793,21 +805,17 @@ sub:annot a oa:Annotation ;
                   <marker id="ah-teal" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#0b7285" /></marker>
                   <marker id="ah-violet" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#7048e8" /></marker>
                 </defs>
-                <!-- annotation-layer edges (anchoring) -->
                 <path d="M250,64 Q450,28 648,138" fill="none" stroke="#0b7285" stroke-width="2" marker-end="url(#ah-teal)" />
                 <path d="M236,116 Q268,168 322,215" fill="none" stroke="#0b7285" stroke-width="2" marker-end="url(#ah-teal)" />
                 <path d="M145,116 L145,233" fill="none" stroke="#0b7285" stroke-width="2" marker-end="url(#ah-teal)" />
-                <!-- discourse-layer edges (rhetorical) -->
                 <path d="M530,242 Q602,188 650,158" fill="none" stroke="#7048e8" stroke-width="2" marker-end="url(#ah-violet)" />
                 <path d="M530,270 Q612,250 648,180" fill="none" stroke="#7048e8" stroke-width="2" marker-end="url(#ah-violet)" />
-                <!-- node boxes (paths: the editor schema has no rect) -->
                 <g fill="#ECECFF" stroke="#9370DB" stroke-width="1.5">
                   <path d="M40,40 h210 v76 h-210 z" />
                   <path d="M40,235 h210 v64 h-210 z" />
                   <path d="M300,215 h230 v76 h-230 z" />
                   <path d="M650,130 h120 v64 h-120 z" />
                 </g>
-                <!-- edge-label chips -->
                 <g>
                   <path d="M404,34 h92 v20 h-92 z" fill="#e7f5f8" />
                   <path d="M214,158 h84 v20 h-84 z" fill="#e7f5f8" />
@@ -815,7 +823,6 @@ sub:annot a oa:Annotation ;
                   <path d="M556,180 h92 v20 h-92 z" fill="#f3effe" />
                   <path d="M556,228 h88 v20 h-88 z" fill="#f3effe" />
                 </g>
-                <!-- edge labels -->
                 <g font-size="13" text-anchor="middle" fill="#212529">
                   <text x="450" y="48">oa:hasTarget</text>
                   <text x="256" y="172">oa:hasBody</text>
@@ -823,14 +830,12 @@ sub:annot a oa:Annotation ;
                   <text x="602" y="194">cito:disputes</text>
                   <text x="600" y="242">as:inReplyTo</text>
                 </g>
-                <!-- node labels -->
                 <g font-size="15" text-anchor="middle">
                   <text x="145" y="72" font-weight="600" fill="#1d1d2c">sub:annot</text><text x="145" y="96" fill="#495057">(oa:Annotation)</text>
                   <text x="145" y="263" font-weight="600" fill="#1d1d2c">oa:assessing</text><text x="145" y="285" fill="#495057">(oa:Motivation)</text>
                   <text x="415" y="247" font-weight="600" fill="#1d1d2c">sub:statement</text><text x="415" y="271" fill="#495057">(schema:Statement)</text>
                   <text x="710" y="167" fill="#1d1d2c">target</text>
                 </g>
-                <!-- legend -->
                 <g font-size="12" fill="#495057">
                   <line x1="40" y1="345" x2="70" y2="345" stroke="#0b7285" stroke-width="2" marker-end="url(#ah-teal)" /><text x="78" y="349">annotation layer &#8212; anchoring</text>
                   <line x1="320" y1="345" x2="350" y2="345" stroke="#7048e8" stroke-width="2" marker-end="url(#ah-violet)" /><text x="358" y="349">discourse layer &#8212; rhetorical</text>
@@ -842,8 +847,8 @@ sub:annot a oa:Annotation ;
             </figure>
           </section>
 
-          <section id="sec-5-4" rel="schema:hasPart" resource="#sec-5-4">
-            <h4 id="5.4">5.4 Layers and nanopublications</h4>
+          <section id="layers-and-nanopublications" rel="schema:hasPart" resource="#layers-and-nanopublications" inlist>
+            <h4>Layers and nanopublications</h4>
             <p>The two layers may coexist in a single nanopublication when they represent one authoring act. A dokieli
               user who selects a passage and writes a rebuttal in one operation produces a single nanopub whose
               assertion graph contains both the rebuttal content node with its discourse triples and the annotation
@@ -853,23 +858,23 @@ sub:annot a oa:Annotation ;
               separate nanopub by a different author or at a different time.</p>
           </section>
 
-          <section id="sec-5-5" rel="schema:hasPart" resource="#sec-5-5">
-            <h4 id="5.5">5.5 Interoperability between the two shapes</h4>
+          <section id="interoperability-between-the-two-shapes" rel="schema:hasPart" resource="#interoperability-between-the-two-shapes" inlist>
+            <h4>Interoperability between the two shapes</h4>
             <p>The two representations are alternate views of the same underlying fact, and are bidirectionally
               derivable at query time.</p>
           </section>
         </section>
 
-        <section id="sec-6-provenance" rel="schema:hasPart" resource="#sec-6-provenance">
-          <h3 id="6">6. Provenance and authorship</h3>
+        <section id="provenance-and-authorship" rel="schema:hasPart" resource="#provenance-and-authorship" inlist>
+          <h3>Provenance and authorship</h3>
           <p>This model follows the <a href="https://nanopub.net/guidelines/working_draft/">nanopublication
               guidelines</a> for authorship and provenance.</p>
           <p>Authorship of the nanopublication is recorded in two places: the assertion's creator in the provenance
             graph, the nanopublication's creator in the pubinfo graph. The two are conceptually distinct and may
             identify different agents.</p>
 
-          <section id="sec-6-1" rel="schema:hasPart" resource="#sec-6-1">
-            <h4 id="6.1">6.1 Assertion authorship (provenance graph)</h4>
+          <section id="assertion-authorship" rel="schema:hasPart" resource="#assertion-authorship" inlist>
+            <h4>Assertion authorship (provenance graph)</h4>
             <p>The provenance graph records who is responsible for the content of the assertion and where the assertion
               came from:</p>
             <pre><code>sub:assertion prov:wasAttributedTo &lt;agent-IRI&gt; ;
@@ -890,8 +895,8 @@ sub:annot a oa:Annotation ;
               pre-existing claim by Author A and an annotation by the curator associating that claim with a target.</p>
           </section>
 
-          <section id="sec-6-2" rel="schema:hasPart" resource="#sec-6-2">
-            <h4 id="6.2">6.2 Nanopub authorship (pubinfo graph)</h4>
+          <section id="nanopub-authorship" rel="schema:hasPart" resource="#nanopub-authorship" inlist>
+            <h4>Nanopub authorship (pubinfo graph)</h4>
             <p>The pubinfo graph records who is responsible for the act of publishing the nanopub. The canonical
               convention is as follows:</p>
             <pre><code>this: dct:creator &lt;agent-IRI&gt; ;
@@ -902,8 +907,8 @@ sub:annot a oa:Annotation ;
               as <code>npx:hasNanopubType</code>.</p>
           </section>
 
-          <section id="sec-6-3" rel="schema:hasPart" resource="#sec-6-3">
-            <h4 id="6.3">6.3 Assertion creator and nanopub creator</h4>
+          <section id="assertion-creator-and-nanopub-creator" rel="schema:hasPart" resource="#assertion-creator-and-nanopub-creator" inlist>
+            <h4>Assertion creator and nanopub creator</h4>
             <p>The assertion creator (provenance graph) and the nanopub creator (pubinfo graph) may identify different
               agents. There are two common patterns:</p>
             <ul>
@@ -937,10 +942,10 @@ sub:pubinfo {
 }</code></pre>
           </section>
 
-          <section id="sec-6-4" rel="schema:hasPart" resource="#sec-6-4">
-            <h4 id="6.4">6.4 Tool-mediated publishing</h4>
+          <section id="tool-mediated-publishing" rel="schema:hasPart" resource="#tool-mediated-publishing" inlist>
+            <h4>Tool-mediated publishing</h4>
             <p>When a tool publishes a nanopub on behalf of a human author, the assertion creator and the nanopub
-              creator may identify different agents (<a href="#6.3">#6.3</a>). Some patterns include:</p>
+              creator may identify different agents (<a href="#assertion-creator-and-nanopub-creator">Assertion creator and nanopub creator</a>). Some patterns include:</p>
             <ul>
               <li>Naming the tool as <code>dct:creator</code> of the nanopub directly (the tool is the publisher)</li>
               <li>Keeping the human as <code>dct:creator</code> of the nanopub and naming the tool via a separate
@@ -953,8 +958,8 @@ sub:pubinfo {
               chosen one.</p>
           </section>
 
-          <section id="sec-6-5" rel="schema:hasPart" resource="#sec-6-5">
-            <h4 id="6.5">6.5 Agents</h4>
+          <section id="agents" rel="schema:hasPart" resource="#agents" inlist>
+            <h4>Agents</h4>
             <p>Agents are identified by IRIs. A human is identified by an ORCID; a bot, tool, or automated agent is
               identified by a stable IRI managed by the project or organization that operates it (e.g. <a
                 href="https://w3id.org/kpxl/gen/terms/RoCrateBot">https://w3id.org/kpxl/gen/terms/RoCrateBot</a> ). The
@@ -964,8 +969,8 @@ sub:pubinfo {
               convenience metadata for UIs, not a requirement of the model.</p>
           </section>
 
-          <section id="sec-6-6" rel="schema:hasPart" resource="#sec-6-6">
-            <h4 id="6.6">6.6 Source application or platform</h4>
+          <section id="source-application-or-platform" rel="schema:hasPart" resource="#source-application-or-platform" inlist>
+            <h4>Source application or platform</h4>
             <p>When a contribution originates from a federated platform or decentralized clientside tool (a discussion
               forum, an annotation tool, an authoring environment), the originating platform may be recorded in pubinfo
               so UIs can display source attribution ("via discussit.org") and federation logic can route accordingly.
@@ -980,16 +985,16 @@ sub:pubinfo {
               left to the publishing tool based on their specific context.</p>
           </section>
 
-          <section id="sec-6-7" rel="schema:hasPart" resource="#sec-6-7">
-            <h4 id="6.7">6.7 Nanopub type indexing</h4>
+          <section id="nanopub-type-indexing" rel="schema:hasPart" resource="#nanopub-type-indexing" inlist>
+            <h4>Nanopub type indexing</h4>
             <p>The pubinfo graph carries <code>npx:hasNanopubType</code> indicating the primary rhetorical or content
               type of the nanopub (e.g. <code>cito:disputes</code>, <code>schema:Statement</code>,
               <code>cito:qualifies</code>). Used for indexing and query.</p>
           </section>
         </section>
 
-        <section id="sec-7-nanopublications" rel="schema:hasPart" resource="#sec-7-nanopublications">
-          <h3 id="7">7. Alignment with Nanopublications</h3>
+        <section id="alignment-with-nanopublications" rel="schema:hasPart" resource="#alignment-with-nanopublications" inlist>
+          <h3>Alignment with Nanopublications</h3>
           <p>Each contribution is published as one signed nanopublication. The three-graph nanopub structure maps onto
             the model as follows:</p>
           <ul>
@@ -1005,8 +1010,8 @@ sub:pubinfo {
             query pattern over the nanopublication network. The query template is given in section 10.</p>
         </section>
 
-        <section id="sec-8-activitypub" rel="schema:hasPart" resource="#sec-8-activitypub">
-          <h3 id="8">8. Alignment with ActivityPub</h3>
+        <section id="alignment-with-activitypub" rel="schema:hasPart" resource="#alignment-with-activitypub" inlist>
+          <h3>Alignment with ActivityPub</h3>
           <p>The model bridges to ActivityPub through two mechanisms:</p>
           <ul>
             <li><code>as:inReplyTo</code> on content nodes (section 4.1.3) makes generic conversational threading
@@ -1014,7 +1019,7 @@ sub:pubinfo {
               <code>cito:disputes</code>, and others) on content nodes serve the same threading purpose for more
               specific rhetorical relations, since any CiTO relation between two content nodes is a form of response.
               The ActivityPub connector may surface either as threading.</li>
-            <li>Source-application markers in pubinfo (<a href="#6.6">#6.6</a>), whether emitted as <code>npx:wasCreatedAt</code> or
+            <li>Source-application markers in pubinfo (<a href="#source-application-or-platform">Source application or platform</a>), whether emitted as <code>npx:wasCreatedAt</code> or
               <code>oa:renderedVia</code>, identify the originating platform. The ActivityPub connector uses this to
               route outbox-to-inbox delivery and to attribute source ("via discussit.org") in receiving UIs.</li>
           </ul>
@@ -1026,14 +1031,14 @@ sub:pubinfo {
             for the model's content; ActivityPub serves as a federation transport.</p>
         </section>
 
-        <section id="sec-9-subtypes" rel="schema:hasPart" resource="#sec-9-subtypes">
-          <h3 id="9">9. Statement subtypes</h3>
-          <p>The base type for any contribution to the discourse graph is <code>schema:Statement</code> (<a href="#3">#3</a>). Where a
+        <section id="statement-subtypes" rel="schema:hasPart" resource="#statement-subtypes" inlist>
+          <h3>Statement subtypes</h3>
+          <p>The base type for any contribution to the discourse graph is <code>schema:Statement</code> (<a href="#entity-classes">Entity classes</a>). Where a
             contribution's nature is more specific, it may also be typed with one of the subtypes below. These remain
             optional; minimal deployments may use <code>schema:Statement</code> throughout.</p>
 
-          <section id="sec-9-1" rel="schema:hasPart" resource="#sec-9-1">
-            <h4 id="9.1">9.1 SIO subtypes</h4>
+          <section id="sio-subtypes" rel="schema:hasPart" resource="#sio-subtypes" inlist>
+            <h4>SIO subtypes</h4>
             <p>The following SIO classes may be used alongside <code>schema:Statement</code> to refine the
               contribution's intrinsic type.</p>
             <ul>
@@ -1046,7 +1051,7 @@ sub:pubinfo {
             </ul>
             <p>All three are subclasses of <code>sio:proposition</code> (<code>SIO_000256</code>), defined as "a
               sentence expressing something true or false." SIO does not define structural relationships between these
-              concepts; relating them is this model's job, via the discourse-graph relations (<a href="#4.1">#4.1</a>).</p>
+              concepts; relating them is this model's job, via the discourse-graph relations (<a href="#discourse-graph-relations">Discourse-graph relations</a>).</p>
             <p>These types are intrinsic. A statement is <code>sio:evidence</code> because of what it is (a body of
               facts bearing on a proposition), not because of which claim it currently grounds. What is contextual is
               the role the statement plays in a particular argument, and that role is expressed by the discourse-graph
@@ -1055,8 +1060,8 @@ sub:pubinfo {
               surface specific needs.</p>
           </section>
 
-          <section id="sec-9-2" rel="schema:hasPart" resource="#sec-9-2">
-            <h4 id="9.2">9.2 Optional evidence typing with ECO</h4>
+          <section id="optional-evidence-typing-with-eco" rel="schema:hasPart" resource="#optional-evidence-typing-with-eco" inlist>
+            <h4>Optional evidence typing with ECO</h4>
             <p>A statement typed <code>sio:evidence</code> (or a domain-specific subclass) may optionally carry a
               finer-grained evidence type drawn from the Evidence and Conclusion Ontology (ECO). ECO is a
               community-curated controlled vocabulary of evidence categories ("experimental evidence," "computational
@@ -1074,8 +1079,8 @@ sub:pubinfo {
               <code>cito:supports</code> relation; the typing degrades gracefully.</p>
           </section>
 
-          <section id="sec-9-3" rel="schema:hasPart" resource="#sec-9-3">
-            <h4 id="9.3">9.3 Extensions for richer structure</h4>
+          <section id="extensions-for-richer-structure" rel="schema:hasPart" resource="#extensions-for-richer-structure" inlist>
+            <h4>Extensions for richer structure</h4>
             <p>Two existing ontologies provide structure this model's core does not commit to, but which some pilot
               communities may want. Each is available as an extension.</p>
             <ul>
@@ -1100,14 +1105,14 @@ sub:pubinfo {
           </section>
         </section>
 
-        <section id="sec-10-queries" rel="schema:hasPart" resource="#sec-10-queries">
-          <h3 id="10">10. Query patterns (informative)</h3>
+        <section id="query-patterns" rel="schema:hasPart" resource="#query-patterns" inlist>
+          <h3>Query patterns (informative)</h3>
           <p>Queries over the discourse and evidence graph operate at two distinct levels. The model is designed to
             support the first level directly; the second level depends on additional vocabulary work and is out of scope
             for this version of this specification.</p>
 
-          <section id="sec-10-1" rel="schema:hasPart" resource="#sec-10-1">
-            <h4 id="10.1">10.1 Level 1: graph-traversal queries</h4>
+          <section id="level-1-graph-traversal-queries" rel="schema:hasPart" resource="#level-1-graph-traversal-queries" inlist>
+            <h4>Level 1: graph-traversal queries</h4>
             <p>Level 1 queries follow typed edges between content nodes, with no aggregation, and equivalent claims are
               not merged. The pattern supports retrieving a contribution's incoming and outgoing relations by type,
               walking reply or rhetorical chains to arbitrary depth, and resolving each contribution's author and
@@ -1145,8 +1150,8 @@ sub:pubinfo {
               milestone of the Nanoarguments project.</p>
           </section>
 
-          <section id="sec-10-2" rel="schema:hasPart" resource="#sec-10-2">
-            <h4 id="10.2">10.2 Level 2: aggregation queries (out of scope for this version)</h4>
+          <section id="level-2-aggregation-queries" rel="schema:hasPart" resource="#level-2-aggregation-queries" inlist>
+            <h4>Level 2: aggregation queries (out of scope for this version)</h4>
             <p>Aggregation queries derive summary information by grouping, counting, ranking, or otherwise combining
               results across multiple contributions. Categories include:</p>
             <ul>
@@ -1159,27 +1164,27 @@ sub:pubinfo {
           </section>
         </section>
 
-        <section id="sec-11-examples" rel="schema:hasPart" resource="#sec-11-examples">
-          <h3 id="11">11. Worked examples</h3>
+        <section id="worked-examples" rel="schema:hasPart" resource="#worked-examples" inlist>
+          <h3>Worked examples</h3>
           <p>This section presents one complete discourse thread expressed in the model. To demonstrate the
-            orthogonal-layers framing of <a href="#5">#5</a>, the thread is shown in two representations:</p>
+            orthogonal-layers framing of <a href="#discourse-and-annotation-layers">Discourse and annotation layers</a>, the thread is shown in two representations:</p>
           <ul>
-            <li><a href="#11.A">#11.A</a> uses direct discourse triples between content nodes. Each contribution is a nanopublication whose
+            <li><a href="#direct-discourse-representation">Direct discourse representation</a> uses direct discourse triples between content nodes. Each contribution is a nanopublication whose
               assertion graph contains a <code>schema:Statement</code> (or <code>schema:Question</code>) carrying its
               discourse relations directly.</li>
-            <li><a href="#11.B">#11.B</a> shows the same thread re-expressed using <code>oa:Annotation</code> wrappers. Each contribution
+            <li><a href="#annotation-based-representation">Annotation-based representation</a> shows the same thread re-expressed using <code>oa:Annotation</code> wrappers. Each contribution
               after the root is published as an annotation targeting a previous contribution, as an annotation tool
-              would emit. The body of each annotation is the same content node that appears in <a href="#11.A">#11.A</a>; the annotation
+              would emit. The body of each annotation is the same content node that appears in <a href="#direct-discourse-representation">Direct discourse representation</a>; the annotation
               adds anchoring to the target.</li>
-            <li><a href="#11.D">#11.D</a> shows a different thread rooted in an annotation of an external paper. Subsequent contributions
+            <li><a href="#discourse-rooted-in-an-annotation-of-a-paper">Discourse rooted in an annotation of a paper</a> shows a different thread rooted in an annotation of an external paper. Subsequent contributions
               annotate previous annotations, producing a chain anchored to the paper at the root.</li>
           </ul>
-          <p>Together, <a href="#11.A">#11.A</a> and <a href="#11.B">#11.B</a> demonstrate the orthogonal-layers framing of <a href="#5">#5</a>: the same discourse expressed
-            with and without annotation wrappers, and the equivalence between the two (<a href="#11.C">#11.C</a>). <a href="#11.D">#11.D</a> demonstrates a
+          <p>Together, <a href="#direct-discourse-representation">Direct discourse representation</a> and <a href="#annotation-based-representation">Annotation-based representation</a> demonstrate the orthogonal-layers framing of <a href="#discourse-and-annotation-layers">Discourse and annotation layers</a>: the same discourse expressed
+            with and without annotation wrappers, and the equivalence between the two (<a href="#equivalence-of-the-two-representations">Equivalence of the two representations</a>). <a href="#discourse-rooted-in-an-annotation-of-a-paper">Discourse rooted in an annotation of a paper</a> demonstrates a
             different scholarly workflow where annotations are first-class from the start.</p>
 
-          <section id="sec-11-a" rel="schema:hasPart" resource="#sec-11-a">
-            <h4 id="11.A">11.A Direct discourse representation</h4>
+          <section id="direct-discourse-representation" rel="schema:hasPart" resource="#direct-discourse-representation" inlist>
+            <h4>Direct discourse representation</h4>
             <p>Each contribution is a nanopublication. Discourse relations are direct triples on the content nodes.</p>
             <p>The thread consists of:</p>
             <ul>
@@ -1191,7 +1196,8 @@ sub:pubinfo {
               <li>An open question requesting clarification.</li>
             </ul>
 
-            <h5 id="11.A.1">11.A.1 Root claim</h5>
+            <section id="direct-root-claim" rel="schema:hasPart" resource="#direct-root-claim" inlist>
+            <h5>Root claim</h5>
             <pre><code>@prefix this:   &lt;https://w3id.org/np/RAxample-alvarez-microbiota-claim&gt; .
 @prefix sub:    &lt;https://w3id.org/np/RAxample-alvarez-microbiota-claim/&gt; .
 @prefix np:     &lt;http://www.nanopub.org/nschema#&gt; .
@@ -1230,7 +1236,9 @@ sub:pubinfo {
 }</code></pre>
             <p>The root claim carries no discourse-graph relation because it has no target.</p>
 
-            <h5 id="11.A.2">11.A.2 Support</h5>
+            </section>
+            <section id="direct-support" rel="schema:hasPart" resource="#direct-support" inlist>
+            <h5>Support</h5>
             <pre><code>@prefix this: &lt;https://w3id.org/np/RAxample-wang-support&gt; .
 @prefix sub:  &lt;https://w3id.org/np/RAxample-wang-support/&gt; .
 
@@ -1259,7 +1267,9 @@ sub:pubinfo {
     npx:hasNanopubType     cito:supports .
 }</code></pre>
 
-            <h5 id="11.A.3">11.A.3 Caveat</h5>
+            </section>
+            <section id="direct-caveat" rel="schema:hasPart" resource="#direct-caveat" inlist>
+            <h5>Caveat</h5>
             <pre><code>@prefix this: &lt;https://w3id.org/np/RAxample-medaibot-caveat&gt; .
 @prefix sub:  &lt;https://w3id.org/np/RAxample-medaibot-caveat/&gt; .
 
@@ -1288,7 +1298,9 @@ sub:pubinfo {
     npx:hasNanopubType     cito:qualifies .
 }</code></pre>
 
-            <h5 id="11.A.4">11.A.4 Counter-argument</h5>
+            </section>
+            <section id="direct-counter-argument" rel="schema:hasPart" resource="#direct-counter-argument" inlist>
+            <h5>Counter-argument</h5>
             <pre><code>@prefix this: &lt;https://w3id.org/np/RAxample-moller-counterargument&gt; .
 @prefix sub:  &lt;https://w3id.org/np/RAxample-moller-counterargument/&gt; .
 
@@ -1317,7 +1329,9 @@ sub:pubinfo {
     npx:hasNanopubType     cito:disputes .
 }</code></pre>
 
-            <h5 id="11.A.5">11.A.5 Rebuttal</h5>
+            </section>
+            <section id="direct-rebuttal" rel="schema:hasPart" resource="#direct-rebuttal" inlist>
+            <h5>Rebuttal</h5>
             <pre><code>@prefix this: &lt;https://w3id.org/np/RAxample-criticaibot-rebuttal&gt; .
 @prefix sub:  &lt;https://w3id.org/np/RAxample-criticaibot-rebuttal/&gt; .
 @prefix as:   &lt;https://www.w3.org/ns/activitystreams#&gt; .
@@ -1349,7 +1363,9 @@ sub:pubinfo {
     npx:hasNanopubType     cito:disputes .
 }</code></pre>
 
-            <h5 id="11.A.6">11.A.6 Open question</h5>
+            </section>
+            <section id="direct-open-question" rel="schema:hasPart" resource="#direct-open-question" inlist>
+            <h5>Open question</h5>
             <pre><code>@prefix this: &lt;https://w3id.org/np/RAxample-perez-question&gt; .
 @prefix sub:  &lt;https://w3id.org/np/RAxample-perez-question/&gt; .
 
@@ -1377,14 +1393,15 @@ sub:pubinfo {
     npx:introduces       sub:question ;
     npx:hasNanopubType     schema:Question .
 }</code></pre>
+            </section>
           </section>
 
-          <section id="sec-11-b" rel="schema:hasPart" resource="#sec-11-b">
-            <h4 id="11.B">11.B Annotation-based representation</h4>
+          <section id="annotation-based-representation" rel="schema:hasPart" resource="#annotation-based-representation" inlist>
+            <h4>Annotation-based representation</h4>
             <p>The same six contributions, expressed as a thread where each contribution after the root is published as
               an <code>oa:Annotation</code> targeting a previous contribution, as an annotation tool would emit. Bodies
-              are content nodes carrying the same discourse relations as in <a href="#11.A">#11.A</a>; the annotation wrapper adds
-              anchoring. The root claim (<a href="#11.B.1">#11.B.1</a>) is the same nanopublication shown in <a href="#11.A.1">#11.A.1</a>, with no annotation.</p>
+              are content nodes carrying the same discourse relations as in <a href="#direct-discourse-representation">Direct discourse representation</a>; the annotation wrapper adds
+              anchoring. The root claim (<a href="#annotation-root-claim">Root claim</a>) is the same nanopublication shown in <a href="#direct-root-claim">Root claim</a>, with no annotation.</p>
             <p>A note on targets: an annotation can target any addressable resource (a document, a passage of a
               document, an image region, another annotation, a content node, or any other URI). The choice depends on
               the context and use case. In the examples below, the contributions are annotations of a claim published as
@@ -1393,14 +1410,17 @@ sub:pubinfo {
               <code>oa:hasTarget</code> records where the annotation is positioned (the nanopublication as a citeable
               artifact), while the discourse relation on the content node (<code>cito:supports</code>,
               <code>cito:qualifies</code>, <code>as:inReplyTo</code>, etc.) points at the content node being responded to
-              (the <code>/claim</code> resource), matching the direct representation in <a href="#11.A">#11.A</a>. The two
-              may legitimately point at different granularities (see <a href="#11.B.4">#11.B.4</a>, where the discourse
+              (the <code>/claim</code> resource), matching the direct representation in <a href="#direct-discourse-representation">Direct discourse representation</a>. The two
+              may legitimately point at different granularities (see <a href="#annotation-counter-argument">Counter-argument</a>, where the discourse
               relation targets the whole claim while the anchoring narrows to a phrase).</p>
 
-            <h5 id="11.B.1">11.B.1 Root claim</h5>
-            <p>Identical to <a href="#11.A.1">#11.A.1</a>. No annotation; the root has no target to anchor to.</p>
+            <section id="annotation-root-claim" rel="schema:hasPart" resource="#annotation-root-claim" inlist>
+            <h5>Root claim</h5>
+            <p>Identical to <a href="#direct-root-claim">Root claim</a>. No annotation; the root has no target to anchor to.</p>
 
-            <h5 id="11.B.2">11.B.2 Support (as annotation)</h5>
+            </section>
+            <section id="annotation-support" rel="schema:hasPart" resource="#annotation-support" inlist>
+            <h5>Support (as annotation)</h5>
             <pre><code>@prefix this: &lt;https://w3id.org/np/RAxample-wang-support-annotation&gt; .
 @prefix sub:  &lt;https://w3id.org/np/RAxample-wang-support-annotation/&gt; .
 @prefix oa:   &lt;http://www.w3.org/ns/oa#&gt; .
@@ -1435,10 +1455,12 @@ sub:pubinfo {
     npx:hasNanopubType     cito:supports .
 }</code></pre>
             <p>The content node <code>sub:reason</code> carries the same value and <code>cito:supports</code> triple as
-              in <a href="#11.A.2">#11.A.2</a>. The annotation wraps it and anchors it to the root. A consumer reading the discourse graph
+              in <a href="#direct-support">Support</a>. The annotation wraps it and anchors it to the root. A consumer reading the discourse graph
               sees the same <code>cito:supports</code> edge in either representation.</p>
 
-            <h5 id="11.B.3">11.B.3 Caveat (as annotation)</h5>
+            </section>
+            <section id="annotation-caveat" rel="schema:hasPart" resource="#annotation-caveat" inlist>
+            <h5>Caveat (as annotation)</h5>
             <pre><code>@prefix this: &lt;https://w3id.org/np/RAxample-medaibot-caveat-annotation&gt; .
 @prefix sub:  &lt;https://w3id.org/np/RAxample-medaibot-caveat-annotation/&gt; .
 
@@ -1472,7 +1494,9 @@ sub:pubinfo {
     npx:hasNanopubType     cito:qualifies .
 }</code></pre>
 
-            <h5 id="11.B.4">11.B.4 Counter-argument (as annotation, with selector)</h5>
+            </section>
+            <section id="annotation-counter-argument" rel="schema:hasPart" resource="#annotation-counter-argument" inlist>
+            <h5>Counter-argument (as annotation, with selector)</h5>
             <p>This contribution disputes a specific phrase of the root claim, demonstrating selector-narrowed
               targeting.</p>
             <pre><code>@prefix this: &lt;https://w3id.org/np/RAxample-moller-counterargument-annotation&gt; .
@@ -1518,7 +1542,9 @@ sub:pubinfo {
               reflecting that the rhetorical disagreement is with the claim as a whole even when the anchoring picks out
               a phrase.</p>
 
-            <h5 id="11.B.5">11.B.5 Rebuttal (annotation of an annotation)</h5>
+            </section>
+            <section id="annotation-rebuttal" rel="schema:hasPart" resource="#annotation-rebuttal" inlist>
+            <h5>Rebuttal (annotation of an annotation)</h5>
             <p>The rebuttal targets M&oslash;ller's annotation, demonstrating that annotations can be targets of other
               annotations.</p>
             <pre><code>@prefix this: &lt;https://w3id.org/np/RAxample-criticaibot-rebuttal-annotation&gt; .
@@ -1557,9 +1583,11 @@ sub:pubinfo {
 }</code></pre>
             <p>The annotation uses <code>oa:motivatedBy</code> <code>oa:replying</code> since the contribution is a
               direct reply. The body carries <code>cito:disputes</code> and <code>as:inReplyTo</code> as direct triples,
-              exactly as in <a href="#11.A.5">#11.A.5</a>; the annotation adds the body-target association.</p>
+              exactly as in <a href="#direct-rebuttal">Rebuttal</a>; the annotation adds the body-target association.</p>
 
-            <h5 id="11.B.6">11.B.6 Open question (as annotation)</h5>
+            </section>
+            <section id="annotation-open-question" rel="schema:hasPart" resource="#annotation-open-question" inlist>
+            <h5>Open question (as annotation)</h5>
             <pre><code>@prefix this: &lt;https://w3id.org/np/RAxample-perez-question-annotation&gt; .
 @prefix sub:  &lt;https://w3id.org/np/RAxample-perez-question-annotation/&gt; .
 
@@ -1594,32 +1622,33 @@ sub:pubinfo {
 }</code></pre>
             <p>The annotation uses <code>oa:motivatedBy</code> <code>oa:questioning</code> (a standard Web Annotation
               motivation) for the question case.</p>
+            </section>
           </section>
 
-          <section id="sec-11-c" rel="schema:hasPart" resource="#sec-11-c">
-            <h4 id="11.C">11.C Equivalence of the two representations</h4>
-            <p>The content nodes in <a href="#11.A">#11.A</a> and <a href="#11.B">#11.B</a> are the same: same IRIs, same values, same discourse-graph
+          <section id="equivalence-of-the-two-representations" rel="schema:hasPart" resource="#equivalence-of-the-two-representations" inlist>
+            <h4>Equivalence of the two representations</h4>
+            <p>The content nodes in <a href="#direct-discourse-representation">Direct discourse representation</a> and <a href="#annotation-based-representation">Annotation-based representation</a> are the same: same IRIs, same values, same discourse-graph
               relations. A query for "all contributions targeting Alvarez's claim" returns the same result set in either
               representation, because the <code>cito:supports</code>, <code>cito:disputes</code>,
               <code>cito:qualifies</code>, and <code>as:inReplyTo</code> triples sit on the content nodes regardless of
               whether an annotation wraps them.</p>
-            <p>What differs between the two representations is the anchoring: <a href="#11.B">#11.B</a> contributions additionally carry
+            <p>What differs between the two representations is the anchoring: <a href="#annotation-based-representation">Annotation-based representation</a> contributions additionally carry
               <code>oa:Annotation</code> resources with <code>oa:hasTarget</code> pointing at the contribution they
-              respond to. <a href="#11.A">#11.A</a> contributions have no such anchoring; the discourse-graph relation is the only
+              respond to. <a href="#direct-discourse-representation">Direct discourse representation</a> contributions have no such anchoring; the discourse-graph relation is the only
               structural connection.</p>
             <p>For a network mixing both representations (some contributions published as plain nanopubs, others as
-              annotations), the discourse-graph traversal queries of <a href="#10.1">#10.1</a> operate uniformly. Implementations interested
+              annotations), the discourse-graph traversal queries of <a href="#level-1-graph-traversal-queries">Level 1: graph-traversal queries</a> operate uniformly. Implementations interested
               in the additional anchoring information can additionally query <code>oa:hasTarget</code> to recover where
               annotations are positioned.</p>
           </section>
 
-          <section id="sec-11-d" rel="schema:hasPart" resource="#sec-11-d">
-            <h4 id="11.D">11.D Discourse rooted in an annotation of a paper</h4>
+          <section id="discourse-rooted-in-an-annotation-of-a-paper" rel="schema:hasPart" resource="#discourse-rooted-in-an-annotation-of-a-paper" inlist>
+            <h4>Discourse rooted in an annotation of a paper</h4>
             <p>The previous examples started with a claim published as a nanopublication. A different common pattern
               starts with an annotation of an external document: a contributor reads a paper, selects a passage, and
               writes a claim about it. Subsequent contributions respond by annotating the original annotation, producing
               a chain where each annotation's target is the previous one.</p>
-            <p>This section uses a different topic from <a href="#11.A">#11.A</a> and <a href="#11.B">#11.B</a> to keep the patterns distinct. The thread:</p>
+            <p>This section uses a different topic from <a href="#direct-discourse-representation">Direct discourse representation</a> and <a href="#annotation-based-representation">Annotation-based representation</a> to keep the patterns distinct. The thread:</p>
             <ul>
               <li>A root annotation of a passage in a paper, asserting a counter-claim.</li>
               <li>A support annotation of the root, citing evidence.</li>
@@ -1627,7 +1656,8 @@ sub:pubinfo {
               <li>A rebuttal annotation of the counter-argument, citing further evidence.</li>
             </ul>
 
-            <h5 id="11.D.1">11.D.1 Root annotation of a paper passage</h5>
+            <section id="root-annotation-of-a-paper-passage" rel="schema:hasPart" resource="#root-annotation-of-a-paper-passage" inlist>
+            <h5>Root annotation of a paper passage</h5>
             <pre><code>@prefix this:   &lt;https://w3id.org/np/RAxample-pigeon-mirror-root&gt; .
 @prefix sub:    &lt;https://w3id.org/np/RAxample-pigeon-mirror-root/&gt; .
 @prefix np:     &lt;http://www.nanopub.org/nschema#&gt; .
@@ -1681,7 +1711,9 @@ sub:pubinfo {
               The body is the counter-claim, which carries <code>cito:disputes</code> directly pointing at the paper.
             </p>
 
-            <h5 id="11.D.2">11.D.2 Support annotation (of the root annotation)</h5>
+            </section>
+            <section id="support-annotation" rel="schema:hasPart" resource="#support-annotation" inlist>
+            <h5>Support annotation (of the root annotation)</h5>
             <pre><code>@prefix this: &lt;https://w3id.org/np/RAxample-pigeon-mirror-support&gt; .
 @prefix sub:  &lt;https://w3id.org/np/RAxample-pigeon-mirror-support/&gt; .
 
@@ -1721,7 +1753,9 @@ sub:pubinfo {
               contribution was authored as a response to the root annotation, while the discourse-graph triple records
               that it supports the root claim.</p>
 
-            <h5 id="11.D.3">11.D.3 Counter-argument annotation (of the root annotation)</h5>
+            </section>
+            <section id="counter-argument-annotation" rel="schema:hasPart" resource="#counter-argument-annotation" inlist>
+            <h5>Counter-argument annotation (of the root annotation)</h5>
             <pre><code>@prefix this: &lt;https://w3id.org/np/RAxample-pigeon-mirror-counter&gt; .
 @prefix sub:  &lt;https://w3id.org/np/RAxample-pigeon-mirror-counter/&gt; .
 
@@ -1757,7 +1791,9 @@ sub:pubinfo {
             <p>A counter-argument, also annotating the root. The annotation's target is the root annotation; the body's
               <code>cito:disputes</code> points at the root's claim.</p>
 
-            <h5 id="11.D.4">11.D.4 Rebuttal annotation (of the counter-argument)</h5>
+            </section>
+            <section id="rebuttal-annotation" rel="schema:hasPart" resource="#rebuttal-annotation" inlist>
+            <h5>Rebuttal annotation (of the counter-argument)</h5>
             <pre><code>@prefix this: &lt;https://w3id.org/np/RAxample-pigeon-mirror-rebuttal&gt; .
 @prefix sub:  &lt;https://w3id.org/np/RAxample-pigeon-mirror-rebuttal/&gt; .
 @prefix as:   &lt;https://www.w3.org/ns/activitystreams#&gt; .
@@ -1799,45 +1835,43 @@ sub:pubinfo {
               triples (<code>cito:disputes</code>, <code>cito:supports</code>, <code>as:inReplyTo</code>) are
               independent of this chain and connect the bodies directly.</p>
 
-            <h5 id="11.D.5">11.D.5 Notes on the pattern</h5>
+            </section>
+            <section id="notes-on-the-pattern" rel="schema:hasPart" resource="#notes-on-the-pattern" inlist>
+            <h5>Notes on the pattern</h5>
             <p>Two structures coexist throughout the example:</p>
             <p>The annotation chain records anchoring: each annotation's <code>oa:hasTarget</code> records what the
               contribution was authored relative to (a paper passage, a previous annotation). This structure is what an
               annotation-aware client follows to render the thread with anchored selections and nesting.</p>
             <p>The discourse graph records rhetorical stance: each body's outgoing CiTO predicates record what it
-              supports, disputes, or qualifies. This structure is what discourse-graph traversal queries (<a href="#10.1">#10.1</a>) operate
+              supports, disputes, or qualifies. This structure is what discourse-graph traversal queries (<a href="#level-1-graph-traversal-queries">Level 1: graph-traversal queries</a>) operate
               on, regardless of whether the contributions were authored as annotations.</p>
             <p>A consumer interested in pure discourse can ignore the annotations entirely and still recover the full
               structure of who supports or disputes what. A consumer interested in rendering the thread visually follows
               the annotation chain to recover the anchoring and the threading. The two structures align because the
-              annotation's body is the same RDF resource that carries the discourse triples (<a href="#5">#5</a>).</p>
+              annotation's body is the same RDF resource that carries the discourse triples (<a href="#discourse-and-annotation-layers">Discourse and annotation layers</a>).</p>
+            </section>
           </section>
         </section>
       </section>
 
-      <section class="appendix" id="changelog" rel="schema:hasPart" resource="#changelog" typeof="spec:Changelog">
+      <section class="appendix" id="changelog" rel="schema:hasPart" resource="#changelog" typeof="spec:Changelog" inlist>
         <h2 property="schema:name">Changelog</h2>
         <div datatype="rdf:HTML" property="schema:description">
           <h3 property="schema:name">Version 0.1.1</h3>
           <ul about="#changelog" rel="spec:change">
             <li typeof="spec:Change" property="spec:statement">Reuse <code>cito:qualifies</code> for qualifying caveats
-              and add it to the recommended CiTO subset (<a href="#4.1" rel="spec:changeSubject">§4.1</a>), retiring the
+              and add it to the recommended CiTO subset (<a href="#discourse-graph-relations" rel="spec:changeSubject">Discourse-graph relations</a>), retiring the
               previously minted <code>na:qualifies</code> term and its <code>rdfs:subPropertyOf cito:discusses</code>
               fallback.</li>
             <li typeof="spec:Change" property="spec:statement">Standardize the worked examples on slash sub-resource IRIs
-              for content nodes (<code>&lt;np&gt;/claim</code>), matching the IRIs produced at signing time (<a
-                href="#11" rel="spec:changeSubject">§11</a>).</li>
-            <li typeof="spec:Change" property="spec:statement">Clarify that discourse relations target the content node
-              while <code>oa:hasTarget</code> anchors on the nanopublication, and that the two may differ in granularity
-              (<a href="#11.B" rel="spec:changeSubject">§11.B</a>).</li>
+              for content nodes (<code>&lt;np&gt;/claim</code>), matching the IRIs produced at signing time (<a href="#worked-examples" rel="spec:changeSubject">Worked examples</a>).</li>
             <li typeof="spec:Change" property="spec:statement">Add <code>npx:introduces</code> to each example to mark the
-              content node the nanopublication mints (<a href="#11" rel="spec:changeSubject">§11</a>).</li>
-            <li typeof="spec:Change" property="spec:statement">Add this Changelog appendix.</li>
+              content node the nanopublication mints (<a href="#worked-examples" rel="spec:changeSubject">Worked examples</a>).</li>
           </ul>
         </div>
       </section>
 
-      <section id="acknowledgements" rel="schema:hasPart" resource="#acknowledgements">
+      <section id="acknowledgements" rel="schema:hasPart" resource="#acknowledgements" inlist>
         <h2>Acknowledgements</h2>
         <p>Thanks to <a href="https://csarven.ca/" rel="schema:contributor" typeof="schema:Person">Sarven Capadisli</a> for review and feedback.</p>
       </section>
