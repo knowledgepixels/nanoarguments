@@ -583,7 +583,7 @@
           <pre><code>sub:statement a schema:Statement ;
   rdf:value     "Pigeons can pass a modified mirror-mark test." ;
   cito:disputes &lt;https://w3id.org/np/RAxample/claim&gt; .</code></pre>
-          <p><code>&lt;https://w3id.org/np/RAxample#claim&gt;</code> is the IRI of a previously published nanopub's
+          <p><code>&lt;https://w3id.org/np/RAxample/claim&gt;</code> is the IRI of a previously published nanopub's
             content node, e.g. "Self-recognition is restricted to great apes". Disputing it does not require knowing
             more about it than its IRI.</p>
           <p>As the body of an annotation that anchors it to a passage, the claim is now also positioned at a specific
@@ -607,7 +607,7 @@ sub:annot a oa:Annotation ;
           <pre><code>sub:statement a schema:Statement ;
   rdf:value     "Recent field studies show generalization to wild populations." ;
   cito:disputes [ a oa:SpecificResource ;
-                  oa:hasSource &lt;https://w3id.org/np/RAxample-prior-claim#claim&gt; ;
+                  oa:hasSource &lt;https://w3id.org/np/RAxample-prior-claim/claim&gt; ;
                   oa:hasSelector [ a oa:TextQuoteSelector ;
                                    oa:exact "the training does not generalize to wild populations" ] ] .</code></pre>
           <p>Here the prior claim is something like "Pigeons can pass a modified mirror-mark test, but the training does
@@ -1227,13 +1227,14 @@ sub:provenance {
 sub:pubinfo {
   this: dct:creator        orcid:0000-0001-alvarez-b ;
     dct:created            "2026-05-24T08:00:00Z"^^xsd:dateTime ;
+    npx:introduces       sub:claim ;
     npx:hasNanopubType     schema:Statement .
 }</code></pre>
             <p>The root claim carries no discourse-graph relation because it has no target.</p>
 
             <h5 id="11.A.2">11.A.2 Support</h5>
             <pre><code>@prefix this: &lt;https://w3id.org/np/RAxample-wang-support&gt; .
-@prefix sub:  &lt;https://w3id.org/np/RAxample-wang-support#&gt; .
+@prefix sub:  &lt;https://w3id.org/np/RAxample-wang-support/&gt; .
 
 sub:Head {
   this: a np:Nanopublication ;
@@ -1256,6 +1257,7 @@ sub:provenance {
 sub:pubinfo {
   this: dct:creator        orcid:0000-0002-wang-p ;
     dct:created            "2026-05-24T09:00:00Z"^^xsd:dateTime ;
+    npx:introduces       sub:reason ;
     npx:hasNanopubType     cito:supports .
 }</code></pre>
 
@@ -1285,6 +1287,7 @@ sub:provenance {
 sub:pubinfo {
   this: dct:creator        &lt;https://example.org/agents/medai-bot&gt; ;
     dct:created            "2026-05-24T10:10:00Z"^^xsd:dateTime ;
+    npx:introduces       sub:caveat ;
     npx:hasNanopubType     na:qualifies .
 }</code></pre>
 
@@ -1313,6 +1316,7 @@ sub:provenance {
 sub:pubinfo {
   this: dct:creator        orcid:0000-0003-moller-m ;
     dct:created            "2026-05-24T10:28:00Z"^^xsd:dateTime ;
+    npx:introduces       sub:counterclaim ;
     npx:hasNanopubType     cito:disputes .
 }</code></pre>
 
@@ -1344,6 +1348,7 @@ sub:provenance {
 sub:pubinfo {
   this: dct:creator        &lt;https://example.org/agents/criticai-bot&gt; ;
     dct:created            "2026-05-24T10:48:00Z"^^xsd:dateTime ;
+    npx:introduces       sub:rebuttal ;
     npx:hasNanopubType     cito:disputes .
 }</code></pre>
 
@@ -1372,6 +1377,7 @@ sub:provenance {
 sub:pubinfo {
   this: dct:creator        orcid:0000-0002-perez-l ;
     dct:created            "2026-05-24T11:15:00Z"^^xsd:dateTime ;
+    npx:introduces       sub:question ;
     npx:hasNanopubType     schema:Question .
 }</code></pre>
           </section>
@@ -1385,15 +1391,21 @@ sub:pubinfo {
             <p>A note on targets: an annotation can target any addressable resource (a document, a passage of a
               document, an image region, another annotation, a content node, or any other URI). The choice depends on
               the context and use case. In the examples below, the contributions are annotations of a claim published as
-              a nanopublication, so each annotation's target is the canonical nanopublication IRI
-              (https://w3id.org/np/...).</p>
+              a nanopublication, so each annotation's <code>oa:hasTarget</code> is the canonical nanopublication IRI
+              (https://w3id.org/np/...). This anchoring is distinct from the discourse relation: the
+              <code>oa:hasTarget</code> records where the annotation is positioned (the nanopublication as a citeable
+              artifact), while the discourse relation on the content node (<code>cito:supports</code>,
+              <code>na:qualifies</code>, <code>as:inReplyTo</code>, etc.) points at the content node being responded to
+              (the <code>/claim</code> resource), matching the direct representation in <a href="#11.A">#11.A</a>. The two
+              may legitimately point at different granularities (see <a href="#11.B.4">#11.B.4</a>, where the discourse
+              relation targets the whole claim while the anchoring narrows to a phrase).</p>
 
             <h5 id="11.B.1">11.B.1 Root claim</h5>
             <p>Identical to <a href="#11.A.1">#11.A.1</a>. No annotation; the root has no target to anchor to.</p>
 
             <h5 id="11.B.2">11.B.2 Support (as annotation)</h5>
             <pre><code>@prefix this: &lt;https://w3id.org/np/RAxample-wang-support-annotation&gt; .
-@prefix sub:  &lt;https://w3id.org/np/RAxample-wang-support-annotation#&gt; .
+@prefix sub:  &lt;https://w3id.org/np/RAxample-wang-support-annotation/&gt; .
 @prefix oa:   &lt;http://www.w3.org/ns/oa#&gt; .
 
 sub:Head {
@@ -1406,7 +1418,7 @@ sub:Head {
 sub:assertion {
   sub:reason a schema:Statement ;
     rdf:value      "Their SCFA data is compelling." ;
-    cito:supports  &lt;https://w3id.org/np/RAxample-alvarez-microbiota-claim&gt; .
+    cito:supports  &lt;https://w3id.org/np/RAxample-alvarez-microbiota-claim/claim&gt; .
 
   sub:annot a oa:Annotation ;
     oa:hasBody     sub:reason ;
@@ -1422,6 +1434,7 @@ sub:provenance {
 sub:pubinfo {
   this: dct:creator        orcid:0000-0002-wang-p ;
     dct:created            "2026-05-24T09:00:00Z"^^xsd:dateTime ;
+    npx:introduces       sub:reason ;
     npx:hasNanopubType     cito:supports .
 }</code></pre>
             <p>The content node <code>sub:reason</code> carries the same value and <code>cito:supports</code> triple as
@@ -1430,7 +1443,7 @@ sub:pubinfo {
 
             <h5 id="11.B.3">11.B.3 Caveat (as annotation)</h5>
             <pre><code>@prefix this: &lt;https://w3id.org/np/RAxample-medaibot-caveat-annotation&gt; .
-@prefix sub:  &lt;https://w3id.org/np/RAxample-medaibot-caveat-annotation#&gt; .
+@prefix sub:  &lt;https://w3id.org/np/RAxample-medaibot-caveat-annotation/&gt; .
 
 sub:Head {
   this: a np:Nanopublication ;
@@ -1442,7 +1455,7 @@ sub:Head {
 sub:assertion {
   sub:caveat a schema:Statement ;
     rdf:value     "Be cautious about interpreting causality here without intervention studies." ;
-    na:qualifies  &lt;https://w3id.org/np/RAxample-alvarez-microbiota-claim#claim&gt; .
+    na:qualifies  &lt;https://w3id.org/np/RAxample-alvarez-microbiota-claim/claim&gt; .
 
   sub:annot a oa:Annotation ;
     oa:hasBody     sub:caveat ;
@@ -1458,6 +1471,7 @@ sub:provenance {
 sub:pubinfo {
   this: dct:creator        &lt;https://example.org/agents/medai-bot&gt; ;
     dct:created            "2026-05-24T10:10:00Z"^^xsd:dateTime ;
+    npx:introduces       sub:caveat ;
     npx:hasNanopubType     na:qualifies .
 }</code></pre>
 
@@ -1465,7 +1479,7 @@ sub:pubinfo {
             <p>This contribution disputes a specific phrase of the root claim, demonstrating selector-narrowed
               targeting.</p>
             <pre><code>@prefix this: &lt;https://w3id.org/np/RAxample-moller-counterargument-annotation&gt; .
-@prefix sub:  &lt;https://w3id.org/np/RAxample-moller-counterargument-annotation#&gt; .
+@prefix sub:  &lt;https://w3id.org/np/RAxample-moller-counterargument-annotation/&gt; .
 
 sub:Head {
   this: a np:Nanopublication ;
@@ -1498,6 +1512,7 @@ sub:provenance {
 sub:pubinfo {
   this: dct:creator        orcid:0000-0003-moller-m ;
     dct:created            "2026-05-24T10:28:00Z"^^xsd:dateTime ;
+    npx:introduces       sub:counterclaim ;
     npx:hasNanopubType     cito:disputes .
 }</code></pre>
             <p>The annotation's target is an <code>oa:SpecificResource</code> selecting a particular phrase from the
@@ -1510,7 +1525,7 @@ sub:pubinfo {
             <p>The rebuttal targets M&oslash;ller's annotation, demonstrating that annotations can be targets of other
               annotations.</p>
             <pre><code>@prefix this: &lt;https://w3id.org/np/RAxample-criticaibot-rebuttal-annotation&gt; .
-@prefix sub:  &lt;https://w3id.org/np/RAxample-criticaibot-rebuttal-annotation#&gt; .
+@prefix sub:  &lt;https://w3id.org/np/RAxample-criticaibot-rebuttal-annotation/&gt; .
 
 sub:Head {
   this: a np:Nanopublication ;
@@ -1523,8 +1538,8 @@ sub:assertion {
   sub:rebuttal a schema:Statement ;
     rdf:value             "Note that [Kim 2025] controlled for fiber intake using dietary logs." ;
     cito:citesAsEvidence  &lt;https://doi.org/10.1234/kim-2025-microbiota-vaccine&gt; ;
-    as:inReplyTo          &lt;https://w3id.org/np/RAxample-moller-counterargument-annotation#counterclaim&gt; ;
-    cito:disputes         &lt;https://w3id.org/np/RAxample-moller-counterargument-annotation#counterclaim&gt; .
+    as:inReplyTo          &lt;https://w3id.org/np/RAxample-moller-counterargument-annotation/counterclaim&gt; ;
+    cito:disputes         &lt;https://w3id.org/np/RAxample-moller-counterargument-annotation/counterclaim&gt; .
 
   sub:annot a oa:Annotation ;
     oa:hasBody     sub:rebuttal ;
@@ -1540,6 +1555,7 @@ sub:provenance {
 sub:pubinfo {
   this: dct:creator        &lt;https://example.org/agents/criticai-bot&gt; ;
     dct:created            "2026-05-24T10:48:00Z"^^xsd:dateTime ;
+    npx:introduces       sub:rebuttal ;
     npx:hasNanopubType     cito:disputes .
 }</code></pre>
             <p>The annotation uses <code>oa:motivatedBy</code> <code>oa:replying</code> since the contribution is a
@@ -1548,7 +1564,7 @@ sub:pubinfo {
 
             <h5 id="11.B.6">11.B.6 Open question (as annotation)</h5>
             <pre><code>@prefix this: &lt;https://w3id.org/np/RAxample-perez-question-annotation&gt; .
-@prefix sub:  &lt;https://w3id.org/np/RAxample-perez-question-annotation#&gt; .
+@prefix sub:  &lt;https://w3id.org/np/RAxample-perez-question-annotation/&gt; .
 
 sub:Head {
   this: a np:Nanopublication ;
@@ -1560,7 +1576,7 @@ sub:Head {
 sub:assertion {
   sub:question a schema:Question ;
     rdf:value     "Has anyone tested this in non-trial populations?" ;
-    as:inReplyTo  &lt;https://w3id.org/np/RAxample-alvarez-microbiota-claim&gt; .
+    as:inReplyTo  &lt;https://w3id.org/np/RAxample-alvarez-microbiota-claim/claim&gt; .
 
   sub:annot a oa:Annotation ;
     oa:hasBody     sub:question ;
@@ -1576,6 +1592,7 @@ sub:provenance {
 sub:pubinfo {
   this: dct:creator        orcid:0000-0002-perez-l ;
     dct:created            "2026-05-24T11:15:00Z"^^xsd:dateTime ;
+    npx:introduces       sub:question ;
     npx:hasNanopubType     schema:Question .
 }</code></pre>
             <p>The annotation uses <code>oa:motivatedBy</code> <code>oa:questioning</code> (a standard Web Annotation
@@ -1615,7 +1632,7 @@ sub:pubinfo {
 
             <h5 id="11.D.1">11.D.1 Root annotation of a paper passage</h5>
             <pre><code>@prefix this:   &lt;https://w3id.org/np/RAxample-pigeon-mirror-root&gt; .
-@prefix sub:    &lt;https://w3id.org/np/RAxample-pigeon-mirror-root#&gt; .
+@prefix sub:    &lt;https://w3id.org/np/RAxample-pigeon-mirror-root/&gt; .
 @prefix np:     &lt;http://www.nanopub.org/nschema#&gt; .
 @prefix npx:    &lt;http://purl.org/nanopub/x/&gt; .
 @prefix prov:   &lt;http://www.w3.org/ns/prov#&gt; .
@@ -1658,6 +1675,7 @@ sub:provenance {
 sub:pubinfo {
   this: dct:creator        orcid:0000-0002-1234-5678 ;
     dct:created            "2026-05-24T11:05:03Z"^^xsd:dateTime ;
+    npx:introduces       sub:claim ;
     npx:hasNanopubType     cito:disputes .
 }</code></pre>
             <p>The contributor reads a paper claiming "no nonhuman species other than the great apes demonstrates
@@ -1668,7 +1686,7 @@ sub:pubinfo {
 
             <h5 id="11.D.2">11.D.2 Support annotation (of the root annotation)</h5>
             <pre><code>@prefix this: &lt;https://w3id.org/np/RAxample-pigeon-mirror-support&gt; .
-@prefix sub:  &lt;https://w3id.org/np/RAxample-pigeon-mirror-support#&gt; .
+@prefix sub:  &lt;https://w3id.org/np/RAxample-pigeon-mirror-support/&gt; .
 
 sub:Head {
   this: a np:Nanopublication ;
@@ -1681,11 +1699,11 @@ sub:assertion {
   sub:evidence a schema:Statement ;
     rdf:value             "Trained pigeons pecked at body stickers only visible via a mirror, not at hidden controls." ;
     cito:citesAsEvidence  &lt;https://doi.org/10.1111/pigeon-mirror-mark-test&gt; ;
-    cito:supports         &lt;https://w3id.org/np/RAxample-pigeon-mirror-root#claim&gt; .
+    cito:supports         &lt;https://w3id.org/np/RAxample-pigeon-mirror-root/claim&gt; .
 
   sub:annot a oa:Annotation ;
     oa:hasBody     sub:evidence ;
-    oa:hasTarget   &lt;https://w3id.org/np/RAxample-pigeon-mirror-root#annot&gt; ;
+    oa:hasTarget   &lt;https://w3id.org/np/RAxample-pigeon-mirror-root/annot&gt; ;
     oa:motivatedBy oa:assessing .
 }
 
@@ -1697,6 +1715,7 @@ sub:provenance {
 sub:pubinfo {
   this: dct:creator        orcid:0000-0003-2345-6789 ;
     dct:created            "2026-05-24T12:30:00Z"^^xsd:dateTime ;
+    npx:introduces       sub:evidence ;
     npx:hasNanopubType     cito:supports .
 }</code></pre>
             <p>The support is itself an annotation: its target is the root annotation (<code>sub:annot</code> of the
@@ -1707,7 +1726,7 @@ sub:pubinfo {
 
             <h5 id="11.D.3">11.D.3 Counter-argument annotation (of the root annotation)</h5>
             <pre><code>@prefix this: &lt;https://w3id.org/np/RAxample-pigeon-mirror-counter&gt; .
-@prefix sub:  &lt;https://w3id.org/np/RAxample-pigeon-mirror-counter#&gt; .
+@prefix sub:  &lt;https://w3id.org/np/RAxample-pigeon-mirror-counter/&gt; .
 
 sub:Head {
   this: a np:Nanopublication ;
@@ -1719,11 +1738,11 @@ sub:Head {
 sub:assertion {
   sub:counterclaim a schema:Statement ;
     rdf:value      "The training conditions may not generalize beyond the lab setting." ;
-    cito:disputes  &lt;https://w3id.org/np/RAxample-pigeon-mirror-root#claim&gt; .
+    cito:disputes  &lt;https://w3id.org/np/RAxample-pigeon-mirror-root/claim&gt; .
 
   sub:annot a oa:Annotation ;
     oa:hasBody     sub:counterclaim ;
-    oa:hasTarget   &lt;https://w3id.org/np/RAxample-pigeon-mirror-root#annot&gt; ;
+    oa:hasTarget   &lt;https://w3id.org/np/RAxample-pigeon-mirror-root/annot&gt; ;
     oa:motivatedBy oa:assessing .
 }
 
@@ -1735,6 +1754,7 @@ sub:provenance {
 sub:pubinfo {
   this: dct:creator        orcid:0000-0004-3456-7890 ;
     dct:created            "2026-05-24T14:15:00Z"^^xsd:dateTime ;
+    npx:introduces       sub:counterclaim ;
     npx:hasNanopubType     cito:disputes .
 }</code></pre>
             <p>A counter-argument, also annotating the root. The annotation's target is the root annotation; the body's
@@ -1742,7 +1762,7 @@ sub:pubinfo {
 
             <h5 id="11.D.4">11.D.4 Rebuttal annotation (of the counter-argument)</h5>
             <pre><code>@prefix this: &lt;https://w3id.org/np/RAxample-pigeon-mirror-rebuttal&gt; .
-@prefix sub:  &lt;https://w3id.org/np/RAxample-pigeon-mirror-rebuttal#&gt; .
+@prefix sub:  &lt;https://w3id.org/np/RAxample-pigeon-mirror-rebuttal/&gt; .
 @prefix as:   &lt;https://www.w3.org/ns/activitystreams#&gt; .
 
 sub:Head {
@@ -1756,12 +1776,12 @@ sub:assertion {
   sub:rebuttal a schema:Statement ;
     rdf:value             "Wild populations of corvids show similar mirror-guided behaviour, suggesting the capacity is not lab-specific." ;
     cito:citesAsEvidence  &lt;https://doi.org/10.1016/magpie-mirror-self-recognition-review&gt; ;
-    as:inReplyTo          &lt;https://w3id.org/np/RAxample-pigeon-mirror-counter#counterclaim&gt; ;
-    cito:disputes         &lt;https://w3id.org/np/RAxample-pigeon-mirror-counter#counterclaim&gt; .
+    as:inReplyTo          &lt;https://w3id.org/np/RAxample-pigeon-mirror-counter/counterclaim&gt; ;
+    cito:disputes         &lt;https://w3id.org/np/RAxample-pigeon-mirror-counter/counterclaim&gt; .
 
   sub:annot a oa:Annotation ;
     oa:hasBody     sub:rebuttal ;
-    oa:hasTarget   &lt;https://w3id.org/np/RAxample-pigeon-mirror-counter#annot&gt; ;
+    oa:hasTarget   &lt;https://w3id.org/np/RAxample-pigeon-mirror-counter/annot&gt; ;
     oa:motivatedBy oa:replying .
 }
 
@@ -1773,6 +1793,7 @@ sub:provenance {
 sub:pubinfo {
   this: dct:creator        orcid:0000-0005-4567-8901 ;
     dct:created            "2026-05-24T15:45:00Z"^^xsd:dateTime ;
+    npx:introduces       sub:rebuttal ;
     npx:hasNanopubType     cito:disputes .
 }</code></pre>
             <p>The rebuttal demonstrates the deepest annotation nesting in the example: its target is the
