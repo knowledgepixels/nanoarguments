@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="en"
-  prefix="schema: https://schema.org/ rdf: http://www.w3.org/1999/02/22-rdf-syntax-ns# rdfs: http://www.w3.org/2000/01/rdf-schema# dcterms: http://purl.org/dc/terms/ oa: http://www.w3.org/ns/oa# cito: http://purl.org/spar/cito/ prov: http://www.w3.org/ns/prov# as: https://www.w3.org/ns/activitystreams# sio: http://semanticscience.org/resource/ na: https://w3id.org/nanoarguments/ np: http://www.nanopub.org/nschema# npx: http://purl.org/nanopub/x/ rel: https://www.w3.org/ns/iana/link-relations/relation# spec: http://www.w3.org/ns/spec#">
+  prefix="schema: https://schema.org/ rdf: http://www.w3.org/1999/02/22-rdf-syntax-ns# rdfs: http://www.w3.org/2000/01/rdf-schema# dcterms: http://purl.org/dc/terms/ oa: http://www.w3.org/ns/oa# cito: http://purl.org/spar/cito/ prov: http://www.w3.org/ns/prov# as: https://www.w3.org/ns/activitystreams# sio: http://semanticscience.org/resource/ na: https://w3id.org/nanoarguments/ np: http://www.nanopub.org/nschema# npx: http://purl.org/nanopub/x/ rel: https://www.w3.org/ns/iana/link-relations/relation# spec: http://www.w3.org/ns/spec# doap: http://usefulinc.com/ns/doap#">
 
 <head>
   <meta charset="utf-8" />
@@ -129,7 +129,7 @@
 
           <section id="vocab-schema-org" rel="schema:hasPart" resource="#vocab-schema-org" inlist>
             <h4>Schema.org</h4>
-            <p><a href="https://schema.org/">https://schema.org/</a></p>
+            <p><a rel="dcterms:references" href="https://schema.org/">https://schema.org/</a></p>
             <p><strong>Summary:</strong> Schema.org is a collaborative vocabulary maintained by Google, Yahoo,
               Microsoft, and Yandex, primarily used for marking up structured data on web pages so search engines and
               other consumers can interpret content. It defines a hierarchy of types (with <code>schema:Thing</code> at
@@ -165,7 +165,7 @@
 
           <section id="vocab-web-annotation" rel="schema:hasPart" resource="#vocab-web-annotation" inlist>
             <h4>Web Annotation Data Model (W3C Rec, 2017)</h4>
-            <p><a href="https://www.w3.org/TR/annotation-model/">https://www.w3.org/TR/annotation-model/</a></p>
+            <p><a rel="dcterms:references" typeof="doap:Specification" href="https://www.w3.org/TR/annotation-model/">https://www.w3.org/TR/annotation-model/</a></p>
             <p><strong>Summary:</strong> The Web Annotation Data Model is a W3C Recommendation defining a structured way
               to associate a body of information with a target resource. It supports arbitrary targets (documents, parts
               of documents via selectors, other annotations, arbitrary URIs), multiple bodies, and motivation typing
@@ -194,7 +194,7 @@
 
           <section id="vocab-amo" rel="schema:hasPart" resource="#vocab-amo" inlist>
             <h4>Argument Model Ontology</h4>
-            <p><a href="http://purl.org/spar/amo">http://purl.org/spar/amo</a></p>
+            <p><a rel="dcterms:references" href="http://purl.org/spar/amo">http://purl.org/spar/amo</a></p>
             <p><strong>Summary:</strong> AMO is a SPAR ontology that encodes <a
                 href="https://owl.purdue.edu/owl/general_writing/academic_writing/historical_perspectives_on_argumentation/toulmin_argument.html">Toulmin's
                 model of argument</a>. It defines six interrelated components (claim, evidence, warrant, backing,
@@ -235,7 +235,7 @@
 
           <section id="vocab-sepio" rel="schema:hasPart" resource="#vocab-sepio" inlist>
             <h4>SEPIO - Scientific Evidence and Provenance Information Ontology</h4>
-            <p><a
+            <p><a rel="dcterms:references"
                 href="https://github.com/monarch-initiative/SEPIO-ontology/wiki/The-SEPIO-Core-Ontology">https://github.com/monarch-initiative/SEPIO-ontology/wiki/The-SEPIO-Core-Ontology</a>
             </p>
             <p><strong>Summary:</strong> SEPIO is a domain ontology developed by the Monarch Initiative for representing
@@ -261,7 +261,7 @@
 
           <section id="vocab-prov-o" rel="schema:hasPart" resource="#vocab-prov-o" inlist>
             <h4>PROV-O (W3C Rec)</h4>
-            <p><a href="https://www.w3.org/TR/prov-o/">https://www.w3.org/TR/prov-o/</a></p>
+            <p><a rel="dcterms:references" typeof="doap:Specification" href="https://www.w3.org/TR/prov-o/">https://www.w3.org/TR/prov-o/</a></p>
             <p><strong>Summary:</strong> PROV-O is the W3C-recommended OWL ontology for representing provenance. It
               captures who generated what, when, from what source, through what activity. The core triad is
               <code>prov:Entity</code>, <code>prov:Activity</code>, and <code>prov:Agent</code>. Attribution,
@@ -286,7 +286,7 @@
 
           <section id="vocab-cito" rel="schema:hasPart" resource="#vocab-cito" inlist>
             <h4>CiTO - Citation Typing Ontology</h4>
-            <p><a
+            <p><a rel="dcterms:references"
                 href="https://sparontologies.github.io/cito/current/cito.html">https://sparontologies.github.io/cito/current/cito.html</a>
             </p>
             <p><strong>Summary:</strong> CiTO is a SPAR ontology that types citations and references between scholarly
@@ -317,7 +317,7 @@
 
           <section id="vocab-eco" rel="schema:hasPart" resource="#vocab-eco" inlist>
             <h4>ECO - Evidence &amp; Conclusion Ontology</h4>
-            <p><a href="http://evidenceontology.org/">http://evidenceontology.org/</a></p>
+            <p><a rel="dcterms:references" href="http://evidenceontology.org/">http://evidenceontology.org/</a></p>
             <p><strong>Summary:</strong> ECO is a community-curated controlled vocabulary of evidence categories used to
               describe the type of evidence supporting a scientific assertion. It provides a structured hierarchy of
               evidence types crossed with assertion methods, producing leaf terms like "experimental evidence used in
@@ -337,7 +337,7 @@
 
           <section id="vocab-sio" rel="schema:hasPart" resource="#vocab-sio" inlist>
             <h4>SIO - Semanticscience Integrated Ontology</h4>
-            <p><a
+            <p><a rel="dcterms:references"
                 href="https://github.com/MaastrichtU-IDS/semanticscience">https://github.com/MaastrichtU-IDS/semanticscience</a>
             </p>
             <p><strong>Summary:</strong> SIO is a broad upper-level ontology for the description of scientific objects,
@@ -358,7 +358,7 @@
 
           <section id="vocab-activitypub" rel="schema:hasPart" resource="#vocab-activitypub" inlist>
             <h4>ActivityPub</h4>
-            <p><a href="https://www.w3.org/TR/activitypub/">https://www.w3.org/TR/activitypub/</a></p>
+            <p><a rel="dcterms:references" typeof="doap:Specification" href="https://www.w3.org/TR/activitypub/">https://www.w3.org/TR/activitypub/</a></p>
             <p><strong>Summary:</strong> ActivityPub is a W3C-recommended decentralized social networking protocol built
               on Activity Streams 2.0. It defines a client-to-server API (clients post to a user's outbox) and a
               server-to-server federation protocol (servers deliver activities to recipients' inboxes). Each actor has
@@ -377,7 +377,7 @@
 
           <section id="vocab-activitystreams" rel="schema:hasPart" resource="#vocab-activitystreams" inlist>
             <h4>Activity Streams 2.0 (alignment target)</h4>
-            <p><a
+            <p><a rel="dcterms:references" typeof="doap:Specification"
                 href="https://www.w3.org/TR/activitystreams-vocabulary/">https://www.w3.org/TR/activitystreams-vocabulary/</a>
             </p>
             <p><strong>Summary:</strong> Activity Streams 2.0 is a W3C-recommended vocabulary for describing social
