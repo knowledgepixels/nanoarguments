@@ -471,7 +471,7 @@
             Implementations consuming the network should be prepared to receive any of these shapes.</p>
 
           <p><strong>Criteria for using <code>oa:Annotation</code>:</strong></p>
-          <p>Use <code>oa:Annotation</code> when the link itself needs to be a first-class object &mdash; when there is
+          <p>Use <code>oa:Annotation</code> when the link itself needs to be a first-class object: when there is
             something to say about the connection between body and target that a direct triple between content nodes
             cannot carry. Cases:</p>
           <ul>
@@ -634,7 +634,12 @@ sub:annot a oa:Annotation ;
             <code>schema:CreativeWork</code> and carries its content in <code>rdf:value</code>. A question may target
             another content node via <code>as:inReplyTo</code> (when the question is asked in response to a prior
             contribution) or via CiTO predicates when the question is rhetorically loaded (e.g.
-            <code>cito:disputes</code> for a question that implicitly challenges its target). Answers to a question are
+            <code>cito:disputes</code> for a question that implicitly challenges its target). Unlike statements, which
+            may take any CiTO stance, a question relates to its target through a narrow, non-affirmative subset:
+            challenging it (<code>cito:disputes</code>, <code>cito:critiques</code>, <code>cito:qualifies</code>,
+            <code>cito:corrects</code>) or neutrally discussing it (<code>cito:discusses</code>), never affirming
+            it. A question does not <code>cito:supports</code> or <code>cito:agreesWith</code> a target; that would be an
+            assertion, not a question. Answers to a question are
             separate content nodes that target the question; the relationship between question and answer is expressed
             by the same discourse-graph relations the model uses for any other pair of contributions.</p>
           <p>Schema.org's documentation recommends <code>schema:text</code> for the content of a
@@ -1088,9 +1093,9 @@ sub:pubinfo {
                 findings into a single coherent line of support or refutation, the recommended representation is an
                 intermediate statement that the findings target via <code>cito:supports</code> and that itself targets
                 the claim. This handles most evidence-grouping cases without additional machinery. For use cases that
-                require richer semantics &mdash; graded support across multiple independent lines, chained provenance
+                require richer semantics (graded support across multiple independent lines, chained provenance
                 trails, contradicting lines on a shared proposition, or alignment with existing SEPIO-based
-                infrastructure &mdash; SEPIO (see Part I) may be adopted as an extension. Adoption would require pinning
+                infrastructure), SEPIO (see Part I) may be adopted as an extension. Adoption would require pinning
                 to a specific version (the published OWL ontology has drifted from the GA4GH-aligned information model).
               </li>
               <li><strong>AMO:</strong> Toulmin-structured arguments. Where a contribution should be structured
