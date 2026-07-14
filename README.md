@@ -34,3 +34,8 @@ interaction with decentralized platforms.
   Streams, ActivityPub, LDN) and the model specification (content nodes, the
   discourse and annotation layers, provenance, alignment with nanopublications
   and ActivityPub, statement subtypes, query patterns, and worked examples).
+- **[templates.html](templates.html)** - *Nanopublication Templates*: the templates
+  for authoring discourse contributions, evidence findings, questions, and
+  annotations, each linked to its published nanopublication.
+- **[shapes.html](shapes.html)** - *Conformance Shapes*: the SHACL shapes for
+  validating Nanoarguments nanopublications, from [shapes/](shapes/).

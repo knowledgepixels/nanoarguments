@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en" prefix="schema: https://schema.org/ rdf: http://www.w3.org/1999/02/22-rdf-syntax-ns# rdfs: http://www.w3.org/2000/01/rdf-schema# dcterms: http://purl.org/dc/terms/ oa: http://www.w3.org/ns/oa# cito: http://purl.org/spar/cito/ prov: http://www.w3.org/ns/prov# as: https://www.w3.org/ns/activitystreams# sio: http://semanticscience.org/resource/ na: https://w3id.org/nanoarguments/ np: http://www.nanopub.org/nschema# npx: http://purl.org/nanopub/x/ sh: http://www.w3.org/ns/shacl#">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Nanoarguments: Conformance Shapes</title>
+  <link rel="canonical" href="https://knowledgepixels.com/nanoarguments/shapes.html" />
+  <link href="https://dokie.li/media/css/basic.css" media="all" rel="stylesheet" />
+  <link href="https://dokie.li/media/css/dokieli.css" media="all" rel="stylesheet" />
+  <script src="https://dokie.li/scripts/dokieli.js"></script>
+</head>
+
+<body>
+  <main>
+    <article about="" typeof="schema:Article" prefix="schema: https://schema.org/">
+
+      <h1 property="schema:name">Nanoarguments: Conformance Shapes</h1>
+
+      <dl id="document-authors">
+        <dt>Author</dt>
+        <dd id="Virginia-Balseiro"><a href="https://virginiabalseiro.com/#me" rel="schema:creator schema:author" typeof="schema:Person">Virginia Balseiro</a></dd>
+      </dl>
+      <dl id="document-license">
+        <dt>License</dt>
+        <dd><a href="https://creativecommons.org/licenses/by/4.0/" rel="schema:license">CC BY 4.0</a></dd>
+      </dl>
+      <dl id="document-related">
+        <dt>Related</dt>
+        <dd><a href="model.html" rel="schema:isPartOf">Vocabulary Survey and Model Specification</a></dd>
+      </dl>
+
+      <section id="introduction" rel="schema:hasPart" resource="#introduction" inlist>
+        <h2>Introduction</h2>
+        <p>The Nanoarguments <strong>conformance shapes</strong> are a SHACL description of what counts as a well-formed
+          Nanoarguments nanopublication, for validating instances produced by the <a href="templates.html">templates</a>
+          or retrieved from the network. They are pure <strong>SHACL Core</strong>, so any
+          conformant validator runs them.</p>
+      </section>
+
+      <section id="shapes" rel="schema:hasPart" resource="#shapes" inlist>
+        <h2>Shapes</h2>
+        <p>What each shape checks:</p>
+        <ul>
+          <li><code>DiscourseContribution</code> (<code>schema:Statement</code> or <code>schema:Question</code>):
+            exactly one <code>rdf:value</code>; <code>as:inReplyTo</code> at most once; <code>cito:citesAsEvidence</code>
+            repeatable. The CiTO stance predicate is left unconstrained (any CiTO relation).</li>
+          <li><code>Evidence</code> (<code>sio:SIO_001394</code>): exactly one <code>rdf:value</code>.</li>
+          <li><code>AssertionProvenance</code>: the assertion is <code>prov:wasAttributedTo</code> an agent;
+            <code>prov:wasDerivedFrom</code> is an IRI when present.</li>
+          <li><code>Nanopublication</code>: a <code>dct:creator</code> and <code>dct:license</code>; a missing
+            <code>dct:created</code> is a warning, not an error.</li>
+        </ul>
+        <p>The Web Annotation layer of an annotation contribution (the <code>oa:Annotation</code> and its selectors) is
+          validated against the <a href="https://www.w3.org/TR/annotation-model/">W3C Web Annotation</a> model and its
+          test suite, not re-specified here; Nanoarguments-specific annotation shapes may be added later.</p>
+        <pre><code>@prefix sh:     &lt;http://www.w3.org/ns/shacl#&gt; .
+@prefix rdf:    &lt;http://www.w3.org/1999/02/22-rdf-syntax-ns#&gt; .
+@prefix rdfs:   &lt;http://www.w3.org/2000/01/rdf-schema#&gt; .
+@prefix xsd:    &lt;http://www.w3.org/2001/XMLSchema#&gt; .
+@prefix schema: &lt;https://schema.org/&gt; .
+@prefix cito:   &lt;http://purl.org/spar/cito/&gt; .
+@prefix sio:    &lt;http://semanticscience.org/resource/&gt; .
+@prefix as:     &lt;https://www.w3.org/ns/activitystreams#&gt; .
+@prefix prov:   &lt;http://www.w3.org/ns/prov#&gt; .
+@prefix dct:    &lt;http://purl.org/dc/terms/&gt; .
+@prefix np:     &lt;http://www.nanopub.org/nschema#&gt; .
+@prefix nash:   &lt;https://w3id.org/nanoarguments/shapes/&gt; .
+
+# Nanoarguments conformance shapes (SHACL Core) for a signed nanopublication.
+# Validate over the union of the nanopub's four graphs; see shapes.html to run it.
+
+nash:DiscourseContribution a sh:NodeShape ;
+  rdfs:label "Discourse contribution (content node)" ;
+  sh:targetClass schema:Statement ;
+  sh:targetClass schema:Question ;
+  sh:property [
+    sh:path      rdf:value ;
+    sh:name      "statement or question text" ;
+    sh:datatype  xsd:string ;
+    sh:minCount  1 ;
+    sh:maxCount  1 ;
+    sh:message   "A discourse contribution needs exactly one rdf:value string." ;
+  ] ;
+  sh:property [
+    sh:path      as:inReplyTo ;
+    sh:name      "in reply to" ;
+    sh:nodeKind  sh:IRI ;
+    sh:maxCount  1 ;
+  ] ;
+  sh:property [
+    sh:path      cito:citesAsEvidence ;
+    sh:name      "cites as evidence" ;
+    sh:nodeKind  sh:IRI ;
+  ] .
+
+nash:Evidence a sh:NodeShape ;
+  rdfs:label "Evidence finding" ;
+  sh:targetClass sio:SIO_001394 ;   # SIO "evidence"
+  sh:property [
+    sh:path      rdf:value ;
+    sh:name      "finding text" ;
+    sh:datatype  xsd:string ;
+    sh:minCount  1 ;
+    sh:maxCount  1 ;
+    sh:message   "An evidence finding needs exactly one rdf:value string." ;
+  ] .
+
+# The Web Annotation layer (oa:Annotation, oa:SpecificResource, oa:TextQuoteSelector)
+# is validated against the W3C Web Annotation model and its test suite, not
+# re-specified here. Nanoarguments-specific annotation shapes may be added later.
+
+nash:AssertionProvenance a sh:NodeShape ;
+  rdfs:label "Assertion provenance" ;
+  sh:targetObjectsOf np:hasAssertion ;
+  sh:property [
+    sh:path      prov:wasAttributedTo ;
+    sh:name      "attributed to" ;
+    sh:nodeKind  sh:IRI ;
+    sh:minCount  1 ;
+    sh:message   "The assertion needs prov:wasAttributedTo an agent." ;
+  ] ;
+  sh:property [
+    sh:path      prov:wasDerivedFrom ;
+    sh:name      "derived from" ;
+    sh:nodeKind  sh:IRI ;
+  ] .
+
+nash:Nanopublication a sh:NodeShape ;
+  rdfs:label "Nanopublication pubinfo" ;
+  sh:targetClass np:Nanopublication ;
+  sh:property [
+    sh:path      dct:creator ;
+    sh:name      "creator" ;
+    sh:nodeKind  sh:IRI ;
+    sh:minCount  1 ;
+    sh:message   "The nanopublication needs a dct:creator." ;
+  ] ;
+  sh:property [
+    sh:path      dct:license ;
+    sh:name      "license" ;
+    sh:nodeKind  sh:IRI ;
+    sh:minCount  1 ;
+    sh:message   "The nanopublication needs a dct:license." ;
+  ] ;
+  sh:property [
+    sh:path      dct:created ;
+    sh:name      "created" ;
+    sh:datatype  xsd:dateTime ;
+    sh:minCount  1 ;
+    sh:severity  sh:Warning ;
+    sh:message   "The nanopublication has no dct:created timestamp." ;
+  ] .</code></pre>
+        <p class="artifact-links">Canonical: <a href="shapes/conformance.shacl.ttl">shapes/conformance.shacl.ttl</a></p>
+      </section>
+
+      <section id="running" rel="schema:hasPart" resource="#running" inlist>
+        <h2>Running the shapes (Python example)</h2>
+        <p>Two of the shapes (<code>AssertionProvenance</code>, <code>Nanopublication</code>) read across a
+          nanopublication's four graphs, so validate the whole nanopublication, not a single extracted graph. The example
+          below uses Python (<a href="https://github.com/RDFLib/pySHACL">pySHACL</a> and the
+          <a href="https://github.com/Nanopublication/nanopub-py">nanopub</a> library); <code>np.rdf</code> holds all four
+          graphs, which pySHACL reads across.</p>
+        <pre><code>import pyshacl
+# np.rdf, from the nanopub Python library, holds all four of the nanopub's graphs
+conforms, report_graph, report_text = pyshacl.validate(
+    np.rdf, shacl_graph="shapes/conformance.shacl.ttl")</code></pre>
+        <p>A runnable end-to-end example, with a passing and a failing nanopublication, is in
+          <a href="notebooks/validation.ipynb"><code>notebooks/validation.ipynb</code></a>.</p>
+      </section>
+
+    </article>
+  </main>
+</body>
+</html>

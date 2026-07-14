@@ -1,0 +1,97 @@
+@prefix sh:     <http://www.w3.org/ns/shacl#> .
+@prefix rdf:    <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs:   <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd:    <http://www.w3.org/2001/XMLSchema#> .
+@prefix schema: <https://schema.org/> .
+@prefix cito:   <http://purl.org/spar/cito/> .
+@prefix sio:    <http://semanticscience.org/resource/> .
+@prefix as:     <https://www.w3.org/ns/activitystreams#> .
+@prefix prov:   <http://www.w3.org/ns/prov#> .
+@prefix dct:    <http://purl.org/dc/terms/> .
+@prefix np:     <http://www.nanopub.org/nschema#> .
+@prefix nash:   <https://w3id.org/nanoarguments/shapes/> .
+
+# Nanoarguments conformance shapes (SHACL Core) for a signed nanopublication.
+# Validate over the union of the nanopub's four graphs; see shapes.html to run it.
+
+nash:DiscourseContribution a sh:NodeShape ;
+  rdfs:label "Discourse contribution (content node)" ;
+  sh:targetClass schema:Statement ;
+  sh:targetClass schema:Question ;
+  sh:property [
+    sh:path      rdf:value ;
+    sh:name      "statement or question text" ;
+    sh:datatype  xsd:string ;
+    sh:minCount  1 ;
+    sh:maxCount  1 ;
+    sh:message   "A discourse contribution needs exactly one rdf:value string." ;
+  ] ;
+  sh:property [
+    sh:path      as:inReplyTo ;
+    sh:name      "in reply to" ;
+    sh:nodeKind  sh:IRI ;
+    sh:maxCount  1 ;
+  ] ;
+  sh:property [
+    sh:path      cito:citesAsEvidence ;
+    sh:name      "cites as evidence" ;
+    sh:nodeKind  sh:IRI ;
+  ] .
+
+nash:Evidence a sh:NodeShape ;
+  rdfs:label "Evidence finding" ;
+  sh:targetClass sio:SIO_001394 ;   # SIO "evidence"
+  sh:property [
+    sh:path      rdf:value ;
+    sh:name      "finding text" ;
+    sh:datatype  xsd:string ;
+    sh:minCount  1 ;
+    sh:maxCount  1 ;
+    sh:message   "An evidence finding needs exactly one rdf:value string." ;
+  ] .
+
+# The Web Annotation layer (oa:Annotation, oa:SpecificResource, oa:TextQuoteSelector)
+# is validated against the W3C Web Annotation model and its test suite, not
+# re-specified here. Nanoarguments-specific annotation shapes may be added later.
+
+nash:AssertionProvenance a sh:NodeShape ;
+  rdfs:label "Assertion provenance" ;
+  sh:targetObjectsOf np:hasAssertion ;
+  sh:property [
+    sh:path      prov:wasAttributedTo ;
+    sh:name      "attributed to" ;
+    sh:nodeKind  sh:IRI ;
+    sh:minCount  1 ;
+    sh:message   "The assertion needs prov:wasAttributedTo an agent." ;
+  ] ;
+  sh:property [
+    sh:path      prov:wasDerivedFrom ;
+    sh:name      "derived from" ;
+    sh:nodeKind  sh:IRI ;
+  ] .
+
+nash:Nanopublication a sh:NodeShape ;
+  rdfs:label "Nanopublication pubinfo" ;
+  sh:targetClass np:Nanopublication ;
+  sh:property [
+    sh:path      dct:creator ;
+    sh:name      "creator" ;
+    sh:nodeKind  sh:IRI ;
+    sh:minCount  1 ;
+    sh:message   "The nanopublication needs a dct:creator." ;
+  ] ;
+  sh:property [
+    sh:path      dct:license ;
+    sh:name      "license" ;
+    sh:nodeKind  sh:IRI ;
+    sh:minCount  1 ;
+    sh:message   "The nanopublication needs a dct:license." ;
+  ] ;
+  sh:property [
+    sh:path      dct:created ;
+    sh:name      "created" ;
+    sh:datatype  xsd:dateTime ;
+    sh:minCount  1 ;
+    sh:severity  sh:Warning ;
+    sh:message   "The nanopublication has no dct:created timestamp." ;
+  ] .
