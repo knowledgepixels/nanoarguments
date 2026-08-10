@@ -46,7 +46,9 @@
           defines each <em>placeholder</em> (a field the author fills) and its type: introduced resource, long-literal,
           restricted choice, external URI, and so on. Optional and repeatable statements are flagged. The
           <code>discourse-contribution</code> template below shows the full structure; the others share the same
-          wrapper, so only their assertion graphs are shown.</p>
+          wrapper, so only their assertion graphs are shown. Snapshots leave out the RSA signature block and
+          Nanodash display labels, marked with <code># …</code> comments; the published nanopublication
+          linked under each snapshot is the complete, signed record.</p>
         <pre><code>@prefix this: &lt;https://w3id.org/np/RAFpID-NunXGUAZebXPfhD9efjvfpZqB5gDBrgP2Lp5N8&gt; .
 @prefix sub: &lt;https://w3id.org/np/RAFpID-NunXGUAZebXPfhD9efjvfpZqB5gDBrgP2Lp5N8/&gt; .
 @prefix gen: &lt;https://w3id.org/kpxl/gen/terms/&gt; .
@@ -59,7 +61,6 @@
 @prefix rdfs: &lt;http://www.w3.org/2000/01/rdf-schema#&gt; .
 @prefix orcid: &lt;https://orcid.org/&gt; .
 @prefix prov: &lt;http://www.w3.org/ns/prov#&gt; .
-@prefix foaf: &lt;http://xmlns.com/foaf/0.1/&gt; .
 
 sub:Head {
   this: a np:Nanopublication;
@@ -69,14 +70,8 @@ sub:Head {
 }
 
 sub:assertion {
-  &lt;http://purl.org/spar/cito/citesAsEvidence&gt; rdfs:label "cites as evidence" .
-  
-  rdf:type rdfs:label "type" .
-  
-  rdf:value rdfs:label "value" .
-  
-  &lt;https://schema.org/Statement&gt; rdfs:label "Statement" .
-  
+  # … display labels for external terms omitted …
+
   sub:evidence a nt:ExternalUriPlaceholder .
   
   sub:st1 a rdf:Statement;
@@ -121,8 +116,6 @@ sub:assertion {
     gen:governedBy &lt;https://w3id.org/spaces/knowledgepixels/nanoarguments&gt;;
     nt:hasStatement sub:st1, sub:st2, sub:st3, sub:st4, sub:st5;
     nt:hasTag "Discourse" .
-  
-  &lt;https://www.w3.org/ns/activitystreams#inReplyTo&gt; rdfs:label "In Reply To" .
 }
 
 sub:provenance {
@@ -130,35 +123,22 @@ sub:provenance {
 }
 
 sub:pubinfo {
-  orcid:0000-0002-1267-0234 foaf:name "Tobias Kuhn" .
-  
-  orcid:0009-0009-0118-9195 foaf:name "Virginia Balseiro" .
-  
   this: dct:created "2026-07-14T09:13:10.856Z"^^xsd:dateTime;
     dct:creator orcid:0000-0002-1267-0234, orcid:0009-0009-0118-9195;
     dct:license &lt;https://creativecommons.org/licenses/by/4.0/&gt;;
     npx:embeds sub:template;
     npx:introduces sub:templateKind;
     npx:wasCreatedAt &lt;https://nanodash.knowledgepixels.com/&gt;;
-    rdfs:label "Discourse contribution";
     prov:wasDerivedFrom &lt;https://w3id.org/np/RAsHohypO12gewyyusDEH_aI3z7GE-36tXIkr_ev8eITc&gt;;
     nt:wasCreatedFromProvenanceTemplate &lt;https://w3id.org/np/RA7lSq6MuK_TIC6JMSHvLtee3lpLoZDOqLJCLXevnrPoU&gt;;
     nt:wasCreatedFromPubinfoTemplate &lt;https://w3id.org/np/RACJ58Gvyn91LqCKIO9zu1eijDQIeEff28iyDrJgjSJF8&gt;,
       &lt;https://w3id.org/np/RAMEgudZsQ1bh1fZhfYnkthqH6YSXpghSE_DEN1I-6eAI&gt;, &lt;https://w3id.org/np/RARW4MsFkHuwjycNElvEVtuMjpf4yWDL10-0C5l2MqqRQ&gt;,
       &lt;https://w3id.org/np/RAukAcWHRDlkqxk7H2XNSegc1WnHI569INvNr-xdptDGI&gt;;
     nt:wasCreatedFromTemplate &lt;https://w3id.org/np/RAKmcrbEVkxF0ivA0_yGg8bnl6iKkwVDp_2SSHvPBrkPw/template&gt; .
-  
-  sub:sig npx:hasAlgorithm "RSA";
-    npx:hasPublicKey "MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQD4Wj537OijfOWVtsHMznuXKISqBhtGDQZfdO6pbb4hg9EHMcUFGTLbWaPrP783PHv8HMAAPjvEkHLaOHMIknqhaIa5236lfBO3r+ljVdYBElBcLvROmwG+ZGtmPNZf7lMhI15xf5TfoaSa84AFRd5J2EXekK6PhaFQhRm1IpSYtwIDAQAB";
-    npx:hasSignature "fBJb8DORhPlcxHSyft/8ITQwDVv+784TRid+SHCk5PIp48UOxdIaeQPgeF2Hn+XIm5cy9eLQiJHLxaFeZzrkUXSLHG1qc8FmwNoeuQGrzEAQtviqTFjBP1XC02/WssxQMRetXGyO+23tHbr6pIXBq7cpvAzjdorHWPTVBYoFo7o=";
-    npx:hasSignatureTarget this:;
-    npx:signedBy orcid:0000-0002-1267-0234 .
-  
-  &lt;https://w3id.org/spaces/knowledgepixels/nanoarguments&gt; nt:hasLabelFromApi """Nanoarguments - &lt;p&gt;Global, federated graph of scientific claims as LinkedData&lt;/p&gt;
 
-&lt;p&gt;Scienti...""" .
+  # … RSA signature (sub:sig), author names, and display labels omitted …
 }</code></pre>
-        <p class="artifact-links">Published: <a href="https://w3id.org/np/RAFpID-NunXGUAZebXPfhD9efjvfpZqB5gDBrgP2Lp5N8"><code>RAFpID-N…</code></a></p>
+        <p class="artifact-links">Published: <a href="https://w3id.org/np/RAFpID-NunXGUAZebXPfhD9efjvfpZqB5gDBrgP2Lp5N8/templateKind"><code>RAFpID-N…/templateKind</code></a></p>
         <p>Placeholders draw restricted choices from a <em>value-list nanopublication</em> via
           <code>nt:possibleValuesFrom</code>: the stance placeholder draws the full CiTO predicate set from the published
           <code>cito-choices</code> list. Statements <code>st3</code>-<code>st5</code> are optional, so a
@@ -174,7 +154,7 @@ sub:pubinfo {
             (<code>schema:Statement</code>) carrying its discourse relations as plain triples: a typed CiTO stance
             and/or an <code>as:inReplyTo</code> reply to another contribution, plus optional cited evidence. Shown in
             full under <a href="#anatomy">Anatomy</a> above.</p>
-          <p class="artifact-links">Published: <a href="https://w3id.org/np/RAFpID-NunXGUAZebXPfhD9efjvfpZqB5gDBrgP2Lp5N8"><code>RAFpID-N…</code></a></p>
+          <p class="artifact-links">Published: <a href="https://w3id.org/np/RAFpID-NunXGUAZebXPfhD9efjvfpZqB5gDBrgP2Lp5N8/templateKind"><code>RAFpID-N…/templateKind</code></a></p>
         </section>
 
         <section id="t-annotation" rel="schema:hasPart" resource="#t-annotation" inlist>
@@ -283,7 +263,7 @@ sub:pubinfo {
       sub:st2, sub:st3, sub:st4, sub:st5, sub:st6, sub:st7, sub:st8, sub:st9;
     nt:hasTag "Discourse" .
 }</code></pre>
-          <p class="artifact-links">Published: <a href="https://w3id.org/np/RATxyPikKUvLwqijI4T_fvaHE758DsxgXhOq0m6KiLlEI"><code>RATxyPik…</code></a></p>
+          <p class="artifact-links">Published: <a href="https://w3id.org/np/RATxyPikKUvLwqijI4T_fvaHE758DsxgXhOq0m6KiLlEI/templateKind"><code>RATxyPik…/templateKind</code></a></p>
         </section>
 
         <section id="t-evidence" rel="schema:hasPart" resource="#t-evidence" inlist>
@@ -328,7 +308,7 @@ sub:pubinfo {
     nt:hasStatement sub:st1, sub:st2, sub:st3, sub:st4;
     nt:hasTag "Discourse" .
 }</code></pre>
-          <p class="artifact-links">Published: <a href="https://w3id.org/np/RAdGQVeqqUoTNJe52OSMhY8EX1MkFA1LI4oQh-NAgrYV8"><code>RAdGQVeq…</code></a></p>
+          <p class="artifact-links">Published: <a href="https://w3id.org/np/RAdGQVeqqUoTNJe52OSMhY8EX1MkFA1LI4oQh-NAgrYV8/templateKind"><code>RAdGQVeq…/templateKind</code></a></p>
         </section>
 
         <section id="t-question" rel="schema:hasPart" resource="#t-question" inlist>
@@ -380,19 +360,24 @@ sub:pubinfo {
     nt:hasStatement sub:st1, sub:st2, sub:st3, sub:st4, sub:st5;
     nt:hasTag "Discourse" .
 }</code></pre>
-          <p class="artifact-links">Published: <a href="https://w3id.org/np/RAOp9i7XUKKJhT4qIvtCA6LpXj9Hq7qkhsZ1MrLP7UfHE"><code>RAOp9i7X…</code></a></p>
+          <p class="artifact-links">Published: <a href="https://w3id.org/np/RAOp9i7XUKKJhT4qIvtCA6LpXj9Hq7qkhsZ1MrLP7UfHE/templateKind"><code>RAOp9i7X…/templateKind</code></a></p>
         </section>
       </section>
 
       <section id="published" rel="schema:hasPart" resource="#published" inlist>
         <h2>Published templates</h2>
+        <p>Each template is a <em>maintained resource</em> of the
+          <a href="https://w3id.org/spaces/knowledgepixels/nanoarguments">Nanoarguments space</a>, linked here by its
+          <strong>template kind</strong>: the stable identifier that stays the same across versions (each published
+          version declares <code>dct:isVersionOf</code> the kind). The snapshots on this page show the version current
+          at the time of writing.</p>
         <table>
           <thead><tr><th>Template</th><th>Nanopublication</th></tr></thead>
           <tbody>
-            <tr><td>Discourse contribution</td><td><a href="https://w3id.org/np/RAFpID-NunXGUAZebXPfhD9efjvfpZqB5gDBrgP2Lp5N8"><code>RAFpID-NunXGUAZebXPfhD9efjvfpZqB5gDBrgP2Lp5N8</code></a></td></tr>
-            <tr><td>Annotation as a discourse contribution</td><td><a href="https://w3id.org/np/RATxyPikKUvLwqijI4T_fvaHE758DsxgXhOq0m6KiLlEI"><code>RATxyPikKUvLwqijI4T_fvaHE758DsxgXhOq0m6KiLlEI</code></a></td></tr>
-            <tr><td>Evidence finding</td><td><a href="https://w3id.org/np/RAdGQVeqqUoTNJe52OSMhY8EX1MkFA1LI4oQh-NAgrYV8"><code>RAdGQVeqqUoTNJe52OSMhY8EX1MkFA1LI4oQh-NAgrYV8</code></a></td></tr>
-            <tr><td>Question</td><td><a href="https://w3id.org/np/RAOp9i7XUKKJhT4qIvtCA6LpXj9Hq7qkhsZ1MrLP7UfHE"><code>RAOp9i7XUKKJhT4qIvtCA6LpXj9Hq7qkhsZ1MrLP7UfHE</code></a></td></tr>
+            <tr><td>Discourse contribution</td><td><a href="https://w3id.org/np/RAFpID-NunXGUAZebXPfhD9efjvfpZqB5gDBrgP2Lp5N8/templateKind"><code>RAFpID-NunXGUAZebXPfhD9efjvfpZqB5gDBrgP2Lp5N8/templateKind</code></a></td></tr>
+            <tr><td>Annotation as a discourse contribution</td><td><a href="https://w3id.org/np/RATxyPikKUvLwqijI4T_fvaHE758DsxgXhOq0m6KiLlEI/templateKind"><code>RATxyPikKUvLwqijI4T_fvaHE758DsxgXhOq0m6KiLlEI/templateKind</code></a></td></tr>
+            <tr><td>Evidence finding</td><td><a href="https://w3id.org/np/RAdGQVeqqUoTNJe52OSMhY8EX1MkFA1LI4oQh-NAgrYV8/templateKind"><code>RAdGQVeqqUoTNJe52OSMhY8EX1MkFA1LI4oQh-NAgrYV8/templateKind</code></a></td></tr>
+            <tr><td>Question</td><td><a href="https://w3id.org/np/RAOp9i7XUKKJhT4qIvtCA6LpXj9Hq7qkhsZ1MrLP7UfHE/templateKind"><code>RAOp9i7XUKKJhT4qIvtCA6LpXj9Hq7qkhsZ1MrLP7UfHE/templateKind</code></a></td></tr>
           </tbody>
         </table>
       </section>
