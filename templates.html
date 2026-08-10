@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html lang="en" prefix="schema: https://schema.org/ rdf: http://www.w3.org/1999/02/22-rdf-syntax-ns# rdfs: http://www.w3.org/2000/01/rdf-schema# dcterms: http://purl.org/dc/terms/ oa: http://www.w3.org/ns/oa# cito: http://purl.org/spar/cito/ prov: http://www.w3.org/ns/prov# as: https://www.w3.org/ns/activitystreams# sio: http://semanticscience.org/resource/ na: https://w3id.org/nanoarguments/ np: http://www.nanopub.org/nschema# npx: http://purl.org/nanopub/x/ sh: http://www.w3.org/ns/shacl#">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Nanoarguments: Nanopublication Templates</title>
+  <link rel="canonical" href="https://knowledgepixels.com/nanoarguments/templates.html" />
+  <link href="https://dokie.li/media/css/basic.css" media="all" rel="stylesheet" />
+  <link href="https://dokie.li/media/css/dokieli.css" media="all" rel="stylesheet" />
+  <script src="https://dokie.li/scripts/dokieli.js"></script>
+</head>
+
+<body>
+  <main>
+    <article about="" typeof="schema:Article" prefix="schema: https://schema.org/">
+
+      <h1 property="schema:name">Nanoarguments: Nanopublication Templates</h1>
+
+      <dl id="document-authors">
+        <dt>Author</dt>
+        <dd id="Virginia-Balseiro"><a href="https://virginiabalseiro.com/#me" rel="schema:creator schema:author" typeof="schema:Person">Virginia Balseiro</a></dd>
+      </dl>
+      <dl id="document-license">
+        <dt>License</dt>
+        <dd><a href="https://creativecommons.org/licenses/by/4.0/" rel="schema:license">CC BY 4.0</a></dd>
+      </dl>
+      <dl id="document-related">
+        <dt>Related</dt>
+        <dd><a href="model.html" rel="schema:isPartOf">Vocabulary Survey and Model Specification</a></dd>
+      </dl>
+
+      <section id="introduction" rel="schema:hasPart" resource="#introduction" inlist>
+        <h2>Introduction</h2>
+        <p>The Nanoarguments <strong>nanopublication templates</strong> are the reusable forms authoring tools use to
+          produce discourse contributions, evidence findings, questions, and annotations as nanopublications, following
+          the <a href="model.html">Nanoarguments model</a>. Each is shown inline as a snapshot, with a link to the
+          published nanopublication, which is the authoritative version. The
+          <a href="shapes.html">conformance shapes</a> validate the instances these templates generate.</p>
+      </section>
+
+      <section id="anatomy" rel="schema:hasPart" resource="#anatomy" inlist>
+        <h2>Anatomy of a template</h2>
+        <p>A template is a nanopublication with the usual four graphs (Head, assertion, provenance, publication info).
+          The <code>assertion</code> graph declares an <code>nt:AssertionTemplate</code> that lists its statements and
+          defines each <em>placeholder</em> (a field the author fills) and its type: introduced resource, long-literal,
+          restricted choice, external URI, and so on. Optional and repeatable statements are flagged. The
+          <code>discourse-contribution</code> template below shows the full structure; the others share the same
+          wrapper, so only their assertion graphs are shown. Snapshots leave out the RSA signature block and
+          Nanodash display labels, marked with <code># …</code> comments; the published nanopublication
+          linked under each snapshot is the complete, signed record.</p>
+        <pre><code>@prefix this: &lt;https://w3id.org/np/RAFpID-NunXGUAZebXPfhD9efjvfpZqB5gDBrgP2Lp5N8&gt; .
+@prefix sub: &lt;https://w3id.org/np/RAFpID-NunXGUAZebXPfhD9efjvfpZqB5gDBrgP2Lp5N8/&gt; .
+@prefix gen: &lt;https://w3id.org/kpxl/gen/terms/&gt; .
+@prefix np: &lt;http://www.nanopub.org/nschema#&gt; .
+@prefix dct: &lt;http://purl.org/dc/terms/&gt; .
+@prefix rdf: &lt;http://www.w3.org/1999/02/22-rdf-syntax-ns#&gt; .
+@prefix nt: &lt;https://w3id.org/np/o/ntemplate/&gt; .
+@prefix npx: &lt;http://purl.org/nanopub/x/&gt; .
+@prefix xsd: &lt;http://www.w3.org/2001/XMLSchema#&gt; .
+@prefix rdfs: &lt;http://www.w3.org/2000/01/rdf-schema#&gt; .
+@prefix orcid: &lt;https://orcid.org/&gt; .
+@prefix prov: &lt;http://www.w3.org/ns/prov#&gt; .
+
+sub:Head {
+  this: a np:Nanopublication;
+    np:hasAssertion sub:assertion;
+    np:hasProvenance sub:provenance;
+    np:hasPublicationInfo sub:pubinfo .
+}
+
+sub:assertion {
+  # … display labels for external terms omitted …
+
+  sub:evidence a nt:ExternalUriPlaceholder .
+  
+  sub:st1 a rdf:Statement;
+    rdf:object &lt;https://schema.org/Statement&gt;;
+    rdf:predicate rdf:type;
+    rdf:subject sub:statement .
+  
+  sub:st2 a rdf:Statement;
+    rdf:object sub:statementText;
+    rdf:predicate rdf:value;
+    rdf:subject sub:statement .
+  
+  sub:st3 a nt:OptionalStatement;
+    rdf:object sub:target;
+    rdf:predicate sub:stance;
+    rdf:subject sub:statement .
+  
+  sub:st4 a nt:OptionalStatement;
+    rdf:object sub:target;
+    rdf:predicate &lt;https://www.w3.org/ns/activitystreams#inReplyTo&gt;;
+    rdf:subject sub:statement .
+  
+  sub:st5 a nt:OptionalStatement, nt:RepeatableStatement;
+    rdf:object sub:evidence;
+    rdf:predicate &lt;http://purl.org/spar/cito/citesAsEvidence&gt;;
+    rdf:subject sub:statement .
+  
+  sub:stance a nt:RestrictedChoicePlaceholder;
+    nt:possibleValuesFrom &lt;https://w3id.org/np/RAZt5kzfoJg2m4dMRdMm2SP6JeUDD_GMzSq9xyRPMgP5k&gt; .
+  
+  sub:statement a nt:IntroducedResource .
+  
+  sub:statementText a nt:LongLiteralPlaceholder;
+    rdfs:label "statement text" .
+  
+  sub:target a nt:ExternalUriPlaceholder .
+  
+  sub:template a nt:AssertionTemplate;
+    dct:description "A discourse statement that takes a typed (CiTO) stance toward, and/or replies to, another contribution, and may cite evidence. A statement with no stance, reply, or evidence is a valid standalone claim (e.g. a thread root).";
+    dct:isVersionOf sub:templateKind;
+    rdfs:label "Discourse contribution";
+    gen:governedBy &lt;https://w3id.org/spaces/knowledgepixels/nanoarguments&gt;;
+    nt:hasStatement sub:st1, sub:st2, sub:st3, sub:st4, sub:st5;
+    nt:hasTag "Discourse" .
+}
+
+sub:provenance {
+  sub:assertion prov:wasAttributedTo orcid:0009-0009-0118-9195 .
+}
+
+sub:pubinfo {
+  this: dct:created "2026-07-14T09:13:10.856Z"^^xsd:dateTime;
+    dct:creator orcid:0000-0002-1267-0234, orcid:0009-0009-0118-9195;
+    dct:license &lt;https://creativecommons.org/licenses/by/4.0/&gt;;
+    npx:embeds sub:template;
+    npx:introduces sub:templateKind;
+    npx:wasCreatedAt &lt;https://nanodash.knowledgepixels.com/&gt;;
+    prov:wasDerivedFrom &lt;https://w3id.org/np/RAsHohypO12gewyyusDEH_aI3z7GE-36tXIkr_ev8eITc&gt;;
+    nt:wasCreatedFromProvenanceTemplate &lt;https://w3id.org/np/RA7lSq6MuK_TIC6JMSHvLtee3lpLoZDOqLJCLXevnrPoU&gt;;
+    nt:wasCreatedFromPubinfoTemplate &lt;https://w3id.org/np/RACJ58Gvyn91LqCKIO9zu1eijDQIeEff28iyDrJgjSJF8&gt;,
+      &lt;https://w3id.org/np/RAMEgudZsQ1bh1fZhfYnkthqH6YSXpghSE_DEN1I-6eAI&gt;, &lt;https://w3id.org/np/RARW4MsFkHuwjycNElvEVtuMjpf4yWDL10-0C5l2MqqRQ&gt;,
+      &lt;https://w3id.org/np/RAukAcWHRDlkqxk7H2XNSegc1WnHI569INvNr-xdptDGI&gt;;
+    nt:wasCreatedFromTemplate &lt;https://w3id.org/np/RAKmcrbEVkxF0ivA0_yGg8bnl6iKkwVDp_2SSHvPBrkPw/template&gt; .
+
+  # … RSA signature (sub:sig), author names, and display labels omitted …
+}</code></pre>
+        <p class="artifact-links">Published: <a href="https://w3id.org/np/RAFpID-NunXGUAZebXPfhD9efjvfpZqB5gDBrgP2Lp5N8/templateKind"><code>RAFpID-N…/templateKind</code></a></p>
+        <p>Placeholders draw restricted choices from a <em>value-list nanopublication</em> via
+          <code>nt:possibleValuesFrom</code>: the stance placeholder draws the full CiTO predicate set from the published
+          <code>cito-choices</code> list. Statements <code>st3</code>-<code>st5</code> are optional, so a
+          statement with no stance, reply, or evidence is a valid standalone claim (a thread root).</p>
+      </section>
+
+      <section id="templates" rel="schema:hasPart" resource="#templates" inlist>
+        <h2>The templates</h2>
+
+        <section id="t-discourse" rel="schema:hasPart" resource="#t-discourse" inlist>
+          <h3>Discourse contribution</h3>
+          <p>The <strong>direct</strong> representation: the statement is a first-class content node
+            (<code>schema:Statement</code>) carrying its discourse relations as plain triples: a typed CiTO stance
+            and/or an <code>as:inReplyTo</code> reply to another contribution, plus optional cited evidence. Shown in
+            full under <a href="#anatomy">Anatomy</a> above.</p>
+          <p class="artifact-links">Published: <a href="https://w3id.org/np/RAFpID-NunXGUAZebXPfhD9efjvfpZqB5gDBrgP2Lp5N8/templateKind"><code>RAFpID-N…/templateKind</code></a></p>
+        </section>
+
+        <section id="t-annotation" rel="schema:hasPart" resource="#t-annotation" inlist>
+          <h3>Annotation as a discourse contribution</h3>
+          <p>The same discourse statement wrapped as an <code>oa:Annotation</code> that anchors it to a target.
+            <code>oa:hasBody</code> references the statement <em>by IRI</em>, so the body is an external web resource
+            (a first-class content node, not embedded annotation text). The target is an
+            <code>oa:SpecificResource</code>, optionally narrowed to a passage with an <code>oa:TextQuoteSelector</code>
+            (leave the selector empty to anchor to the whole resource).</p>
+          <pre><code>sub:assertion {
+  sub:annotation a nt:LocalResource .
+  
+  sub:exactText a nt:LongLiteralPlaceholder .
+  
+  sub:motivation a nt:RestrictedChoicePlaceholder;
+    nt:possibleValuesFrom &lt;https://w3id.org/np/RACsOf8k6zeAMnUDOjv2IkCKgQmom-2VRNTKKt70kc57k&gt; .
+  
+  sub:prefixText a nt:LiteralPlaceholder .
+  
+  sub:specificResource a nt:LocalResource .
+  
+  sub:st1 rdf:object &lt;https://schema.org/Statement&gt;;
+    rdf:predicate rdf:type;
+    rdf:subject sub:statement .
+  
+  sub:st10 rdf:object sub:anchor;
+    rdf:predicate &lt;http://www.w3.org/ns/oa#hasSource&gt;;
+    rdf:subject sub:specificResource .
+  
+  sub:st11 a nt:OptionalStatement;
+    rdf:object sub:selector;
+    rdf:predicate &lt;http://www.w3.org/ns/oa#hasSelector&gt;;
+    rdf:subject sub:specificResource .
+  
+  sub:st12 a nt:OptionalStatement;
+    rdf:object &lt;http://www.w3.org/ns/oa#TextQuoteSelector&gt;;
+    rdf:predicate rdf:type;
+    rdf:subject sub:selector .
+  
+  sub:st13 a nt:OptionalStatement;
+    rdf:object sub:exactText;
+    rdf:predicate &lt;http://www.w3.org/ns/oa#exact&gt;;
+    rdf:subject sub:selector .
+  
+  sub:st14 a nt:OptionalStatement;
+    rdf:object sub:prefixText;
+    rdf:predicate &lt;http://www.w3.org/ns/oa#prefix&gt;;
+    rdf:subject sub:selector .
+  
+  sub:st15 a nt:OptionalStatement;
+    rdf:object sub:suffixText;
+    rdf:predicate &lt;http://www.w3.org/ns/oa#suffix&gt;;
+    rdf:subject sub:selector .
+  
+  sub:st2 rdf:object sub:statementText;
+    rdf:predicate rdf:value;
+    rdf:subject sub:statement .
+  
+  sub:st3 a nt:OptionalStatement;
+    rdf:object sub:target;
+    rdf:predicate sub:stance;
+    rdf:subject sub:statement .
+  
+  sub:st4 a nt:OptionalStatement;
+    rdf:object sub:target;
+    rdf:predicate &lt;https://www.w3.org/ns/activitystreams#inReplyTo&gt;;
+    rdf:subject sub:statement .
+  
+  sub:st5 rdf:object &lt;http://www.w3.org/ns/oa#Annotation&gt;;
+    rdf:predicate rdf:type;
+    rdf:subject sub:annotation .
+  
+  sub:st6 rdf:object sub:statement;
+    rdf:predicate &lt;http://www.w3.org/ns/oa#hasBody&gt;;
+    rdf:subject sub:annotation .
+  
+  sub:st7 rdf:object sub:specificResource;
+    rdf:predicate &lt;http://www.w3.org/ns/oa#hasTarget&gt;;
+    rdf:subject sub:annotation .
+  
+  sub:st8 rdf:object sub:motivation;
+    rdf:predicate &lt;http://www.w3.org/ns/oa#motivatedBy&gt;;
+    rdf:subject sub:annotation .
+  
+  sub:st9 rdf:object &lt;http://www.w3.org/ns/oa#SpecificResource&gt;;
+    rdf:predicate rdf:type;
+    rdf:subject sub:specificResource .
+  
+  sub:stance a nt:RestrictedChoicePlaceholder;
+    nt:possibleValuesFrom &lt;https://w3id.org/np/RAZt5kzfoJg2m4dMRdMm2SP6JeUDD_GMzSq9xyRPMgP5k&gt; .
+  
+  sub:statement a nt:IntroducedResource .
+  
+  sub:statementText a nt:LongLiteralPlaceholder .
+  
+  sub:suffixText a nt:LiteralPlaceholder .
+  
+  sub:target a nt:ExternalUriPlaceholder .
+  
+  sub:template a nt:AssertionTemplate;
+    dct:description "A Web Annotation whose body is a discourse statement taking a typed (CiTO) stance toward, and/or replying to, the annotated target. oa:hasBody references the statement by IRI, so the body is an external web resource. The target is an oa:SpecificResource, optionally narrowed to a passage with an oa:TextQuoteSelector.";
+    dct:isVersionOf sub:templateKind;
+    rdfs:label "Annotation as a discourse contribution";
+    gen:governedBy &lt;https://w3id.org/spaces/knowledgepixels/nanoarguments&gt;;
+    nt:hasStatement sub:st1, sub:st10, sub:st11, sub:st12, sub:st13, sub:st14, sub:st15,
+      sub:st2, sub:st3, sub:st4, sub:st5, sub:st6, sub:st7, sub:st8, sub:st9;
+    nt:hasTag "Discourse" .
+}</code></pre>
+          <p class="artifact-links">Published: <a href="https://w3id.org/np/RATxyPikKUvLwqijI4T_fvaHE758DsxgXhOq0m6KiLlEI/templateKind"><code>RATxyPik…/templateKind</code></a></p>
+        </section>
+
+        <section id="t-evidence" rel="schema:hasPart" resource="#t-evidence" inlist>
+          <h3>Evidence finding</h3>
+          <p>An ordinary discourse contribution (a <code>schema:Statement</code> with a CiTO stance)
+            <strong>additionally typed</strong> as the SIO evidence class (<code>sio:SIO_001394</code>), pointed at the
+            claim it bears on. It is still a valued statement with a CiTO relation, so it flows through the same
+            discourse queries as any other contribution, and a receiver that does not understand the evidence type still
+            sees a statement supporting or disputing a claim. Finer-grained evidence typing (ECO) is a deferred, optional
+            extension.</p>
+          <pre><code>sub:assertion {
+  sub:claim a nt:ExternalUriPlaceholder .
+  
+  sub:finding a nt:IntroducedResource .
+  
+  sub:findingText a nt:LongLiteralPlaceholder .
+  
+  sub:st1 rdf:object &lt;https://schema.org/Statement&gt;;
+    rdf:predicate rdf:type;
+    rdf:subject sub:finding .
+  
+  sub:st2 rdf:object &lt;http://semanticscience.org/resource/SIO_001394&gt;;
+    rdf:predicate rdf:type;
+    rdf:subject sub:finding .
+  
+  sub:st3 rdf:object sub:findingText;
+    rdf:predicate rdf:value;
+    rdf:subject sub:finding .
+  
+  sub:st4 rdf:object sub:claim;
+    rdf:predicate sub:stance;
+    rdf:subject sub:finding .
+  
+  sub:stance a nt:RestrictedChoicePlaceholder;
+    nt:possibleValuesFrom &lt;https://w3id.org/np/RAZt5kzfoJg2m4dMRdMm2SP6JeUDD_GMzSq9xyRPMgP5k&gt; .
+  
+  sub:template a nt:AssertionTemplate;
+    dct:description "A finding presented as evidence: a statement typed as the SIO evidence class that bears on a claim through a typed (CiTO) relation. It is an ordinary discourse contribution (a schema:Statement carrying rdf:value and a CiTO stance) additionally typed as evidence, so it flows through the same discourse queries as any other contribution.";
+    dct:isVersionOf sub:templateKind;
+    rdfs:label "Evidence finding";
+    gen:governedBy &lt;https://w3id.org/spaces/knowledgepixels/nanoarguments&gt;;
+    nt:hasStatement sub:st1, sub:st2, sub:st3, sub:st4;
+    nt:hasTag "Discourse" .
+}</code></pre>
+          <p class="artifact-links">Published: <a href="https://w3id.org/np/RAdGQVeqqUoTNJe52OSMhY8EX1MkFA1LI4oQh-NAgrYV8/templateKind"><code>RAdGQVeq…/templateKind</code></a></p>
+        </section>
+
+        <section id="t-question" rel="schema:hasPart" resource="#t-question" inlist>
+          <h3>Question</h3>
+          <p>A <code>schema:Question</code> posed to the discourse graph: the same shape as a discourse contribution,
+            typed as a question. Unlike statements, a question relates to its target through a
+            <strong>narrow, non-affirmative</strong> subset of CiTO, challenging it
+            (<code>disputes</code>, <code>critiques</code>, <code>qualifies</code>, <code>corrects</code>) or neutrally
+            discussing it (<code>discusses</code>), never supporting or agreeing. These are supplied inline as
+            <code>nt:possibleValue</code> rather than pulled from the full CiTO list.</p>
+          <pre><code>sub:assertion {
+  sub:evidence a nt:ExternalUriPlaceholder .
+  
+  sub:question a nt:IntroducedResource .
+  
+  sub:questionText a nt:LongLiteralPlaceholder .
+  
+  sub:st1 rdf:object &lt;https://schema.org/Question&gt;;
+    rdf:predicate rdf:type;
+    rdf:subject sub:question .
+  
+  sub:st2 rdf:object sub:questionText;
+    rdf:predicate rdf:value;
+    rdf:subject sub:question .
+  
+  sub:st3 rdf:object sub:target;
+    rdf:predicate sub:stance;
+    rdf:subject sub:question .
+  
+  sub:st4 rdf:object sub:target;
+    rdf:predicate &lt;https://www.w3.org/ns/activitystreams#inReplyTo&gt;;
+    rdf:subject sub:question .
+  
+  sub:st5 rdf:object sub:evidence;
+    rdf:predicate &lt;http://purl.org/spar/cito/citesAsEvidence&gt;;
+    rdf:subject sub:question .
+  
+  sub:stance a nt:RestrictedChoicePlaceholder;
+    nt:possibleValue &lt;http://purl.org/spar/cito/corrects&gt;, &lt;http://purl.org/spar/cito/critiques&gt;,
+      &lt;http://purl.org/spar/cito/discusses&gt;, &lt;http://purl.org/spar/cito/disputes&gt;, &lt;http://purl.org/spar/cito/qualifies&gt; .
+  
+  sub:target a nt:ExternalUriPlaceholder .
+  
+  sub:template a nt:AssertionTemplate;
+    dct:description "A question posed to the discourse graph: a schema:Question carrying its text in rdf:value. It may reply to a prior contribution (as:inReplyTo), or carry a rhetorical CiTO stance toward one when the question implicitly challenges its target (e.g. cito:disputes), and may cite evidence. Answers are separate contributions that target this question. A standalone question with no target is valid.";
+    dct:isVersionOf sub:templateKind;
+    rdfs:label "Question";
+    gen:governedBy &lt;https://w3id.org/spaces/knowledgepixels/nanoarguments&gt;;
+    nt:hasStatement sub:st1, sub:st2, sub:st3, sub:st4, sub:st5;
+    nt:hasTag "Discourse" .
+}</code></pre>
+          <p class="artifact-links">Published: <a href="https://w3id.org/np/RAOp9i7XUKKJhT4qIvtCA6LpXj9Hq7qkhsZ1MrLP7UfHE/templateKind"><code>RAOp9i7X…/templateKind</code></a></p>
+        </section>
+      </section>
+
+      <section id="published" rel="schema:hasPart" resource="#published" inlist>
+        <h2>Published templates</h2>
+        <p>Each template is a <em>maintained resource</em> of the
+          <a href="https://w3id.org/spaces/knowledgepixels/nanoarguments">Nanoarguments space</a>, linked here by its
+          <strong>template kind</strong>: the stable identifier that stays the same across versions (each published
+          version declares <code>dct:isVersionOf</code> the kind). The snapshots on this page show the version current
+          at the time of writing.</p>
+        <table>
+          <thead><tr><th>Template</th><th>Nanopublication</th></tr></thead>
+          <tbody>
+            <tr><td>Discourse contribution</td><td><a href="https://w3id.org/np/RAFpID-NunXGUAZebXPfhD9efjvfpZqB5gDBrgP2Lp5N8/templateKind"><code>RAFpID-NunXGUAZebXPfhD9efjvfpZqB5gDBrgP2Lp5N8/templateKind</code></a></td></tr>
+            <tr><td>Annotation as a discourse contribution</td><td><a href="https://w3id.org/np/RATxyPikKUvLwqijI4T_fvaHE758DsxgXhOq0m6KiLlEI/templateKind"><code>RATxyPikKUvLwqijI4T_fvaHE758DsxgXhOq0m6KiLlEI/templateKind</code></a></td></tr>
+            <tr><td>Evidence finding</td><td><a href="https://w3id.org/np/RAdGQVeqqUoTNJe52OSMhY8EX1MkFA1LI4oQh-NAgrYV8/templateKind"><code>RAdGQVeqqUoTNJe52OSMhY8EX1MkFA1LI4oQh-NAgrYV8/templateKind</code></a></td></tr>
+            <tr><td>Question</td><td><a href="https://w3id.org/np/RAOp9i7XUKKJhT4qIvtCA6LpXj9Hq7qkhsZ1MrLP7UfHE/templateKind"><code>RAOp9i7XUKKJhT4qIvtCA6LpXj9Hq7qkhsZ1MrLP7UfHE/templateKind</code></a></td></tr>
+          </tbody>
+        </table>
+      </section>
+
+    </article>
+  </main>
+</body>
+</html>
