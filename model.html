@@ -42,7 +42,7 @@
       </dl>
       <dl id="document-version">
         <dt>Version</dt>
-        <dd><span property="schema:version">0.1.1</span></dd>
+        <dd><span property="schema:version">0.1.2</span></dd>
       </dl>
       <dl id="document-type">
         <dt>Document Type</dt>
@@ -1129,7 +1129,9 @@ sub:pubinfo {
                 ^prov:wasAttributedTo ?author .
   FILTER (?relation IN (cito:supports, cito:disputes,
                         cito:qualifies, cito:agreesWith,
-                        cito:extends, as:inReplyTo))
+                        cito:extends, cito:critiques,
+                        cito:corrects, cito:discusses,
+                        as:inReplyTo))
 }</code></pre>
             <p>Walk a reply tree from a root:</p>
             <pre><code>SELECT ?contribution ?parent ?relation ?author WHERE {
@@ -1140,7 +1142,8 @@ sub:pubinfo {
     ?contribution ?relation ?parent .
     FILTER (?relation IN (cito:supports, cito:disputes,
                           cito:qualifies, cito:agreesWith,
-                          cito:extends))
+                          cito:extends, cito:critiques,
+                          cito:corrects, cito:discusses))
   }
 }</code></pre>
             <p>Find scientific reasoning chains:</p>
@@ -1862,6 +1865,12 @@ sub:pubinfo {
       <section class="appendix" id="changelog" rel="schema:hasPart" resource="#changelog" typeof="spec:Changelog" inlist>
         <h2 property="schema:name">Changelog</h2>
         <div datatype="rdf:HTML" property="schema:description">
+          <h3 property="schema:name">Version 0.1.2</h3>
+          <ul about="#changelog" rel="spec:change">
+            <li typeof="spec:Change" property="spec:statement">Fix: add the question stances
+              (<code>cito:critiques</code>, <code>cito:corrects</code>, <code>cito:discusses</code>) to the Level-1
+              query filters, which predated the question stance subset (<a href="#query-patterns" rel="spec:changeSubject">Query patterns</a>).</li>
+          </ul>
           <h3 property="schema:name">Version 0.1.1</h3>
           <ul about="#changelog" rel="spec:change">
             <li typeof="spec:Change" property="spec:statement">Reuse <code>cito:qualifies</code> for qualifying caveats
