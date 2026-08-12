@@ -38,6 +38,30 @@ nash:DiscourseContribution a sh:NodeShape ;
     sh:nodeKind  sh:IRI ;
   ] .
 
+nash:QuestionStance a sh:NodeShape ;
+  rdfs:label "Question stance (non-affirmative)" ;
+  sh:targetClass schema:Question ;
+  sh:property [
+    sh:path      cito:supports ;
+    sh:maxCount  0 ;
+    sh:message   "A question must not take an affirmative stance (cito:supports); that would be an assertion." ;
+  ] ;
+  sh:property [
+    sh:path      cito:agreesWith ;
+    sh:maxCount  0 ;
+    sh:message   "A question must not take an affirmative stance (cito:agreesWith); that would be an assertion." ;
+  ] ;
+  sh:property [
+    sh:path      cito:extends ;
+    sh:maxCount  0 ;
+    sh:message   "A question must not take an affirmative stance (cito:extends); that would be an assertion." ;
+  ] ;
+  sh:property [
+    sh:path      cito:confirms ;
+    sh:maxCount  0 ;
+    sh:message   "A question must not take an affirmative stance (cito:confirms); that would be an assertion." ;
+  ] .
+
 nash:Evidence a sh:NodeShape ;
   rdfs:label "Evidence finding" ;
   sh:targetClass sio:SIO_001394 ;   # SIO "evidence"
