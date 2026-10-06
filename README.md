@@ -39,3 +39,6 @@ interaction with decentralized platforms.
   annotations, each linked to its published nanopublication.
 - **[shapes.html](shapes.html)** - *Conformance Shapes*: the SHACL shapes for
   validating Nanoarguments nanopublications, from [shapes/](shapes/).
+- **[playground/](playground/)** - a minimal discourse app: a timeline of recent statements from
+  the nanopub network that you can reply to, with your posts published to the nanopub test
+  registry; also the project's Playwright end-to-end tests.
