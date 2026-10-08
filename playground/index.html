@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <script>
+    // Relative URLs need the trailing slash, which some static servers don't add.
+    if (!/\/(index(\.html)?)?$/.test(location.pathname))
+      location.replace(location.pathname + '/' + location.search + location.hash);
+  </script>
+  <title>nanotalk · Nanoarguments playground</title>
+  <link href="./src/style.css" rel="stylesheet" />
+  <!-- jsDelivr, not esm.sh: esm.sh's builds break n3's Store. -->
+  <script type="importmap">
+  {
+    "imports": {
+      "n3": "https://cdn.jsdelivr.net/npm/n3@2.7.12/+esm",
+      "rdf-validate-shacl": "https://cdn.jsdelivr.net/npm/rdf-validate-shacl@0.6.5/+esm",
+      "@nanopub/nanopub-js": "https://cdn.jsdelivr.net/npm/@nanopub/nanopub-js@0.4.0/+esm"
+    }
+  }
+  </script>
+  <script>
+    document.addEventListener('submit', e => e.preventDefault());
+  </script>
+</head>
+
+<body>
+  <header class="bar">
+    <h1>nanotalk</h1>
+    <p><a href="../">Nanoarguments</a> playground</p>
+  </header>
+
+  <main>
+    <section class="pane compose" aria-labelledby="compose-title">
+      <h2 id="compose-title">New statement</h2>
+      <form id="compose">
+        <div id="reply-banner" class="reply" hidden>
+          <p>Replying to <q id="reply-quote"></q></p>
+          <label for="stance">Stance</label>
+          <select id="stance" name="stance">
+            <option value="">none (plain reply)</option>
+            <option value="http://purl.org/spar/cito/agreesWith">agrees with</option>
+            <option value="http://purl.org/spar/cito/disputes">disputes</option>
+            <option value="http://purl.org/spar/cito/supports">supports</option>
+            <option value="http://purl.org/spar/cito/extends">extends</option>
+            <option value="http://purl.org/spar/cito/qualifies">qualifies</option>
+          </select>
+        </div>
+        <label for="statement">Statement</label>
+        <textarea id="statement" name="statement" rows="4"></textarea>
+        <label for="evidence">Evidence <small>optional</small></label>
+        <input id="evidence" name="evidence" type="url" placeholder="https://doi.org/…" />
+        <div class="row">
+          <button type="submit" id="publish">Publish</button>
+          <button type="button" id="cancel-reply" class="quiet" hidden>Cancel reply</button>
+        </div>
+        <output id="status" role="status"></output>
+      </form>
+      <div class="info" role="note" aria-label="About this playground">
+        <p>The timeline shows the latest statements and questions published anywhere on the nanopub
+          network, by anyone.</p>
+        <p>What you post is published as <b>Test User</b>, with the placeholder ORCID iD
+          <code id="author"></code>, and signed with a throwaway key generated in this tab. It goes to the
+          <a id="registry" target="_blank" rel="noopener">test registry</a>, never to the real network, so it
+          won't appear in anyone else's timeline. Here it shows as "you".</p>
+        <p>Each statement follows the <a href="../model.html">model</a> and is checked against the
+          <a href="../shapes.html">conformance shapes</a> before it is published.</p>
+      </div>
+    </section>
+
+    <section class="pane" aria-labelledby="timeline-title">
+      <div class="row spread">
+        <h2 id="timeline-title">Timeline</h2>
+        <button type="button" id="refresh" class="quiet">Refresh</button>
+      </div>
+      <p id="feed-status" class="note" role="status"></p>
+      <ol id="timeline" prefix="schema: https://schema.org/ cito: http://purl.org/spar/cito/ as: https://www.w3.org/ns/activitystreams#"></ol>
+    </section>
+  </main>
+
+  <script type="module" src="./src/main.js"
+    onerror="const s = document.getElementById('status'); s.dataset.kind = 'error'; s.textContent = 'The app failed to load; see the browser console.'"></script>
+</body>
+</html>

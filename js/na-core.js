@@ -2,9 +2,8 @@
 // Builders for the model's triples plus the standard discourse queries.
 // Output is the unsigned four-graph nanopub on the temp base URI; pass the
 // quads or TriG to a signer (@nanopub/nanopub-js, nanopub-py/rs) unchanged.
-// Temporary home; when packaged, change the import below to bare 'n3'.
 
-import { Writer, DataFactory } from 'https://esm.sh/n3@1';
+import { Writer, Parser, Store, DataFactory } from 'n3';
 const { namedNode, literal, quad } = DataFactory;
 
 export const NS = {
@@ -172,11 +171,9 @@ export function toTrig(quads, extraPrefixes = {}) {
 /** Validate nanopub quads against SHACL shapes (a Turtle string, e.g. the
  *  fetched conformance shapes). Loads rdf-validate-shacl on first use.
  *  Returns { conforms, messages }. */
+// TODO: use nanopub-js validate() with shaclShapes once it is implemented.
 export async function validate(quads, shapesTtl) {
-  const [{ default: SHACLValidator }, { Parser, Store }] = await Promise.all([
-    import('https://esm.sh/rdf-validate-shacl@0.6'),
-    import('https://esm.sh/n3@1'),
-  ]);
+  const { default: SHACLValidator } = await import('rdf-validate-shacl');
   const shapes = new Store(new Parser().parse(shapesTtl));
   const report = await new SHACLValidator(shapes).validate(new Store(quads));
   return {
