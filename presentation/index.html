@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="en" xml:lang="en" xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta charset="utf-8" />
+    <title>Nanoarguments</title>
+    <meta content="width=device-width, initial-scale=1" name="viewport" />
+    <link href="https://dokie.li/media/css/basic.css" media="all" rel="stylesheet" title="Basic" />
+    <link href="https://dokie.li/media/css/dokieli.css" media="all" rel="stylesheet" />
+    <script src="https://dokie.li/scripts/dokieli.js"></script>
+    <style>
+.slide figure img { max-width: 100%; max-height: 420px; width: auto; height: auto; border: 1px solid #ddd; }
+.slide figure + figure { margin-top: 1em; }
+.slide pre { font-size: 0.7em; }
+    </style>
+  </head>
+  <body class="list shower" about="" prefix="rdf: http://www.w3.org/1999/02/22-rdf-syntax-ns# rdfs: http://www.w3.org/2000/01/rdf-schema# owl: http://www.w3.org/2002/07/owl# xsd: http://www.w3.org/2001/XMLSchema# dcterms: http://purl.org/dc/terms/ foaf: http://xmlns.com/foaf/0.1/ bibo: http://purl.org/ontology/bibo/ prov: http://www.w3.org/ns/prov# cito: http://purl.org/spar/cito/ schema: http://schema.org/ ldp: http://www.w3.org/ns/ldp#">
+    <main>
+      <article about="" typeof="schema:CreativeWork">
+        <header class="caption">
+          <h1 property="schema:name">Nanoarguments</h1>
+          <details id="document-details">
+            <summary>More details about this document</summary>
+            <dl id="document-authors">
+              <dt>Author</dt>
+              <dd><a rel="schema:creator schema:author" href="https://virginiabalseiro.com/#me">Virginia Balseiro</a></dd>
+              <dd><a rel="schema:creator schema:author" href="https://orcid.org/0000-0001-8492-0354">Ashley Caselli</a></dd>
+            </dl>
+            <dl id="document-published">
+              <dt>Published</dt>
+              <dd><time content="2026-10-13T00:00:00Z" datatype="xsd:dateTime" datetime="2026-10-13T00:00:00Z" property="schema:datePublished">2026-10-13</time></dd>
+            </dl>
+            <dl id="document-license">
+              <dt>License</dt>
+              <dd><a href="https://creativecommons.org/licenses/by/4.0/" rel="schema:license" title="Creative Commons Attribution 4.0 International">CC BY 4.0</a></dd>
+            </dl>
+            <dl id="document-type">
+              <dt>Document Type</dt>
+              <dd><a href="http://purl.org/ontology/bibo/Slideshow" rel="rdf:type">Slideshow</a></dd>
+            </dl>
+          </details>
+        </header>
+
+        <section class="slide" id="cover" inlist="" rel="schema:hasPart" resource="#cover" typeof="bibo:Slide">
+          <h2 property="schema:name">Nanoarguments</h2>
+          <div datatype="rdf:HTML" property="schema:description">
+            <p>Discourse and evidence graphs for decentralized scholarly communication</p>
+            <span about="" rel="bibo:presentedAt" resource="#event-presentation" rev="bibo:presents"></span>
+            <p resource="#event-presentation" typeof="schema:Event">
+              <a href="https://w3id.org/spaces/nanopub/nanosessions/session35" rel="schema:superEvent">Nano Session #35</a>,
+              <time content="2026-10-13T16:00:00+02:00" datatype="xsd:dateTime" datetime="2026-10-13T16:00:00+02:00" property="schema:startDate">2026-10-13</time>
+              <span content="2026-10-13T17:00:00+02:00" datatype="xsd:dateTime" property="schema:endDate"></span>
+            </p>
+            <address>
+              <img alt="Virginia Balseiro's avatar" height="72" src="https://virginiabalseiro.com/assets/images/profile.jpg" width="72" />
+              <span>Virginia Balseiro</span>
+              <a about="#event-presentation" href="https://virginiabalseiro.com/#me" rel="schema:performer">https://virginiabalseiro.com/#me</a>
+              <span>Knowledge Pixels, dokieli</span>
+              <br />
+              <img alt="Ashley Caselli's avatar" height="72" src="media/ashley-caselli.jpg" width="72" />
+              <span>Ashley Caselli</span>
+              <a about="#event-presentation" href="https://orcid.org/0000-0001-8492-0354" rel="schema:performer">https://orcid.org/0000-0001-8492-0354</a>
+              <span>Knowledge Pixels</span>
+            </address>
+            <footer>
+              <dl>
+                <dt>Project</dt>
+                <dd><a href="https://knowledgepixels.com/nanoarguments/">https://knowledgepixels.com/nanoarguments/</a></dd>
+              </dl>
+            </footer>
+          </div>
+        </section>
+
+        <section class="slide" id="overview" inlist="" rel="schema:hasPart" resource="#overview" typeof="bibo:Slide">
+          <h2 property="schema:name">Overview</h2>
+          <div datatype="rdf:HTML" property="schema:description">
+            <ul>
+              <li>The project</li>
+              <li>The model</li>
+              <li>Templates and shapes</li>
+              <li>Nanodash</li>
+              <li>dokieli</li>
+              <li>nanotalk</li>
+              <li>What's next</li>
+            </ul>
+          </div>
+        </section>
+
+        <section class="slide" id="the-project" inlist="" rel="schema:hasPart" resource="#the-project" typeof="bibo:Slide">
+          <h2 property="schema:name">The project</h2>
+          <div datatype="rdf:HTML" property="schema:description">
+            <ul>
+              <li>Scholarly discussion is scattered across papers, reviews, comments and social media, with no shared structure.</li>
+              <li>Goal: a global discourse and evidence graph, browsable as one resource but federated and distributed.</li>
+              <li>Built on the nanopublication network: small, signed Linked Data snippets with provenance and authorship.</li>
+              <li>Funded through <a href="https://nlnet.nl/project/Nanoarguments/">NLnet</a>.</li>
+            </ul>
+          </div>
+        </section>
+
+        <section class="slide" id="the-model" inlist="" rel="schema:hasPart" resource="#the-model" typeof="bibo:Slide">
+          <h2 property="schema:name">The model</h2>
+          <div datatype="rdf:HTML" property="schema:description">
+            <ul>
+              <li>Every contribution is a content node: a <code>schema:Statement</code> with its own IRI.</li>
+              <li>Optional subtypes from SIO: hypothesis, evidence, argument.</li>
+              <li>A statement can take a stance toward another (supports, disputes, qualifies), so the graph shows where people agree and disagree, not only who replied to whom.</li>
+              <li>Reuses existing vocabularies: CiTO, Web Annotation, Activity Streams, PROV-O.</li>
+            </ul>
+<pre><code>sub:statement a schema:Statement ;
+  rdf:value "Pigeons can pass a modified mirror-mark test." ;
+  cito:disputes &lt;https://w3id.org/np/RAxample/claim&gt; .</code></pre>
+          </div>
+        </section>
+
+        <section class="slide" id="relations-and-layers" inlist="" rel="schema:hasPart" resource="#relations-and-layers" typeof="bibo:Slide">
+          <h2 property="schema:name">Relations and layers</h2>
+          <div datatype="rdf:HTML" property="schema:description">
+            <dl>
+              <dt>Stance (CiTO)</dt>
+              <dd><code>supports</code>, <code>disputes</code>, <code>extends</code>, <code>agreesWith</code>, <code>qualifies</code></dd>
+              <dt>Threading (Activity Streams)</dt>
+              <dd><code>as:inReplyTo</code>, with or without a stance</dd>
+              <dt>Discourse layer</dt>
+              <dd>How contributions relate to each other, as direct triples.</dd>
+              <dt>Annotation layer</dt>
+              <dd>Where a contribution is anchored, for example a quote in a paper, via <code>oa:Annotation</code>.</dd>
+            </dl>
+            <p><a href="https://knowledgepixels.com/nanoarguments/model.html">Vocabulary Survey and Model Specification</a></p>
+          </div>
+        </section>
+
+        <section class="slide" id="rdf-examples" inlist="" rel="schema:hasPart" resource="#rdf-examples" typeof="bibo:Slide">
+          <h2 property="schema:name">In RDF</h2>
+          <div datatype="rdf:HTML" property="schema:description">
+            <p>Each statement is its own nanopub. They connect by pointing at each other's IRIs.</p>
+<pre style="font-size: 0.6em; line-height: 1.3;"><code>:claim a schema:Statement ;
+  rdf:value "Cats knock objects off tables to test gravity." ;
+  cito:citesAsEvidence &lt;https://example.org/studies/cat-gravity&gt; .
+:support a schema:Statement ;
+  rdf:value "Home videos show consistent downward acceleration." ;
+  cito:supports :claim .
+:counter a schema:Statement ;
+  rdf:value "Better explained by a desire for human attention." ;
+  cito:disputes :claim .
+:rebuttal a schema:Statement ;
+  rdf:value "Attention doesn't explain incidents at 3am in empty rooms." ;
+  as:inReplyTo :counter ; cito:disputes :counter .
+:question a schema:Question ;
+  rdf:value "Has anyone repeated this with round tables?" ;
+  as:inReplyTo :claim .</code></pre>
+          </div>
+        </section>
+
+        <section class="slide" id="templates-and-shapes" inlist="" rel="schema:hasPart" resource="#templates-and-shapes" typeof="bibo:Slide">
+          <h2 property="schema:name">Templates and shapes</h2>
+          <div datatype="rdf:HTML" property="schema:description">
+            <dl>
+              <dt>Nanopublication templates</dt>
+              <dd>Forms for authoring, published as nanopubs: discourse contribution, annotation, evidence finding, question.</dd>
+              <dt>SHACL shapes</dt>
+              <dd>Conformance checks for any tool that publishes Nanoarguments nanopubs.</dd>
+              <dt>Queries and views</dt>
+              <dd>Also published as nanopubs, so Nanodash can show threads and evidence.</dd>
+            </dl>
+            <p><a href="https://knowledgepixels.com/nanoarguments/templates.html">Templates</a>, <a href="https://knowledgepixels.com/nanoarguments/shapes.html">Shapes</a></p>
+          </div>
+        </section>
+
+        <section class="slide" id="nanodash-thread" inlist="" rel="schema:hasPart" resource="#nanodash-thread" typeof="bibo:Slide">
+          <h2 property="schema:name">Nanodash: threads</h2>
+          <div datatype="rdf:HTML" property="schema:description">
+            <figure>
+              <img alt="Nanodash thread view with nested replies labeled by relation" src="media/browse.png" />
+            </figure>
+          </div>
+        </section>
+
+        <section class="slide" id="nanodash-evidence" inlist="" rel="schema:hasPart" resource="#nanodash-evidence" typeof="bibo:Slide">
+          <h2 property="schema:name">Nanodash: claims and evidence</h2>
+          <div datatype="rdf:HTML" property="schema:description">
+            <figure>
+              <img alt="Claim actions: Comment, Add supporting evidence, Add counterevidence, Reply with a claim" src="media/link.png" />
+            </figure>
+            <figure>
+              <img alt="Evidence table listing evidence with its stance (supports or contradicts) and user" src="media/aggregate.png" />
+            </figure>
+            <p>Demo: Ashley</p>
+          </div>
+        </section>
+
+        <section class="slide" id="dokieli" inlist="" rel="schema:hasPart" resource="#dokieli" typeof="bibo:Slide">
+          <h2 property="schema:name">dokieli</h2>
+          <div datatype="rdf:HTML" property="schema:description">
+            <ul>
+              <li>Annotate any web page and publish the annotation as a signed nanopub.</li>
+              <li>Signing keys managed in the browser, identity via ORCID.</li>
+              <li>See annotations of the current document found on the nanopub network.</li>
+              <li>Notify the annotated document's inbox (LDN).</li>
+              <li>Post to the user's ActivityPub outbox when they have one.</li>
+            </ul>
+            <p>Demo</p>
+          </div>
+        </section>
+
+        <section class="slide" id="nanotalk" inlist="" rel="schema:hasPart" resource="#nanotalk" typeof="bibo:Slide">
+          <h2 property="schema:name">nanotalk</h2>
+          <div datatype="rdf:HTML" property="schema:description">
+            <figure>
+              <img alt="nanotalk: a timeline of recent statements from the nanopub network, each with Reply, Approve, Disapprove, Support and Qualify actions, next to a form for a new statement" src="media/nanotalk.png" style="max-height: 340px;" />
+            </figure>
+            <p>Post, reply and take a stance. <a href="https://knowledgepixels.com/nanoarguments/playground/">Try it</a></p>
+          </div>
+        </section>
+
+        <section class="slide" id="whats-next" inlist="" rel="schema:hasPart" resource="#whats-next" typeof="bibo:Slide">
+          <h2 property="schema:name">What's next</h2>
+          <div datatype="rdf:HTML" property="schema:description">
+            <ul>
+              <li>Pilots with early adopter communities</li>
+              <li>User testing of the Nanoarguments features</li>
+              <li>Looking for volunteers! Want to try it with us?</li>
+            </ul>
+          </div>
+        </section>
+
+        <section class="slide" id="links" inlist="" rel="schema:hasPart" resource="#links" typeof="bibo:Slide">
+          <h2 property="schema:name">Links</h2>
+          <div datatype="rdf:HTML" property="schema:description">
+            <ul>
+              <li>Project: <a href="https://knowledgepixels.com/nanoarguments/">knowledgepixels.com/nanoarguments</a></li>
+              <li>Nanodash: <a href="https://nanodash.knowledgepixels.com/">nanodash.knowledgepixels.com</a></li>
+              <li>dokieli: <a href="https://dokie.li/">dokie.li</a></li>
+              <li>nanotalk: <a href="https://knowledgepixels.com/nanoarguments/playground/">knowledgepixels.com/nanoarguments/playground</a></li>
+              <li>NLnet: <a href="https://nlnet.nl/project/Nanoarguments/">nlnet.nl/project/Nanoarguments</a></li>
+            </ul>
+          </div>
+        </section>
+
+        <section class="slide" id="thank-you" inlist="" rel="schema:hasPart" resource="#thank-you" typeof="bibo:Slide">
+          <h2 class="shout" property="schema:name">Thank you</h2>
+        </section>
+      </article>
+      <div class="do progress"></div>
+    </main>
+  </body>
+</html>
