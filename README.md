@@ -42,3 +42,11 @@ interaction with decentralized platforms.
 - **[playground/](playground/)** - a minimal discourse app: a timeline of recent statements from
   the nanopub network that you can reply to, with your posts published to the nanopub test
   registry; also the project's Playwright end-to-end tests.
+
+## Funding
+
+This project is funded through [NGI0 Commons Fund](https://nlnet.nl/commonsfund), a fund established by [NLnet](https://nlnet.nl) with financial support from the European Commission's [Next Generation Internet](https://ngi.eu) program. Learn more at the [NLnet project page](https://nlnet.nl/project/Nanoarguments).
+
+[<img src="https://nlnet.nl/logo/banner.png" alt="NLnet foundation logo" width="20%" />](https://nlnet.nl)
+[<img src="https://nlnet.nl/image/logos/NGI0_tag.svg" alt="NGI Zero Logo" width="20%" />](https://nlnet.nl/commonsfund)
+
