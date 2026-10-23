@@ -49,6 +49,9 @@
           wrapper, so only their assertion graphs are shown. Snapshots leave out the RSA signature block and
           Nanodash display labels, marked with <code># …</code> comments; the published nanopublication
           linked under each snapshot is the complete, signed record.</p>
+        <p>A template has two IRIs: the node in the assertion graph is one version of it, and the object of its
+           <code>dct:isVersionOf</code> is the version-independent IRI that other nanopublications point at.
+           The new default (since October 2026) is that the version node is named <code>sub:templateVersion</code> to clarify this relation.</p>
         <pre><code>@prefix this: &lt;https://w3id.org/np/RAFpID-NunXGUAZebXPfhD9efjvfpZqB5gDBrgP2Lp5N8&gt; .
 @prefix sub: &lt;https://w3id.org/np/RAFpID-NunXGUAZebXPfhD9efjvfpZqB5gDBrgP2Lp5N8/&gt; .
 @prefix gen: &lt;https://w3id.org/kpxl/gen/terms/&gt; .
@@ -368,11 +371,11 @@ sub:pubinfo {
         <h2>Published templates</h2>
         <p>Each template is a <em>maintained resource</em> of the
           <a href="https://w3id.org/spaces/knowledgepixels/nanoarguments">Nanoarguments space</a>, linked here by its
-          <strong>template kind</strong>: the stable identifier that stays the same across versions (each published
-          version declares <code>dct:isVersionOf</code> the kind). The snapshots on this page show the version current
+          <strong>version-independent IRI</strong>: the identifier that stays the same across versions (each published
+          version declares <code>dct:isVersionOf</code> that IRI). The snapshots on this page show the version current
           at the time of writing.</p>
         <table>
-          <thead><tr><th>Template</th><th>Nanopublication</th></tr></thead>
+          <thead><tr><th>Template</th><th>Version-independent IRI</th></tr></thead>
           <tbody>
             <tr><td>Discourse contribution</td><td><a href="https://w3id.org/np/RAFpID-NunXGUAZebXPfhD9efjvfpZqB5gDBrgP2Lp5N8/templateKind"><code>RAFpID-NunXGUAZebXPfhD9efjvfpZqB5gDBrgP2Lp5N8/templateKind</code></a></td></tr>
             <tr><td>Annotation as a discourse contribution</td><td><a href="https://w3id.org/np/RATxyPikKUvLwqijI4T_fvaHE758DsxgXhOq0m6KiLlEI/templateKind"><code>RATxyPikKUvLwqijI4T_fvaHE758DsxgXhOq0m6KiLlEI/templateKind</code></a></td></tr>
