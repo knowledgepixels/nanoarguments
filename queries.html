@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en" prefix="schema: https://schema.org/ rdf: http://www.w3.org/1999/02/22-rdf-syntax-ns# rdfs: http://www.w3.org/2000/01/rdf-schema# dcterms: http://purl.org/dc/terms/ oa: http://www.w3.org/ns/oa# cito: http://purl.org/spar/cito/ prov: http://www.w3.org/ns/prov# as: https://www.w3.org/ns/activitystreams# sio: http://semanticscience.org/resource/ na: https://w3id.org/nanoarguments/ np: http://www.nanopub.org/nschema# npx: http://purl.org/nanopub/x/">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Nanoarguments: Query Patterns</title>
+  <link rel="canonical" href="https://knowledgepixels.com/nanoarguments/queries.html" />
+  <link href="https://dokie.li/media/css/basic.css" media="all" rel="stylesheet" />
+  <link href="https://dokie.li/media/css/dokieli.css" media="all" rel="stylesheet" />
+  <script src="https://dokie.li/scripts/dokieli.js"></script>
+</head>
+
+<body>
+  <main>
+    <article about="" typeof="schema:Article" prefix="schema: https://schema.org/">
+
+      <h1 property="schema:name">Nanoarguments: Query Patterns</h1>
+
+      <dl id="document-authors">
+        <dt>Author</dt>
+        <dd id="Tobias-Kuhn"><a href="https://orcid.org/0000-0002-1267-0234" rel="schema:creator schema:author" typeof="schema:Person">Tobias Kuhn</a></dd>
+      </dl>
+      <dl id="document-license">
+        <dt>License</dt>
+        <dd><a href="https://creativecommons.org/licenses/by/4.0/" rel="schema:license">CC BY 4.0</a></dd>
+      </dl>
+      <dl id="document-related">
+        <dt>Related</dt>
+        <dd><a href="model.html" rel="schema:isPartOf">Vocabulary Survey and Model Specification</a></dd>
+      </dl>
+
+      <section id="introduction" rel="schema:hasPart" resource="#introduction" inlist>
+        <h2>Introduction</h2>
+        <p>Here we list the published queries for the Nanoarguments discourse graph, implementing the <a href="model.html#level-1-graph-traversal-queries">Level 1 query patterns</a> of the model. These queries are published as nanopublications. SPARQL representations are shown below with a link to the published version.</p>
+        <p>A query can be called via the Nanopub Query API like this:</p>
+        <pre><code>https://query.knowledgepixels.com/api/&lt;code&gt;/&lt;name&gt;?&lt;parameter&gt;=&lt;IRI&gt;</code></pre>
+      </section>
+
+      <section id="queries" rel="schema:hasPart" resource="#queries" inlist>
+        <h2>The queries</h2>
+
+        <section id="q-evidence" rel="schema:hasPart" resource="#q-evidence" inlist>
+          <h3>Evidence for a claim</h3>
+          <p>This query lists the contributions that take a stance on a claim (supporting, opposing, others). The parameter is <code>claim</code>.</p>
+          <pre><code>prefix np: &lt;http://www.nanopub.org/nschema#&gt;
+prefix npa: &lt;http://purl.org/nanopub/admin/&gt;
+prefix npx: &lt;http://purl.org/nanopub/x/&gt;
+prefix rdf: &lt;http://www.w3.org/1999/02/22-rdf-syntax-ns#&gt;
+prefix prov: &lt;http://www.w3.org/ns/prov#&gt;
+prefix cito: &lt;http://purl.org/spar/cito/&gt;
+prefix oa: &lt;http://www.w3.org/ns/oa#&gt;
+prefix sio: &lt;http://semanticscience.org/resource/&gt;
+prefix na: &lt;https://w3id.org/nanoarguments/&gt;
+prefix schema: &lt;https://schema.org/&gt;
+
+select distinct ?evidence_iri ?evidence_iri_label ?stance ?stance_label ?user_iri where {
+  # Stance, label and group: 1 supporting, 2 opposing, 3 other.
+  values (?rel ?relLabel ?group) {
+    (cito:supports "supports" "1")
+    (cito:agreesWith "agrees with" "1")
+    (cito:extends "extends" "1")
+    (cito:disputes "disputes" "2")
+    (cito:critiques "critiques" "2")
+    (cito:corrects "corrects" "2")
+    (cito:qualifies "qualifies" "3")
+    (cito:discusses "discusses" "3")
+    (na:tests "tests" "3")
+    (na:implements "implements" "3")
+  }
+  graph npa:graph {
+    ?np np:hasAssertion ?a ; np:hasProvenance ?p ;
+        npa:hasValidSignatureForPublicKeyHash ?pubkey .
+    filter not exists { ?inv npx:invalidates ?np ; npa:hasValidSignatureForPublicKeyHash ?pubkey . }
+  }
+  graph ?a {
+    { ?evidence_iri a schema:Statement } union { ?evidence_iri a sio:SIO_001394 }
+    { ?evidence_iri ?rel ?_claim_iri . }
+    union
+    { ?evidence_iri ?rel ?spec . ?spec oa:hasSource ?_claim_iri . }
+    optional { ?evidence_iri rdf:value ?text }
+  }
+  optional { graph ?p { ?a prov:wasAttributedTo ?user_iri } }
+  bind(concat(if(?group = "1", "✓ ", if(?group = "2", "✗ ", "· ")), ?relLabel) as ?stance)
+  bind(if(?group = "1", "#1a7f37", if(?group = "2", "#d1242f", "#57606a")) as ?stancecolour)
+  bind(concat("&lt;svg width='110' height='16' viewBox='0 0 110 16'&gt;&lt;text x='0' y='12' font-size='12' font-weight='500' fill='", ?stancecolour, "'&gt;", ?stance, "&lt;/text&gt;&lt;/svg&gt;") as ?stance_label)
+  bind(?text as ?evidence_iri_label)
+}
+order by ?group ?relLabel ?evidence_iri_label</code></pre>
+          <p class="artifact-links">Published: <a href="https://w3id.org/np/RAz18A-jg43aKKd5KEsYfYjqwjbwEnMpO74jOsAtKBhno/get-evidence-for-claim"><code>RAz18A-j…/get-evidence-for-claim</code></a></p>
+        </section>
+
+        <section id="q-thread" rel="schema:hasPart" resource="#q-thread" inlist>
+          <h3>Thread under a contribution</h3>
+          <p>This query lists the replies to a contribution, including replies, following <code>as:inReplyTo</code>. Reply texts are indented by nesting level. The parameter is <code>resource</code>.</p>
+          <pre><code>prefix rdf: &lt;http://www.w3.org/1999/02/22-rdf-syntax-ns#&gt;
+prefix rdfs: &lt;http://www.w3.org/2000/01/rdf-schema#&gt;
+prefix dct: &lt;http://purl.org/dc/terms/&gt;
+prefix np: &lt;http://www.nanopub.org/nschema#&gt;
+prefix npa: &lt;http://purl.org/nanopub/admin/&gt;
+prefix npx: &lt;http://purl.org/nanopub/x/&gt;
+prefix prov: &lt;http://www.w3.org/ns/prov#&gt;
+prefix foaf: &lt;http://xmlns.com/foaf/0.1/&gt;
+prefix as: &lt;https://www.w3.org/ns/activitystreams#&gt;
+
+select ?level ?reply ?reply_label ?relation ?in_reply_to ?in_reply_to_label ?by ?by_label ?date ?reply_target ?np ?np_label
+where {
+  {
+    select ?reply ?in_reply_to ?by ?created ?np
+      (count(distinct ?up) as ?level)
+      (min(?upcreated) as ?start)
+      (coalesce(min(?value), min(?label), str(?reply)) as ?text)
+      (coalesce(min(?ptext), str(?in_reply_to)) as ?parenttext)
+      (min(?cito) as ?relation)
+      (coalesce(min(?name), str(?by)) as ?by_label)
+    where {
+      values ?_resource_multi_iri {}
+      graph npa:graph {
+        ?np np:hasAssertion ?a ; np:hasProvenance ?prov ; np:hasPublicationInfo ?pi ;
+          npa:hasValidSignatureForPublicKeyHash ?key ; dct:created ?created .
+        filter not exists { ?x npx:invalidates ?np ; npa:hasValidSignatureForPublicKeyHash ?key }
+      }
+      graph ?a { ?reply as:inReplyTo ?target }
+      ?reply (as:inReplyTo|np:hasAssertion|npx:introduces)+ ?_resource_multi_iri .
+      optional { graph npa:graph { ?target np:hasAssertion ?targetassertion } }
+      bind(coalesce(?targetassertion, ?target) as ?in_reply_to)
+      optional { graph ?a { ?reply rdf:value ?value } }
+      optional { graph ?a { ?reply rdfs:label ?label } }
+      optional {
+        graph ?a { ?reply ?citoprop ?target }
+        filter(strstarts(str(?citoprop), "http://purl.org/spar/cito/"))
+        bind(strafter(str(?citoprop), "cito/") as ?cito)
+      }
+      optional { graph ?prov { ?a prov:wasAttributedTo ?by } }
+      optional { graph ?pi { ?by foaf:name ?name } }
+      optional {
+        graph npa:graph {
+          ?pnp np:hasAssertion ?pa ; npa:hasValidSignatureForPublicKeyHash ?pkey .
+          filter not exists { ?y npx:invalidates ?pnp ; npa:hasValidSignatureForPublicKeyHash ?pkey }
+        }
+        graph ?pa { ?in_reply_to ?ptextprop ?ptext }
+        filter(?ptextprop in (rdf:value, rdfs:label))
+      }
+      ?reply (as:inReplyTo|np:hasAssertion)* ?up .
+      ?up (as:inReplyTo|np:hasAssertion|npx:introduces)+ ?_resource_multi_iri .
+      graph npa:graph { ?upnp np:hasAssertion ?upa ; dct:created ?upcreated }
+      graph ?upa { ?up as:inReplyTo ?upparent }
+    }
+    group by ?reply ?in_reply_to ?by ?created ?np
+  }
+  bind(concat(substr("· · · · · · · ", 1, 2 * (?level - 1)), ?text) as ?reply_label)
+  bind(if(strlen(?parenttext) &gt; 60, concat(substr(?parenttext, 1, 60), "..."), ?parenttext) as ?in_reply_to_label)
+  bind(substr(str(?created), 1, 10) as ?date)
+  bind(str(?reply) as ?reply_target)
+  bind("^" as ?np_label)
+}
+order by ?start ?created</code></pre>
+          <p class="artifact-links">Published: <a href="https://w3id.org/np/RAhdldevdeHe4nb9fM3CKA_cUnufQPq_xj4fuRyjTkq1o/get-thread"><code>RAhdldev…/get-thread</code></a></p>
+        </section>
+
+        <section id="q-chain" rel="schema:hasPart" resource="#q-chain" inlist>
+          <h3>Reasoning chain for a claim</h3>
+          <p>This query lists the contributions that test a claim or are derived from it, also following longer chains. It uses <code>na:tests</code> and <code>prov:wasDerivedFrom</code>. The parameter is <code>claim</code>.</p>
+          <pre><code>prefix np: &lt;http://www.nanopub.org/nschema#&gt;
+prefix npa: &lt;http://purl.org/nanopub/admin/&gt;
+prefix npx: &lt;http://purl.org/nanopub/x/&gt;
+prefix rdf: &lt;http://www.w3.org/1999/02/22-rdf-syntax-ns#&gt;
+prefix prov: &lt;http://www.w3.org/ns/prov#&gt;
+prefix na: &lt;https://w3id.org/nanoarguments/&gt;
+prefix schema: &lt;https://schema.org/&gt;
+
+select distinct ?step_iri ?step_iri_label ?relation ?target_iri ?target_iri_label ?user_iri ?np ("^" as ?np_label) where {
+  values (?rel ?relation) {
+    (na:tests "tests")
+    (prov:wasDerivedFrom "was derived from")
+  }
+  # The claim or anything on its chain.
+  ?target_iri (prov:wasDerivedFrom|na:tests)* ?_claim_iri .
+  graph npa:graph {
+    ?np np:hasAssertion ?a ; np:hasProvenance ?p ;
+        npa:hasValidSignatureForPublicKeyHash ?pubkey .
+    filter not exists { ?inv npx:invalidates ?np ; npa:hasValidSignatureForPublicKeyHash ?pubkey . }
+  }
+  graph ?a {
+    ?step_iri a schema:Statement ; ?rel ?target_iri .
+    optional { ?step_iri rdf:value ?step_iri_label }
+  }
+  optional { ?target_iri rdf:value ?target_iri_label }
+  optional { graph ?p { ?a prov:wasAttributedTo ?user_iri } }
+}
+order by ?target_iri_label ?relation ?step_iri_label</code></pre>
+          <p class="artifact-links">Published: <a href="https://w3id.org/np/RAEdY3FEckI128K5q45heT-s7hKf56cY9qDrg7vrtVQyc/get-reasoning-chain"><code>RAEdY3FE…/get-reasoning-chain</code></a></p>
+        </section>
+
+        <section id="q-actions" rel="schema:hasPart" resource="#q-actions" inlist>
+          <h3>Claim actions</h3>
+          <p>This query returns the buttons shown on the page of a claim, such "Comment", "Add supporting evidence", and "Add counterevidence". Each button opens a <a href="templates.html">template</a> with the claim filled in. The parameter is <code>claim</code>.</p>
+          <pre><code>prefix schema: &lt;https://schema.org/&gt;
+
+select distinct ?content where {
+  graph ?a { ?_claim_iri a schema:Statement . }
+  bind(encode_for_uri(str(?_claim_iri)) as ?claim)
+  bind("/publish?template-version=latest&amp;amp;template=" as ?base)
+  bind("https%3A%2F%2Fw3id.org%2Fnp%2FRAFpID-NunXGUAZebXPfhD9efjvfpZqB5gDBrgP2Lp5N8%2Ftemplate" as ?tContribution)
+  bind("https%3A%2F%2Fw3id.org%2Fnp%2FRAdGQVeqqUoTNJe52OSMhY8EX1MkFA1LI4oQh-NAgrYV8%2Ftemplate" as ?tEvidence)
+  bind(concat(
+    "&lt;a href='", ?base, ?tContribution, "&amp;amp;param_target=", ?claim,
+      "&amp;amp;param_stance=http%3A%2F%2Fpurl.org%2Fspar%2Fcito%2Fdiscusses'&gt;Comment&lt;/a&gt; ",
+    "&lt;a href='", ?base, ?tEvidence, "&amp;amp;param_claim=", ?claim,
+      "&amp;amp;param_stance=http%3A%2F%2Fpurl.org%2Fspar%2Fcito%2Fsupports'&gt;Add supporting evidence&lt;/a&gt; ",
+    "&lt;a href='", ?base, ?tEvidence, "&amp;amp;param_claim=", ?claim,
+      "&amp;amp;param_stance=http%3A%2F%2Fpurl.org%2Fspar%2Fcito%2Fdisputes'&gt;Add counterevidence&lt;/a&gt; ",
+    "&lt;a href='", ?base, ?tContribution, "&amp;amp;param_target=", ?claim,
+      "'&gt;Reply with a claim&lt;/a&gt;"
+  ) as ?content)
+}</code></pre>
+          <p class="artifact-links">Published: <a href="https://w3id.org/np/RAAUyGrveQskf4fnfZCH89fqsbyl8j7id6T9zaFCZUiAI/get-claim-actions"><code>RAAUyGrv…/get-claim-actions</code></a></p>
+        </section>
+      </section>
+
+      <section id="published" rel="schema:hasPart" resource="#published" inlist>
+        <h2>Published queries</h2>
+        <p>The snapshots on this page show the versions from 13 November 2026.</p>
+        <table>
+          <thead><tr><th>Query</th><th>Parameter</th><th>IRI</th></tr></thead>
+          <tbody>
+            <tr><td>Evidence for a claim</td><td><code>claim</code></td><td><a href="https://w3id.org/np/RAz18A-jg43aKKd5KEsYfYjqwjbwEnMpO74jOsAtKBhno/get-evidence-for-claim"><code>RAz18A-jg43aKKd5KEsYfYjqwjbwEnMpO74jOsAtKBhno/get-evidence-for-claim</code></a></td></tr>
+            <tr><td>Thread under a contribution</td><td><code>resource</code></td><td><a href="https://w3id.org/np/RAhdldevdeHe4nb9fM3CKA_cUnufQPq_xj4fuRyjTkq1o/get-thread"><code>RAhdldevdeHe4nb9fM3CKA_cUnufQPq_xj4fuRyjTkq1o/get-thread</code></a></td></tr>
+            <tr><td>Reasoning chain for a claim</td><td><code>claim</code></td><td><a href="https://w3id.org/np/RAEdY3FEckI128K5q45heT-s7hKf56cY9qDrg7vrtVQyc/get-reasoning-chain"><code>RAEdY3FEckI128K5q45heT-s7hKf56cY9qDrg7vrtVQyc/get-reasoning-chain</code></a></td></tr>
+            <tr><td>Claim actions</td><td><code>claim</code></td><td><a href="https://w3id.org/np/RAAUyGrveQskf4fnfZCH89fqsbyl8j7id6T9zaFCZUiAI/get-claim-actions"><code>RAAUyGrveQskf4fnfZCH89fqsbyl8j7id6T9zaFCZUiAI/get-claim-actions</code></a></td></tr>
+          </tbody>
+        </table>
+      </section>
+
+    </article>
+  </main>
+</body>
+</html>
