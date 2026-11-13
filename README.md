@@ -38,6 +38,7 @@ interaction with decentralized platforms.
   for authoring discourse contributions, evidence findings, questions,
   annotations, and tool-generated provenance, each linked to its published
   nanopublication.
+- **[queries.html](queries.html)** - *Query Patterns*: the published queries over the discourse graph, each linked to its published nanopublication.
 - **[shapes.html](shapes.html)** - *Conformance Shapes*: the SHACL shapes for
   validating Nanoarguments nanopublications, from [shapes/](shapes/).
 - **[playground/](playground/)** - a minimal discourse app: a timeline of recent statements from
