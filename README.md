@@ -35,8 +35,9 @@ interaction with decentralized platforms.
   discourse and annotation layers, provenance, alignment with nanopublications
   and ActivityPub, statement subtypes, query patterns, and worked examples).
 - **[templates.html](templates.html)** - *Nanopublication Templates*: the templates
-  for authoring discourse contributions, evidence findings, questions, and
-  annotations, each linked to its published nanopublication.
+  for authoring discourse contributions, evidence findings, questions,
+  annotations, and tool-generated provenance, each linked to its published
+  nanopublication.
 - **[shapes.html](shapes.html)** - *Conformance Shapes*: the SHACL shapes for
   validating Nanoarguments nanopublications, from [shapes/](shapes/).
 - **[playground/](playground/)** - a minimal discourse app: a timeline of recent statements from
